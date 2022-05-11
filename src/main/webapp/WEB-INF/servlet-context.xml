@@ -10,17 +10,20 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <context:component-scan base-package="com.spacejaam.itservicesportal" />
+  <context:component-scan base-package="com.spacejaam.itservicesportal"/>
 
   <bean id="viewPro" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/pages/"/>
     <property name="suffix" value=".jsp"/>
   </bean>
 
+  <!--  <bean name="client" class="com.spacejaam.itservicesportal.beans.client.Client" scope="session">-->
+  <!--  </bean>-->
+
   <mvc:resources mapping="$scripts/**" location="/WEB-INF/scripts/" cache-period="31556926"/>
   <mvc:resources mapping="$styles/**" location="/WEB-INF/styles/" cache-period="31556926"/>
   <mvc:resources mapping="$assets/**" location="/WEB-INF/assets/" cache-period="31556926"/>
 
-  <mvc:annotation-driven />
+  <mvc:annotation-driven/>
 
 </beans>

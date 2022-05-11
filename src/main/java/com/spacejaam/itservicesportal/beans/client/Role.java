@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.model.client;
+package com.spacejaam.itservicesportal.beans.client;
 
 /**
  *

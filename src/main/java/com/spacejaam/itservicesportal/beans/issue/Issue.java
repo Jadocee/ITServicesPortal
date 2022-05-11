@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.model.issue;
+package com.spacejaam.itservicesportal.beans.issue;
 
 import java.io.Serializable;
 import java.util.ArrayList;

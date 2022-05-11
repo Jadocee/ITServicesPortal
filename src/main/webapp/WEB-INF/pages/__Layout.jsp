@@ -13,7 +13,7 @@
 <%--<c:set var="title" scope="page"/>--%>
 <%--<c:set var="content" scope="page"/>--%>
 
-<t:App title="${title}">
+<t:App title="${pageTitle}">
     <jsp:body>
         <header class="primary-header">
             TEST HEADER
@@ -27,23 +27,23 @@
             </c:choose>
         </header>
 
-        <aside class="nav-menu-container">
-            <nav>
-                <menu class="nav-menu">
-                    <c:choose>
-                        <c:when test="${client == null}">
-                            <li>Login</li>
-                        </c:when>
-                        <c:otherwise>
-                            <li>Logout</li>
-                        </c:otherwise>
-                    </c:choose>
-                </menu>
-            </nav>
-        </aside>
-
         <main>
-            <c:import url="${content}.jsp"/>
+            <aside class="nav-menu-container">
+                <nav>
+                    <menu class="nav-menu">
+                        <c:choose>
+                            <c:when test="${client == null}">
+                                <li>Login</li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>Logout</li>
+                            </c:otherwise>
+                        </c:choose>
+                    </menu>
+                </nav>
+            </aside>
+
+            <c:import url="${pageName}.jsp"/>
         </main>
     </jsp:body>
 </t:App>
