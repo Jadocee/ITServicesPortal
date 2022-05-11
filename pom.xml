@@ -69,7 +69,17 @@
       <version>1.2</version>
     </dependency>
 
+    <dependency>
+      <artifactId>mssql-jdbc</artifactId>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <scope>runtime</scope>
+      <version>10.2.0.jre8</version>
+    </dependency>
 
+    <dependency>
+      <artifactId>spring-jdbc</artifactId>
+      <groupId>org.springframework</groupId>
+    </dependency>
 
 
   </dependencies>

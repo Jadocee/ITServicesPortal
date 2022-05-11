@@ -17,9 +17,6 @@
     <property name="suffix" value=".jsp"/>
   </bean>
 
-  <!--  <bean name="client" class="com.spacejaam.itservicesportal.beans.client.Client" scope="session">-->
-  <!--  </bean>-->
-
   <mvc:resources mapping="$scripts/**" location="/WEB-INF/scripts/" cache-period="31556926"/>
   <mvc:resources mapping="$styles/**" location="/WEB-INF/styles/" cache-period="31556926"/>
   <mvc:resources mapping="$assets/**" location="/WEB-INF/assets/" cache-period="31556926"/>

@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.beans.issue;
+package com.spacejaam.itservicesportal.bean.issue;
 
 /**
  *

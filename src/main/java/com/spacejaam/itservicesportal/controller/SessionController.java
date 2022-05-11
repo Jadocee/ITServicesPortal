@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.controllers;
+package com.spacejaam.itservicesportal.controller;
 
 import org.springframework.stereotype.Controller;
 

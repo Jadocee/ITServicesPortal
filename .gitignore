@@ -34,3 +34,5 @@ build/
 
 # Project exclude paths
 /src/main/webapp/WEB-INF/scripts/test.js
+
+node_modules

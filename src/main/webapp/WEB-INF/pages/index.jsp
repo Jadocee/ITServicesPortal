@@ -12,5 +12,11 @@
 <script type="text/javascript" src="<spring:url value="$scripts/test.js" context="module"/>"></script>
 
 <div>
-    THIS THE MAIN CONTENT OF THE HOMEPAGE
+    <section id="hero">
+        <h1>Welcome</h1>
+    </section>
+
+    <section id="statistics">
+        <h1>Statistics</h1>
+    </section>
 </div>
