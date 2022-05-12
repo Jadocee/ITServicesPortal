@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 @Component("clientBean")
 @Scope(value = "session")
 public class Client implements Serializable {
-//    private static final long serialVersionIUID = 1ac6dcc5-002f-47ae-a8ce-154ada362770;
-
+  private long id;
   private String firstName;
   private String lastName;
   private String email;
@@ -27,6 +26,14 @@ public class Client implements Serializable {
     this.email = email;
     this.contactNum = contactNum;
     this.role = role;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public Role getRole() {
+    return role;
   }
 
 }
