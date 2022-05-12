@@ -14,36 +14,90 @@
 <%--<c:set var="content" scope="page"/>--%>
 
 <t:App title="${pageTitle}">
+    <jsp:attribute name="head">
+        <link type="text/css" rel="stylesheet" href="<spring:url value="$styles/__Layout.css"/>"/>
+    </jsp:attribute>
+
     <jsp:body>
         <header class="primary-header">
-            TEST HEADER
-            <c:choose>
-                <c:when test="${client == null}">
-                    <br> THIS WILL SHOW IF CLIENT IS NULL
-                </c:when>
-                <c:otherwise>
-                    <br> THIS WILL SHOW IF CLIENT IS NOT NULL
-                </c:otherwise>
-            </c:choose>
+            <div class="primary-header__left">
+                <h1>Services Portal</h1>
+            </div>
+            <div class="primary-header__middle">
+
+            </div>
+            <div class="primary-header__right">
+
+            </div>
         </header>
 
-        <main>
-            <aside class="nav-menu-container">
-                <nav>
-                    <menu class="nav-menu">
+        <div id="container">
+
+            <nav class="nav-menu-container">
+                <menu class="nav-menu">
+                    <c:choose>
+                        <c:when test="${client == null}">
+                            <li>
+                                <button type="button" class="nav-menu-button">
+                                    Login
+                                </button>
+                            </li>
+                        </c:when>
+
+                        <c:otherwise>
+                            <li>
+                                <button type="button" class="nav-menu-button">
+                                    Logout
+                                </button>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <li>
+                        <button type="button" class="nav-menu-button">
+                            Home
+                        </button>
+                    </li>
+
+                    <li>
+                        <button type="button" class="nav-menu-button">
+                            Knowledge Base
+                        </button>
+                    </li>
+
+                    <c:if test="${client != null}">
                         <c:choose>
-                            <c:when test="${client == null}">
-                                <li>Login</li>
+                            <c:when test="${client.role.label.equals('User')}">
+                                <li>
+                                    <button type="button" class="nav-menu-button">
+                                        Your Issues
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <button type="button" class="nav-menu-button">
+                                        Create An Issue
+                                    </button>
+                                </li>
                             </c:when>
                             <c:otherwise>
-                                <li>Logout</li>
+                                <li>
+                                    <button type="button" class="nav-menu-button">
+                                        Issue Manager
+                                    </button>
+                                </li>
                             </c:otherwise>
                         </c:choose>
-                    </menu>
-                </nav>
-            </aside>
+                    </c:if>
+                </menu>
+            </nav>
 
-            <c:import url="${pageName}.jsp"/>
-        </main>
+            <main>
+                <c:import url="${pageName}.jsp"/>
+            </main>
+
+        </div>
+
+
     </jsp:body>
 </t:App>
