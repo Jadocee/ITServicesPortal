@@ -10,11 +10,11 @@ import java.util.EnumSet;
  */
 public class Issue implements Serializable {
 
-    private String title;
-    private String desc;
+    private static String title;
+    private static String desc;
     private String author;
     private State state;
-    private Category category;
+    private static Category category;
     private EnumSet<Tag> tags;
     private Date reported;
     private ArrayList<Comment> comments; // TODO might be redundant
@@ -22,4 +22,15 @@ public class Issue implements Serializable {
     public Issue() {
     }
 
+    public static String getTitle() {
+        return title;
+    }
+
+    public static String getDescription() {
+        return desc;
+    }
+
+    public static Category getCatagory() {
+        return category;
+    }
 }
