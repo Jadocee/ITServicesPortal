@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
     <meta name="description" content=""/>
-    <link rel="icon" href="<spring:url value="$assets/favicon.png"/>"/>
+    <link fetchpriority="high" rel="icon" href="<spring:url value="$assets/favicon.png"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link type="text/css" rel="stylesheet" href="<spring:url value="$styles/App.css"/>"/>
     <jsp:invoke fragment="head"/>
