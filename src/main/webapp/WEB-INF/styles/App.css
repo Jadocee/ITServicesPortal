@@ -4,13 +4,18 @@
   box-sizing: border-box;
 }
 
+:root {
+  color-scheme: light dark;
+  accent-color: magenta;
+}
+
 html {
   -moz-tab-size: 4;
   tab-size: 4;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
-  background: hsl(216 28% 7%);
-  color: #fff;
+  /*background: hsl(216 28% 7%);*/
+  /*color: #fff;*/
 }
 
 body {
