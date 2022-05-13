@@ -33,7 +33,7 @@ build/
 .vscode/
 
 # Project exclude paths
-/src/main/webapp/WEB-INF/scripts/test.js
+/src/main/webapp/WEB-INF/scripts/background.js
 
 node_modules
 

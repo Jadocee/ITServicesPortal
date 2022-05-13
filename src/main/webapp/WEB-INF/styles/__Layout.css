@@ -26,7 +26,7 @@ main {
   gap: 0.5em;
   align-items: center;
   justify-content: flex-start;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 48px;
   overflow-y: auto;
 }
 
@@ -59,10 +59,20 @@ main {
 }
 
 .nav-menu-container {
-  min-width: 10rem;
+  position: fixed;
+  min-width: 48px;
+  width: 48px;
   background: hsl(215 21% 11%);
   padding: 1rem 0.5rem;
   left: 0;
+  bottom: 0;
+  top: 4rem;
+  transition: width 600ms ease-in-out;
+  max-width: 15rem;
+}
+
+.nav-menu-container:hover {
+  width: 24%;
 }
 
 .nav-menu {
@@ -86,10 +96,13 @@ main {
   background-color: transparent;
   transition: background-color 400ms ease-in-out;
   padding: 0.5em 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
   font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .nav-menu-button:hover {
