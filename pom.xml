@@ -80,6 +80,10 @@
       <artifactId>spring-jdbc</artifactId>
       <groupId>org.springframework</groupId>
     </dependency>
+    <dependency>
+      <artifactId>spring-data-jdbc</artifactId>
+      <groupId>org.springframework.data</groupId>
+    </dependency>
 
 
   </dependencies>
