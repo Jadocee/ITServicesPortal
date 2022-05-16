@@ -1,5 +1,6 @@
 package com.spacejaam.itservicesportal.config;
 
+import com.spacejaam.itservicesportal.service.ClientDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,34 +9,32 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-    private final DataSource dataSource;
+    //    private final DataSource dataSource;
     @Resource
-    private UserDetailsService userDetailsService;
+    private final ClientDetailService clientDetailService;
 
     @Autowired
-    public SecurityConfig(PasswordEncoder passwordEncoder, DataSource dataSource) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, ClientDetailService clientDetailService) {
         this.passwordEncoder = passwordEncoder;
-        this.dataSource = dataSource;
+//        this.dataSource = dataSource;
+        this.clientDetailService = clientDetailService;
     }
 
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(clientDetailService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
@@ -72,26 +71,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //              .defaultSuccessUrl("/")
 //              .permitAll();
 //        })
-        http.csrf(AbstractHttpConfigurer::disable).authorizeRequests(expressionInterceptUrlRegistry -> {
-            expressionInterceptUrlRegistry
-                    .antMatchers("/", "/$styles/**.css", "/$scripts/**.js", "/$assets/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated();
-        }).formLogin(httpSecurityFormLoginConfigurer -> {
-            httpSecurityFormLoginConfigurer
-                    .loginPage("/login")
-                    .permitAll()
-                    .defaultSuccessUrl("/", true);
-        }).logout(httpSecurityLogoutConfigurer -> {
-            httpSecurityLogoutConfigurer
-                    .logoutUrl("/logout")
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/login");
-        });
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/login", "/error", "/$styles/**.css", "/$scripts/**.js", "/$assets/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/", true)
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login");
+//        http.csrf(AbstractHttpConfigurer::disable).authorizeRequests(expressionInterceptUrlRegistry -> {
+//            expressionInterceptUrlRegistry
+//                    .antMatchers("/", "/$styles/**.css", "/$scripts/**.js", "/$assets/**")
+//                    .permitAll()
+//                    .anyRequest()
+//                    .authenticated();
+//        }).formLogin(httpSecurityFormLoginConfigurer -> {
+//            httpSecurityFormLoginConfigurer
+//                    .loginPage("/login").permitAll()
+//                    .usernameParameter("username")
+//                    .passwordParameter("password")
+//                    .defaultSuccessUrl("/", true);
+//        }).logout(httpSecurityLogoutConfigurer -> {
+//            httpSecurityLogoutConfigurer
+//                    .logoutUrl("/logout")
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+//                    .clearAuthentication(true)
+//                    .invalidateHttpSession(true)
+//                    .deleteCookies("JSESSIONID")
+//                    .logoutSuccessUrl("/login");
+//        });
 //        .logout(LogoutConfigurer::permitAll);
     }
 

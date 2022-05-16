@@ -7,11 +7,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 public class ApplicationConfig {
 
-  @Bean
-  public InternalResourceViewResolver viewResolver() {
-    final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-    viewResolver.setPrefix("/WEB-INF/pages/");
-    viewResolver.setSuffix(".jsp");
-    return viewResolver;
-  }
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/pages/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
 }

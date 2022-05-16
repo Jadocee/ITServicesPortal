@@ -16,11 +16,11 @@
     </jsp:attribute>
 
     <jsp:body>
-        <form id="LoginForm" method="post" action="./login">
+        <form id="LoginForm" method="post" action="${pageContext.request.contextPath}/login">
             <h1>Please enter your credentials</h1>
             <div class="LoginForm__inputs-wrapper">
                 <div class="input-container">
-                    <input type="email" id="emailInput" name="email" placeholder=" " required>
+                    <input type="email" id="emailInput" name="username" placeholder=" " required>
                     <label for="emailInput">Email</label>
                 </div>
                 <div class="input-container">

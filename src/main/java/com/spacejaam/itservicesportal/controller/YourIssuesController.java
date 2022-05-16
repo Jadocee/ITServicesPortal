@@ -12,9 +12,9 @@ public class YourIssuesController {
 
     @GetMapping(value = "/yourissues")
     public ModelAndView yourIssues() {
-        final ModelAndView modelAndView = new ModelAndView("__Layout");
-        modelAndView.addObject("pageTitle", "Your Issues");
-        modelAndView.addObject("pageName", "yourissues");
+        final ModelAndView modelAndView = new ModelAndView("yourissues");
+//        modelAndView.addObject("pageTitle", "Your Issues");
+//        modelAndView.addObject("pageName", "yourissues");
         return modelAndView;
     }
 }

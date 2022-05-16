@@ -12,12 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/")
 public class IndexController {
 
-  @GetMapping(value = "/")
-  public ModelAndView index() {
+    @GetMapping(value = "/")
+    public ModelAndView index() {
 //    ModelAndView modelAndView = new ModelAndView("__Layout");
-      ModelAndView modelAndView = new ModelAndView("index");
-      modelAndView.addObject("pageTitle", "Home");
+        ModelAndView modelAndView = new ModelAndView("index");
+//      modelAndView.addObject("pageTitle", "Home");
 //    modelAndView.addObject("pageName", "index");
-      return modelAndView;
-  }
+        return modelAndView;
+    }
 }

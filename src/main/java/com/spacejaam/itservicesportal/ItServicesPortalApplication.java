@@ -9,8 +9,8 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 @EnableJdbcRepositories(basePackages = "com.spacejaam.itservicesportal")
 public class ItServicesPortalApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(ItServicesPortalApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(ItServicesPortalApplication.class, args);
+    }
 
 }

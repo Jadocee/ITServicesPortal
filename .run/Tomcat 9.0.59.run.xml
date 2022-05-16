@@ -171,7 +171,7 @@
                 <option name="VM_PARAMETERS" value=""/>
                 <option name="PROGRAM_PARAMETERS" value=""/>
             </SHUTDOWN>
-    </ConfigurationWrapper>
+        </ConfigurationWrapper>
         <method v="2">
             <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true"
                     CONFIG_PATH="$PROJECT_DIR$/tsconfig.json"/>
@@ -180,5 +180,5 @@
                 <artifact name="ITServicesPortal:war"/>
             </option>
         </method>
-  </configuration>
+    </configuration>
 </component>

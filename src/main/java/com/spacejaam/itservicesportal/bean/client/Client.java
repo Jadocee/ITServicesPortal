@@ -3,34 +3,52 @@ package com.spacejaam.itservicesportal.bean.client;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 
 //@Component("clientBean")
 //@Scope(value = "session")
-@Table(name = "clients")
-public class Client implements UserDetails {
+@Table(name = "Client")
+public class Client {
 
-
-    @Column("firstName")
-    private final String firstName;
-    @Column("lastName")
-    private final String lastName;
-    @Column("email")
-    private final String email;
-    @Column("password")
-    private final String password;
-    @Column("contactNum")
-    private final String contactNum;
-    @Column("role")
-    private final String role;
     @Id
-    @Column("ID")
     private Long id;
+    @Column("firstName")
+    private String firstName;
+    @Column("lastName")
+    private String lastName;
+    @Column("email")
+    private String email;
+    @Column("password")
+    private String password;
+    @Column("contactNum")
+    private String contactNum;
+    @Column(value = "role")
+    private String role;
+    //    private Set<? extends GrantedAuthority> grantedAuthorities;
+    @Column(value = "isAccountNonExpired")
+    private String isAccountNonExpired;
+    @Column(value = "isAccountNonLocked")
+    private String isAccountNonLocked;
+    @Column(value = "isCredentialsNonExpired")
+    private String isCredentialsNonExpired;
+    @Column(value = "isEnabled")
+    private String isEnabled;
 
-    public Client(Long id, String firstName, String lastName, String email, String password, String contactNum, String role) {
+    public Client() {
+    }
+
+    public Client(
+            Long id,
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String contactNum,
+            String role,
+            String isAccountNonExpired,
+            String isAccountNonLocked,
+            String isCredentialsNonExpired,
+            String isEnabled
+    ) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,74 +56,118 @@ public class Client implements UserDetails {
         this.password = password;
         this.contactNum = contactNum;
         this.role = role;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isEnabled = isEnabled;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+//        this.grantedAuthorities = new HashSet<>();
     }
 
-
-    public String getRoleLabel() {
-        return this.role;
+    public Client(
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String contactNum,
+            String role
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.contactNum = contactNum;
+        this.role = role;
+        this.isAccountNonExpired = "TRUE";
+        this.isAccountNonLocked = "TRUE";
+        this.isEnabled = "TRUE";
+        this.isCredentialsNonExpired = "TRUE";
     }
 
     public Long getId() {
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getContactNum() {
         return contactNum;
     }
 
-
-    public String getFirstName() {
-        return firstName;
+    public void setContactNum(String contactNum) {
+        this.contactNum = contactNum;
     }
-
 
     public String getRole() {
         return role;
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public String getIsAccountNonExpired() {
+        return isAccountNonExpired;
     }
 
-    @Override
-    public String getUsername() {
-        return this.email;
+    public void setIsAccountNonExpired(String isAccountNonExpired) {
+        this.isAccountNonExpired = isAccountNonExpired;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
+    public String getIsAccountNonLocked() {
+        return isAccountNonLocked;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
+    public void setIsAccountNonLocked(String isAccountNonLocked) {
+        this.isAccountNonLocked = isAccountNonLocked;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
+    public String getIsCredentialsNonExpired() {
+        return isCredentialsNonExpired;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return false;
+    public void setIsCredentialsNonExpired(String isCredentialsNonExpired) {
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
     }
 
+    public String getIsEnabled() {
+        return isEnabled;
+    }
 
+    public void setIsEnabled(String isEnabled) {
+        this.isEnabled = isEnabled;
+    }
 }
