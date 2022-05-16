@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository(value = "clientRepository")
 public interface ClientRepository extends CrudRepository<Client, Long> {
-
-  @Query("select * from clients where lastName = :email")
-  Client getClientByEmail(@Param("email") String _email);
+  @Query(value = "SELECT c.ID, c.email, c.password, c.firstName, c.lastName, c.contactNum, c.role FROM clients c WHERE c.email = :email")
+  Client getClientByEmail(@Param("email") String email);
 }

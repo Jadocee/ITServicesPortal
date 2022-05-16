@@ -14,9 +14,10 @@ public class IndexController {
 
   @GetMapping(value = "/")
   public ModelAndView index() {
-    ModelAndView modelAndView = new ModelAndView("__Layout");
-    modelAndView.addObject("pageTitle", "Home");
-    modelAndView.addObject("pageName", "index");
-    return modelAndView;
+//    ModelAndView modelAndView = new ModelAndView("__Layout");
+      ModelAndView modelAndView = new ModelAndView("index");
+      modelAndView.addObject("pageTitle", "Home");
+//    modelAndView.addObject("pageName", "index");
+      return modelAndView;
   }
 }

@@ -1,119 +1,111 @@
 package com.spacejaam.itservicesportal.bean.client;
 
-import javax.annotation.PostConstruct;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 //@Component("clientBean")
 //@Scope(value = "session")
 @Table(name = "clients")
-public class Client {
+public class Client implements UserDetails {
 
-  @Id
-  private Long id;
-  //  @Version
-//  private Integer version;
-  @Column("firstName")
-  private String firstName;
-  @Column("lastName")
-  private String lastName;
-  @Column("email")
-  private String email;
 
-  @Column("password")
-  private String password;
-  @Column("contactNum")
-  private String contactNum;
-  private Role role;
+    @Column("firstName")
+    private final String firstName;
+    @Column("lastName")
+    private final String lastName;
+    @Column("email")
+    private final String email;
+    @Column("password")
+    private final String password;
+    @Column("contactNum")
+    private final String contactNum;
+    @Column("role")
+    private final String role;
+    @Id
+    @Column("ID")
+    private Long id;
 
-  public Client() {
-  }
+    public Client(Long id, String firstName, String lastName, String email, String password, String contactNum, String role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.contactNum = contactNum;
+        this.role = role;
+    }
 
-  public Client(String firstName, String lastName, String email, String contactNum) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.contactNum = contactNum;
-    this.role = Role.USER;
-  }
 
-  public Client(String firstName, String lastName, String email, String contactNum, Role role) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.contactNum = contactNum;
-    this.role = role;
-  }
+    public String getRoleLabel() {
+        return this.role;
+    }
 
-  @PostConstruct
-  public void init(String firstName, String lastName, String email, String contactNum, Role role) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.contactNum = contactNum;
-    this.role = role;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  @Column("role")
-  public String getRoleLabel() {
-    return this.role.getLabel();
-  }
+    private void setId(Long id) {
+        this.id = id;
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getContactNum() {
+        return contactNum;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getRole() {
+        return role;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-  public String getContactNum() {
-    return contactNum;
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
-  public void setContactNum(String contactNum) {
-    this.contactNum = contactNum;
-  }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
 
-  public Role getRole() {
-    return role;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
 
-  public void setRole(Role role) {
-    this.role = role;
-  }
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
 
 }

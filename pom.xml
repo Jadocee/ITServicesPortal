@@ -97,6 +97,10 @@
       <artifactId>spring-boot-starter-security</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
     <!--    <dependency>-->
     <!--      <groupId>com.github.ydespreaux.spring.data</groupId>-->
     <!--      <artifactId>spring-data-jpa</artifactId>-->
