@@ -35,9 +35,6 @@ public class ClientDetailService implements UserDetailsService {
         if (client == null) {
             throw new UsernameNotFoundException(username);
         }
-        System.out.println(client.getEmail());
-        ClientPrinciple clientPrinciple = new ClientPrinciple(client);
-        System.out.println(clientPrinciple.isAccountNonExpired());
-        return clientPrinciple;
+        return new ClientPrinciple(client);
     }
 }

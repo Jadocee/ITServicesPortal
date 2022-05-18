@@ -16,7 +16,7 @@
     </jsp:attribute>
 
     <jsp:body>
-        <form id="LoginForm" method="post" action="<spring:url value="${pageContext.request.contextPath}/login"/>">
+        <form id="LoginForm" method="post" action="<spring:url value="/login"/>">
             <h1>Please enter your credentials</h1>
             <div class="LoginForm__inputs-wrapper">
                 <div class="input-container">

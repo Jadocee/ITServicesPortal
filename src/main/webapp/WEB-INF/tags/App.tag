@@ -1,6 +1,7 @@
 <%@ tag description="layout" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>--%>
 <%@ attribute name="title" required="true" %>
 <%@ attribute name="head" required="false" fragment="true" %>
 <!DOCTYPE html>
@@ -62,7 +63,7 @@
             </button>
         </li>
 
-        <c:if test="${client != null}">
+        <c:if test="${Sprin != null}">
             <c:choose>
                 <c:when test="${client.role.label.equals('User')}">
                     <li>
@@ -87,8 +88,12 @@
             </c:choose>
         </c:if>
 
+        <hr class="bottom-rule">
+
+
         <c:choose>
-            <c:when test="${client == null}">
+            <c:when test="${sessionScope.get('userData') == null}">
+
                 <li class="list-item-bottom">
                     <button
                             id="LoginButton"
@@ -109,11 +114,11 @@
                             id="LogoutButton"
                             type="button"
                             class="nav-menu-button"
+                            aria-label="Logout"
+                            onclick="window.location.href='<spring:url value="/logout"/>'"
                     >
                         <span class="material-symbols-rounded">logout</span>
                         <span class="nav-menu-button__label">Logout</span>
-
-
                     </button>
                 </li>
             </c:otherwise>

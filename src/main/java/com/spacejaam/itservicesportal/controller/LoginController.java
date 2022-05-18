@@ -29,8 +29,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public ModelAndView getLoginView() {
         final ModelAndView modelAndView = new ModelAndView("login");
-//    clientRepository.save(new Client("dev", "dev", "dev@spacejaam.com", passwordEncoder.encode("password"), "000000", "User"));
-//    System.out.println(clientRepository.getClientByEmail("dev@spacejaam.com").getFirstName());
+//        clientRepository.save(new Client("dev", "dev", "dev@spacejaam.com", passwordEncoder.encode("password"), "0000000000", Role.DEV.name()));
         return modelAndView;
     }
 
