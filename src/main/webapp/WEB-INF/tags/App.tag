@@ -43,7 +43,7 @@
                     class="nav-menu-button"
                     aria-label="Return To Homepage"
                     tabindex="0"
-                    onclick="window.location.href='./'"
+                    onclick="window.location.href='<spring:url value="/"/>'"
             >
                 <span class="material-symbols-rounded">home</span>
                 <span class="nav-menu-button__label">Home</span>
@@ -89,7 +89,7 @@
 
         <c:choose>
             <c:when test="${client == null}">
-                <li>
+                <li class="list-item-bottom">
                     <button
                             id="LoginButton"
                             type="button"
@@ -104,7 +104,7 @@
             </c:when>
 
             <c:otherwise>
-                <li>
+                <li class="list-item-bottom">
                     <button
                             id="LogoutButton"
                             type="button"

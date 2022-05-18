@@ -16,15 +16,15 @@
     </jsp:attribute>
 
     <jsp:body>
-        <form id="LoginForm" method="post" action="${pageContext.request.contextPath}/login">
+        <form id="LoginForm" method="post" action="<spring:url value="${pageContext.request.contextPath}/login"/>">
             <h1>Please enter your credentials</h1>
             <div class="LoginForm__inputs-wrapper">
                 <div class="input-container">
-                    <input type="email" id="emailInput" name="username" placeholder=" " required>
+                    <input type="email" id="emailInput" name="email" maxlength="319" autofocus placeholder=" " required>
                     <label for="emailInput">Email</label>
                 </div>
                 <div class="input-container">
-                    <input type="password" id="passwordInput" name="password" placeholder=" " required>
+                    <input type="password" id="passwordInput" name="password" maxlength="30" placeholder=" " required>
                     <label for="passwordInput">Password</label>
                 </div>
             </div>

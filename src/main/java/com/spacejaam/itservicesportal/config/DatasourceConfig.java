@@ -22,7 +22,7 @@ public class DatasourceConfig {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         dataSource.setUrl(
-                "jdbc:sqlserver://it-services-portal.database.windows.net;database=ITServicesPortal;encrypt=true;loginTimeout=30;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;");
+                "jdbc:sqlserver://spacejaam-itservicesportal.database.windows.net;database=ITServicesPortal;encrypt=true;loginTimeout=30;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;");
         dataSource.setUsername("Finisher8510");
         dataSource.setPassword("8UKU^26hLeZz");
         return dataSource;

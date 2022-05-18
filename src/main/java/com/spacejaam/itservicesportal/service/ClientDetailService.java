@@ -31,14 +31,6 @@ public class ClientDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//    final Optional<Client> result = clientDataAccessService.findByUsername(username);
-//    if (result.isEmpty()) {
-//      throw new UsernameNotFoundException(username);
-//    }
-//
-//    final Client client = result.get();
-//    System.out.println(client.getUsername());
-//    return client;
         final Client client = clientRepository.getClientByEmail(username);
         if (client == null) {
             throw new UsernameNotFoundException(username);
@@ -47,12 +39,5 @@ public class ClientDetailService implements UserDetailsService {
         ClientPrinciple clientPrinciple = new ClientPrinciple(client);
         System.out.println(clientPrinciple.isAccountNonExpired());
         return clientPrinciple;
-
-//    return User.builder()
-//        .username(client.getUsername())
-//        .password(client.getPassword())
-//        .authorities("USER")
-//        .roles(Role.USER.toString())
-//        .build();
     }
 }

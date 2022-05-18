@@ -20,7 +20,7 @@ public class ReportController {
 
     @GetMapping("/report")
     public ModelAndView displayForm(Model model, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("__Layout");
+        ModelAndView modelAndView = new ModelAndView("issues");
         modelAndView.addObject("pageTitle", "Create Issue");
         modelAndView.addObject("pageName", "issueform");
         return modelAndView;
