@@ -29,7 +29,7 @@ public class ReportController {
 ////        }
 ////        model.addAttribute("issueTitle", issue.getTitle());
 ////        model.addAttribute("description", issue.getDescription());
-////        model.addAttribute("catagories", Issue.getCatagory());
+////        model.addAttribute("categories", Issue.getCategory());
 ////        return "index";
 //    }
 }
