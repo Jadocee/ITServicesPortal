@@ -22,6 +22,6 @@ public class IssueController {
     @PostMapping("/issues/new")
     @ResponseStatus(HttpStatus.CREATED)
     public void createIssue(@RequestBody Issue issue) {
-
+        
     }
 }
