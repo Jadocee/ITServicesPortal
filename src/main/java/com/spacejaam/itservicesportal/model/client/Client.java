@@ -1,38 +1,48 @@
 package com.spacejaam.itservicesportal.model.client;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
 //@Component("clientBean")
 //@Scope(value = "session")
-@Table(name = "Client")
 public class Client {
 
     @Id
     private Long id;
-    @Column("firstName")
     private String firstName;
-    @Column("lastName")
     private String lastName;
-    @Column("email")
     private String email;
-    @Column("password")
     private String password;
-    @Column("contactNum")
     private String contactNum;
-    @Column(value = "role")
-    private String role;
-    @Column(value = "isAccountNonExpired")
-    private String isAccountNonExpired;
-    @Column(value = "isAccountNonLocked")
-    private String isAccountNonLocked;
-    @Column(value = "isCredentialsNonExpired")
-    private String isCredentialsNonExpired;
-    @Column(value = "isEnabled")
-    private String isEnabled;
+    private Role role;
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
 
-    public Client() {
+    public Client(
+            Long id,
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String contactNum,
+            Role role,
+            boolean isAccountNonExpired,
+            boolean isAccountNonLocked,
+            boolean isCredentialsNonExpired,
+            boolean isEnabled
+    ) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.contactNum = contactNum;
+        this.role = role;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isEnabled = isEnabled;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
     }
 
     public Client(
@@ -41,7 +51,11 @@ public class Client {
             String email,
             String password,
             String contactNum,
-            String role
+            Role role,
+            boolean isAccountNonExpired,
+            boolean isAccountNonLocked,
+            boolean isCredentialsNonExpired,
+            boolean isEnabled
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,10 +63,10 @@ public class Client {
         this.password = password;
         this.contactNum = contactNum;
         this.role = role;
-        this.isAccountNonExpired = "TRUE";
-        this.isAccountNonLocked = "TRUE";
-        this.isEnabled = "TRUE";
-        this.isCredentialsNonExpired = "TRUE";
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isEnabled = isEnabled;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
     }
 
     public Long getId() {
@@ -103,43 +117,43 @@ public class Client {
         this.contactNum = contactNum;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public String getIsAccountNonExpired() {
+    public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
 
-    public void setIsAccountNonExpired(String isAccountNonExpired) {
-        this.isAccountNonExpired = isAccountNonExpired;
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
     }
 
-    public String getIsAccountNonLocked() {
+    public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
 
-    public void setIsAccountNonLocked(String isAccountNonLocked) {
-        this.isAccountNonLocked = isAccountNonLocked;
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
     }
 
-    public String getIsCredentialsNonExpired() {
+    public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
 
-    public void setIsCredentialsNonExpired(String isCredentialsNonExpired) {
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
     }
 
-    public String getIsEnabled() {
+    public boolean isEnabled() {
         return isEnabled;
     }
 
-    public void setIsEnabled(String isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

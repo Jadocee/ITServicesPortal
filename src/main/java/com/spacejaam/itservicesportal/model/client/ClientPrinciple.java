@@ -16,12 +16,13 @@ public class ClientPrinciple implements UserDetails {
     }
 
     public boolean hasRole(Role role) {
-        return role.name().equals(this.client.getRole());
+        return this.client.getRole().equals(role);
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Role.valueOf(this.client.getRole()).getGrantedAuthorities();
+        return this.client.getRole().authorities();
     }
 
     @Override
@@ -36,21 +37,21 @@ public class ClientPrinciple implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return Boolean.parseBoolean(this.client.getIsAccountNonExpired());
+        return this.client.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return Boolean.parseBoolean(this.client.getIsAccountNonLocked());
+        return this.client.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return Boolean.parseBoolean(this.client.getIsCredentialsNonExpired());
+        return this.client.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return Boolean.parseBoolean(this.client.getIsEnabled());
+        return this.client.isEnabled();
     }
 }

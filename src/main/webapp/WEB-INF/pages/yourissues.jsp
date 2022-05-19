@@ -16,9 +16,13 @@
     </jsp:attribute>
 
     <jsp:body>
-        <div>
+        <section>
             <h1>Your Issues</h1>
-        </div>
+
+            <div>
+                    <%--                <c:forEach var="i" begin="0" end="${}"--%>
+            </div>
+        </section>
     </jsp:body>
 </app:Layout>
 

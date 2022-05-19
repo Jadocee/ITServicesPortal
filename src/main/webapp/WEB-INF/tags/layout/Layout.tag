@@ -1,7 +1,7 @@
 <%@ tag description="layout" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>--%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ attribute name="title" required="true" %>
 <%@ attribute name="head" required="false" fragment="true" %>
 <!DOCTYPE html>
@@ -65,53 +65,54 @@
             </button>
         </li>
 
-        <c:if test="${sessionScope.isLoggedIn}">
-            <c:choose>
-                <c:when test="${sessionScope.isUSER}">
-                    <li>
-                        <button
-                                type="button"
-                                class="nav-menu-button"
-                                onclick="window.location.href='<spring:url value="/your-issues"/>'"
-                        >
-                            <span class="material-symbols-rounded">receipt_long</span>
-                            <span class="nav-menu-button__label">Your Issues</span>
-                        </button>
-                    </li>
+        <%--        <c:if test="${sessionScope.isLoggedIn}">--%>
 
-                    <li>
-                        <button id="CreateIssueBtn"
-                                type="button"
-                                class="nav-menu-button"
-                                aria-label="Create an issue"
-                                onclick="window.location.href='<spring:url value="/new-issue"/>'"
-                        >
-                            <span class="material-symbols-rounded">add_circle</span>
-                            <span class="nav-menu-button__label">Create Issue</span>
-                        </button>
-                    </li>
-                </c:when>
-                <c:when test="${sessionScope.isITSTAFF}">
-                    <li>
-                        <button id="ManagerBtn"
-                                type="button"
-                                class="nav-menu-button"
-                                aria-label="Issue Manager"
-                                onclick="window.location.href='<spring:url value="/tracker"/>'"
-                        >
-                            <span class="material-symbols-rounded">pending_actions</span>
-                            <span class="nav-menu-button__label">Track Issues</span>
-                        </button>
-                    </li>
-                </c:when>
-            </c:choose>
+        <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}">
+            <li>
+                <button id="ManagerBtn"
+                        type="button"
+                        class="nav-menu-button"
+                        aria-label="Issue Manager"
+                        onclick="window.location.href='<spring:url value="/tracker"/>'"
+                >
+                    <span class="material-symbols-rounded">pending_actions</span>
+                    <span class="nav-menu-button__label">Track Issues</span>
+                </button>
+            </li>
+
         </c:if>
+
+        <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}">
+            <li>
+                <button
+                        type="button"
+                        class="nav-menu-button"
+                        onclick="window.location.href='<spring:url value="/your-issues"/>'"
+                >
+                    <span class="material-symbols-rounded">receipt_long</span>
+                    <span class="nav-menu-button__label">Your Issues</span>
+                </button>
+            </li>
+
+            <li>
+                <button id="CreateIssueBtn"
+                        type="button"
+                        class="nav-menu-button"
+                        aria-label="Create an issue"
+                        onclick="window.location.href='<spring:url value="/new-issue"/>'"
+                >
+                    <span class="material-symbols-rounded">add_circle</span>
+                    <span class="nav-menu-button__label">Create Issue</span>
+                </button>
+            </li>
+        </c:if>
+        <%--        </c:if>--%>
 
         <hr class="bottom-rule">
 
         <c:choose>
             <c:when test="${!sessionScope.isLoggedIn}">
-                <div>User: <c:out value="${sessionScope.username}"/></div>
+                <div>Not signed in</div>
 
                 <li class="list-item-bottom">
                     <button
@@ -127,7 +128,8 @@
                 </li>
             </c:when>
             <c:otherwise>
-                <div>Not signed in</div>
+                <div>User: <c:out value="${sessionScope.username}"/></div>
+
 
                 <li class="list-item-bottom">
                     <button

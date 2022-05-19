@@ -1,14 +1,7 @@
 package com.spacejaam.itservicesportal.controller;
 
-import com.spacejaam.itservicesportal.repository.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -17,40 +10,25 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-    private final ClientRepository clientRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public LoginController(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
-        this.clientRepository = clientRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
     @GetMapping(value = "/login")
-    public ModelAndView getLoginView() {
-        final ModelAndView modelAndView = new ModelAndView("login");
-//        clientRepository.save(new Client("dev", "dev", "dev@spacejaam.com", passwordEncoder.encode("password"), "0000000000", Role.DEV.name()));
-        return modelAndView;
+    public String getLoginView() {
+        return "login";
     }
 
     @GetMapping(value = "/login?error")
     public ModelAndView getLoginViewWithError() {
         final ModelAndView modelAndView = new ModelAndView("login");
-
-
-//    modelAndView.addObject("pageTitle", "Login");
-//    modelAndView.addObject("pageName", "login");
+        // TODO handle login error
         return modelAndView;
     }
 
-    @PostMapping(value = "/register/submit")
+    /*@PostMapping(value = "/register/submit")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public String registerAccount(@RequestParam("firstName") String firstName,
+    public void registerAccount(@RequestParam("firstName") String firstName,
                                   @RequestParam("lastName") String lastName, @RequestParam("email") String email,
                                   @RequestParam("contactNum") String contactNum) {
-//    final Client newClient = new Client(firstName, lastName, email, password, contactNum);
-        return "/login";
-    }
+
+    }*/
 
 
 }

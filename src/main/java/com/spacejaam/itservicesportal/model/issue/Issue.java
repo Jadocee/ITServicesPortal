@@ -1,42 +1,49 @@
 package com.spacejaam.itservicesportal.model.issue;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
-import java.util.EnumSet;
+import java.util.Set;
 
-@Table(value = "Issue")
 public class Issue {
     @Id
-    @Column(value = "id")
     private Long id;
-    @Column(value = "title")
     private String title;
-    @Column(value = "desc")
     private String desc;
-    @Column(value = "category")
     private Category category;
-    @Column(value = "subcategory")
     private SubCategory subCategory;
-    @Column(value = "author")
-    private Long author;
-    @Column(value = "state")
+    private String author;
     private State state;
-    @Column(value = "tags")
-    private EnumSet<Tag> tags;
-    @Column(value = "date")
-    private Date reported;
+    private Set<Tag> tags;
+    private Date createdOn;
+
+    public Issue(Long id, String title, String desc, Category category, SubCategory subCategory, String author, State state, Date createdOn) {
+        this.id = id;
+        this.title = title;
+        this.desc = desc;
+        this.category = category;
+        this.subCategory = subCategory;
+        this.author = author;
+        this.state = state;
+        this.createdOn = createdOn;
+    }
 
     public Issue() {
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public Long getId() {
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,7 +51,7 @@ public class Issue {
         return title;
     }
 
-    private void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -52,7 +59,7 @@ public class Issue {
         return desc;
     }
 
-    private void setDesc(String desc) {
+    public void setDesc(String desc) {
         this.desc = desc;
     }
 
@@ -60,7 +67,7 @@ public class Issue {
         return category;
     }
 
-    private void setCategory(Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -68,15 +75,15 @@ public class Issue {
         return subCategory;
     }
 
-    private void setSubCategory(SubCategory subCategory) {
+    public void setSubCategory(SubCategory subCategory) {
         this.subCategory = subCategory;
     }
 
-    public Long getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    private void setAuthor(Long author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
@@ -84,31 +91,15 @@ public class Issue {
         return state;
     }
 
-    private void setState(State state) {
+    public void setState(State state) {
         this.state = state;
     }
 
-    public EnumSet<Tag> getTags() {
-        return tags;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    private void setTags(EnumSet<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public boolean addTag(Tag tag) {
-        return this.tags.add(tag);
-    }
-
-    public boolean removeTag(Tag tag) {
-        return this.tags.remove(tag);
-    }
-
-    public Date getReported() {
-        return reported;
-    }
-
-    private void setReported(Date reported) {
-        this.reported = reported;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 }
