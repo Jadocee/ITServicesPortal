@@ -1,13 +1,8 @@
 package com.spacejaam.itservicesportal.controller;
 
-import com.spacejaam.itservicesportal.bean.issue.Issue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -26,15 +21,15 @@ public class ReportController {
         return modelAndView;
     }
 
-    @PostMapping("/report/submit")
-    public String createIssue(@ModelAttribute("issue") Issue issue, BindingResult result,
-                              ModelMap model) {
-        if (result.hasErrors()) {
-            return "issueform";
-        }
-        model.addAttribute("issueTitle", Issue.getTitle());
-        model.addAttribute("description", Issue.getDescription());
-        model.addAttribute("categories", Issue.getCategory());
-        return "index";
-    }
+//    @PostMapping("/report/submit")
+//    public String createIssue(@ModelAttribute("issue") Issue issue, BindingResult result,
+//                              ModelMap model) {
+////        if (result.hasErrors()) {
+////            return "issueform";
+////        }
+////        model.addAttribute("issueTitle", issue.getTitle());
+////        model.addAttribute("description", issue.getDescription());
+////        model.addAttribute("catagories", Issue.getCatagory());
+////        return "index";
+//    }
 }

@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.bean.client;
+package com.spacejaam.itservicesportal.model.client;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +15,13 @@ public class ClientPrinciple implements UserDetails {
         this.client = client;
     }
 
+    public boolean hasRole(Role role) {
+        return role.name().equals(this.client.getRole());
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Role.valueOf(this.client.getRole()).getGrantedAuthorities();
     }
 
     @Override

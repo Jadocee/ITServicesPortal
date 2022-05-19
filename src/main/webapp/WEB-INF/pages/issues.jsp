@@ -7,13 +7,13 @@
 --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags/layout" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%--<c:set var="title" scope="page"/>--%>
 <%--<c:set var="content" scope="page"/>--%>
 
-<t:App title="${pageTitle}">
+<app:Layout title="${pageTitle}">
     <jsp:attribute name="head">
 
     </jsp:attribute>
@@ -22,4 +22,4 @@
 
 
     </jsp:body>
-</t:App>
+</app:Layout>

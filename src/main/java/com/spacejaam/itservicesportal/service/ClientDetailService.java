@@ -1,7 +1,7 @@
 package com.spacejaam.itservicesportal.service;
 
-import com.spacejaam.itservicesportal.bean.client.Client;
-import com.spacejaam.itservicesportal.bean.client.ClientPrinciple;
+import com.spacejaam.itservicesportal.model.client.Client;
+import com.spacejaam.itservicesportal.model.client.ClientPrinciple;
 import com.spacejaam.itservicesportal.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,19 +13,10 @@ import org.springframework.stereotype.Service;
 public class ClientDetailService implements UserDetailsService {
 
     private final ClientRepository clientRepository;
-//  private final ClientDataAccessService clientDataAccessService;
-//  private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public ClientDetailService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-//    this.clientDataAccessService = clientDataAccessService;
-//    this.passwordEncoder = passwordEncoder;
-    }
-
-
-    public void authenticate(String email, String password) {
-//    clientRepository.get
     }
 
 

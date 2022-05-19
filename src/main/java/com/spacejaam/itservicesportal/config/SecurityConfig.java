@@ -1,5 +1,6 @@
 package com.spacejaam.itservicesportal.config;
 
+import com.spacejaam.itservicesportal.model.client.Role;
 import com.spacejaam.itservicesportal.service.ClientDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -48,6 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf(AbstractHttpConfigurer::disable).authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
                         .antMatchers("/", "/login", "/error", "/$styles/**.css", "/$scripts/**.js", "/$assets/**").permitAll()
+                        .antMatchers("/your-issues", "/new-issue").hasRole(Role.USER.name())
+                        .antMatchers("/tracker").hasRole(Role.ITSTAFF.name())
+                        .antMatchers("/knowledge-base").hasAnyRole(Role.ITSTAFF.name(), Role.USER.name())
                         .anyRequest().authenticated()
                 ).formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login").permitAll()

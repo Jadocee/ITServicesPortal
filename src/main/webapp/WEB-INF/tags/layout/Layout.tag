@@ -11,8 +11,8 @@
     <meta name="description" content=""/>
     <link fetchpriority="low" rel="icon" href="<spring:url value="$assets/favicon.png"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="$styles/App.css"/>"/>
-    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="$styles/__Layout.css"/>"/>
+    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="$styles/app.css"/>"/>
+    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="$styles/layout.css"/>"/>
     <script type="text/javascript"
             src="<spring:url value="$scripts/background.js" context="module"/>" defer></script>
     <link rel="stylesheet"
@@ -57,42 +57,61 @@
                     id="KbButton"
                     type="button"
                     class="nav-menu-button"
+                    aria-label="Knowledge-base"
+                    onclick="window.location.href='<spring:url value="/knowledge-base"/>'"
             >
                 <span class="material-symbols-rounded">inventory_2</span>
                 <span class="nav-menu-button__label">Knowledge Base</span>
             </button>
         </li>
 
-        <c:if test="${Sprin != null}">
+        <c:if test="${sessionScope.isLoggedIn}">
             <c:choose>
-                <c:when test="${client.role.label.equals('User')}">
+                <c:when test="${sessionScope.isUSER}">
                     <li>
-                        <button type="button" class="nav-menu-button" onclick="window.location.href='./yourissues'">
-                            Your Issues
+                        <button
+                                type="button"
+                                class="nav-menu-button"
+                                onclick="window.location.href='<spring:url value="/your-issues"/>'"
+                        >
+                            <span class="material-symbols-rounded">receipt_long</span>
+                            <span class="nav-menu-button__label">Your Issues</span>
                         </button>
                     </li>
 
                     <li>
-                        <button type="button" class="nav-menu-button">
-                            Create An Issue
+                        <button id="CreateIssueBtn"
+                                type="button"
+                                class="nav-menu-button"
+                                aria-label="Create an issue"
+                                onclick="window.location.href='<spring:url value="/new-issue"/>'"
+                        >
+                            <span class="material-symbols-rounded">add_circle</span>
+                            <span class="nav-menu-button__label">Create Issue</span>
                         </button>
                     </li>
                 </c:when>
-                <c:otherwise>
+                <c:when test="${sessionScope.isITSTAFF}">
                     <li>
-                        <button type="button" class="nav-menu-button">
-                            Issue Manager
+                        <button id="ManagerBtn"
+                                type="button"
+                                class="nav-menu-button"
+                                aria-label="Issue Manager"
+                                onclick="window.location.href='<spring:url value="/tracker"/>'"
+                        >
+                            <span class="material-symbols-rounded">pending_actions</span>
+                            <span class="nav-menu-button__label">Track Issues</span>
                         </button>
                     </li>
-                </c:otherwise>
+                </c:when>
             </c:choose>
         </c:if>
 
         <hr class="bottom-rule">
 
-
         <c:choose>
-            <c:when test="${sessionScope.get('userData') == null}">
+            <c:when test="${!sessionScope.isLoggedIn}">
+                <div>User: <c:out value="${sessionScope.username}"/></div>
 
                 <li class="list-item-bottom">
                     <button
@@ -100,15 +119,16 @@
                             type="button"
                             class="nav-menu-button"
                             aria-label="Login"
+                            onclick="window.location.href='<spring:url value="/login"/>'"
                     >
                         <span class="material-symbols-rounded">login</span>
                         <span class="nav-menu-button__label">Login</span>
-
                     </button>
                 </li>
             </c:when>
-
             <c:otherwise>
+                <div>Not signed in</div>
+
                 <li class="list-item-bottom">
                     <button
                             id="LogoutButton"

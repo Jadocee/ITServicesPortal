@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.bean.client;
+package com.spacejaam.itservicesportal.model.client;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -23,7 +23,6 @@ public class Client {
     private String contactNum;
     @Column(value = "role")
     private String role;
-    //    private Set<? extends GrantedAuthority> grantedAuthorities;
     @Column(value = "isAccountNonExpired")
     private String isAccountNonExpired;
     @Column(value = "isAccountNonLocked")
@@ -34,33 +33,6 @@ public class Client {
     private String isEnabled;
 
     public Client() {
-    }
-
-    public Client(
-            Long id,
-            String firstName,
-            String lastName,
-            String email,
-            String password,
-            String contactNum,
-            String role,
-            String isAccountNonExpired,
-            String isAccountNonLocked,
-            String isCredentialsNonExpired,
-            String isEnabled
-    ) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.contactNum = contactNum;
-        this.role = role;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isEnabled = isEnabled;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-//        this.grantedAuthorities = new HashSet<>();
     }
 
     public Client(

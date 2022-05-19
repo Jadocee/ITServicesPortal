@@ -6,11 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags/layout" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
-<t:App title="Your Issues">
+<app:Layout title="Your Issues">
     <jsp:attribute name="head">
 
     </jsp:attribute>
@@ -20,5 +20,5 @@
             <h1>Your Issues</h1>
         </div>
     </jsp:body>
-</t:App>
+</app:Layout>
 

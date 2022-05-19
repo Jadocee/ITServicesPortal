@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.bean.issue;
+package com.spacejaam.itservicesportal.model.issue;
 
 /**
  *
@@ -10,5 +10,10 @@ public enum State {
 
     State(String label) {
         this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return this.label;
     }
 }
