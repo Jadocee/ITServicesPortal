@@ -9,12 +9,10 @@
 <head>
     <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
     <meta name="description" content=""/>
-    <link fetchpriority="low" rel="icon" href="<spring:url value="$assets/favicon.png"/>"/>
+    <link fetchpriority="low" rel="icon" href="<spring:url value="/$assets/favicon.png"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="$styles/app.css"/>"/>
-    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="$styles/layout.css"/>"/>
-    <script type="text/javascript"
-            src="<spring:url value="$scripts/background.js" context="module"/>" defer></script>
+    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="/$styles/app.css"/>"/>
+    <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="/$styles/layout.css"/>"/>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <jsp:invoke fragment="head"/>
@@ -52,59 +50,63 @@
             </button>
         </li>
 
-        <li>
-            <button
-                    id="KbButton"
-                    type="button"
-                    class="nav-menu-button"
-                    aria-label="Knowledge-base"
-                    onclick="window.location.href='<spring:url value="/knowledge-base"/>'"
-            >
-                <span class="material-symbols-rounded">inventory_2</span>
-                <span class="nav-menu-button__label">Knowledge Base</span>
-            </button>
-        </li>
+        <c:if test="${sessionScope.isLoggedIn}">
 
-        <%--        <c:if test="${sessionScope.isLoggedIn}">--%>
-
-        <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}">
-            <li>
-                <button id="ManagerBtn"
-                        type="button"
-                        class="nav-menu-button"
-                        aria-label="Issue Manager"
-                        onclick="window.location.href='<spring:url value="/tracker"/>'"
-                >
-                    <span class="material-symbols-rounded">pending_actions</span>
-                    <span class="nav-menu-button__label">Track Issues</span>
-                </button>
-            </li>
-
-        </c:if>
-
-        <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}">
             <li>
                 <button
+                        id="KbButton"
                         type="button"
                         class="nav-menu-button"
-                        onclick="window.location.href='<spring:url value="/your-issues"/>'"
+                        aria-label="Knowledge-base"
+                        onclick="window.location.href='<spring:url value="/knowledge-base"/>'"
                 >
-                    <span class="material-symbols-rounded">receipt_long</span>
-                    <span class="nav-menu-button__label">Your Issues</span>
+                    <span class="material-symbols-rounded">inventory_2</span>
+                    <span class="nav-menu-button__label">Knowledge Base</span>
                 </button>
             </li>
 
-            <li>
-                <button id="CreateIssueBtn"
-                        type="button"
-                        class="nav-menu-button"
-                        aria-label="Create an issue"
-                        onclick="window.location.href='<spring:url value="/new-issue"/>'"
-                >
-                    <span class="material-symbols-rounded">add_circle</span>
-                    <span class="nav-menu-button__label">Create Issue</span>
-                </button>
-            </li>
+            <%--        <c:if test="${sessionScope.isLoggedIn}">--%>
+
+            <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}">
+                <li>
+                    <button id="ManagerBtn"
+                            type="button"
+                            class="nav-menu-button"
+                            aria-label="Issue Manager"
+                            onclick="window.location.href='<spring:url value="/tracker"/>'"
+                    >
+                        <span class="material-symbols-rounded">pending_actions</span>
+                        <span class="nav-menu-button__label">Track Issues</span>
+                    </button>
+                </li>
+
+            </c:if>
+
+            <c:if test="${sessionScope.authorities.contains('ROLE_USER')}">
+                <li>
+                    <button
+                            type="button"
+                            class="nav-menu-button"
+                            onclick="window.location.href='<spring:url value="/your-issues"/>'"
+                    >
+                        <span class="material-symbols-rounded">receipt_long</span>
+                        <span class="nav-menu-button__label">Your Issues</span>
+                    </button>
+                </li>
+
+                <li>
+                    <button id="CreateIssueBtn"
+                            type="button"
+                            class="nav-menu-button"
+                            aria-label="Create an issue"
+                            onclick="window.location.href='<spring:url value="/issues/new"/>'"
+                    >
+                        <span class="material-symbols-rounded">add_circle</span>
+                        <span class="nav-menu-button__label">Create Issue</span>
+                    </button>
+                </li>
+            </c:if>
+
         </c:if>
         <%--        </c:if>--%>
 

@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf(AbstractHttpConfigurer::disable).authorizeRequests(expressionInterceptUrlRegistry -> expressionInterceptUrlRegistry
                         .antMatchers("/", "/login", "/error", "/$styles/**.css", "/$scripts/**.js", "/$assets/**").permitAll()
-                        .antMatchers("/your-issues", "/new-issue").hasRole(Role.USER.name())
+                        .antMatchers("/your-issues", "/issues/new").hasRole(Role.USER.name())
                         .antMatchers("/tracker").hasRole(Role.ITSTAFF.name())
                         .antMatchers("/knowledge-base").hasAnyRole(Role.ITSTAFF.name(), Role.USER.name())
                         .anyRequest().authenticated()

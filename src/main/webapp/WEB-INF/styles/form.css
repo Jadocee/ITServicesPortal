@@ -1,0 +1,102 @@
+/*input:invalid {*/
+/*  background-color: hsl(0 100% 93%);*/
+/*  border-color: hsl(7 89% 60%);*/
+/*}*/
+
+label {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.025em;
+}
+
+input,
+textarea {
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: inherit;
+    border: 2px solid;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    transition: background-color 400ms ease-in-out;
+    width: 100%;
+}
+
+textarea {
+    resize: vertical;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 80%;
+    max-width: 30rem;
+}
+
+form > h1 {
+    margin: 0;
+}
+
+form .input-container {
+    position: relative;
+}
+
+form .input-container > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    text-align: center;
+    color: #000;
+}
+
+form .input-container > input,
+form .input-container > textarea {
+    padding: 1rem 0.75rem;
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #fff;
+    color: #000;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-right: 0.375rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+form .input-container > input:not(:placeholder-shown),
+form .input-container > input:focus {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+form .input-container > input:not(:placeholder-shown) ~ label,
+form .input-container > input:focus ~ label {
+    opacity: 0.65;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+form .input-container:focus-within {
+    z-index: 2;
+}
+
+input:focus:invalid {
+    outline: none;
+}
+
+form > button[type="submit"] {
+    width: 100%;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    min-height: 40px;
+}

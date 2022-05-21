@@ -13,15 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/issues")
 public class IssueController {
 
-    @GetMapping("/issues/new")
+    @GetMapping("/new")
     public ModelAndView displayForm() {
         ModelAndView modelAndView = new ModelAndView("createissue");
         return modelAndView;
     }
 
-    @PostMapping("/issues/new")
+    @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public void createIssue(@RequestBody Issue issue) {
-        
+
     }
 }

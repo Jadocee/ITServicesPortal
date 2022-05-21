@@ -17,15 +17,17 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("$scripts/**")
-                .addResourceLocations("/WEB-INF/scripts/")
+                .addResourceLocations("/WEB-INF/scripts/", "../WEB-INF/scripts/")
                 .setCachePeriod(31556926);
         registry
                 .addResourceHandler("$styles/**")
-                .addResourceLocations("/WEB-INF/styles/")
+                .addResourceLocations("/WEB-INF/styles/", "../WEB-INF/styles/", "")
                 .setCachePeriod(31556926);
         registry
                 .addResourceHandler("$assets/**")
-                .addResourceLocations("/WEB-INF/assets/")
+                .addResourceLocations("/WEB-INF/assets/", "../WEB-INF/assets/")
                 .setCachePeriod(31556926);
     }
 }
+
+

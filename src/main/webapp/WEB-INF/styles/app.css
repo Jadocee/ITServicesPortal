@@ -172,34 +172,6 @@ summary {
     display: list-item;
 }
 
-label {
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.025em;
-}
-
-input {
-    -webkit-appearance: none;
-    appearance: none;
-    font-family: inherit;
-    border: 2px solid;
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 1rem;
-    transition: background-color 400ms ease-in-out;
-}
-
-/*input:invalid {*/
-/*  background-color: hsl(0 100% 93%);*/
-/*  border-color: hsl(7 89% 60%);*/
-/*}*/
-
-input:focus:invalid {
-    outline: none;
-}
-
-
 @media (prefers-color-scheme: dark) {
     html {
         color: #fff;

@@ -12,26 +12,114 @@
 
 <app:Layout title="Login">
     <jsp:attribute name="head">
-        <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/createissue.css"/>"/>
+        <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/form.css"/>"/>
+        <%--        <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/createissue.css"/>"/>--%>
+        <script type="text/javascript">
+            let lastCategory = undefined;
+            const subCategories = {
+                "Network": ["Can't Connect", "Speed", "Constant dropouts"],
+                "Software": ["Slow to load", "Won't load at all"],
+                "Hardware": ["Computer won't turn on", "Computer \"Blue screens\"", "Disk Drive", "Peripherals"],
+                "Email": ["Can't send", "Can't receive", "SPAM/Phishing"],
+                "Account": ["Password reset", "Wrong details"]
+            };
+
+            window.onload = async () => {
+                document.querySelector("#categorySelect").addEventListener("change", async (ev) => {
+                    changeSubCategoryOptions(ev.currentTarget);
+                }, false);
+            }
+
+            function changeSubCategoryOptions(baseCategory) {
+                const subCategorySelect = document.querySelector("#subcategorySelect");
+                removeChildren(subCategorySelect);
+                this.subCategories[baseCategory.value].forEach(subCategory => {
+                    const option = document.createElement("option");
+                    option.setAttribute("value", subCategory);
+                    option.textContent = subCategory;
+                    subCategorySelect.appendChild(option);
+                });
+                subCategorySelect.removeAttribute("disabled");
+                subCategorySelect.setAttribute("aria-disabled", "false");
+            }
+
+            function removeChildren(element) {
+                while (element.hasChildNodes()) {
+                    element.firstChild.remove();
+                }
+            }
+        </script>
+        <style>
+            .categories-select-container {
+                display: flex;
+                flex-direction: row;
+            }
+        </style>
     </jsp:attribute>
 
     <jsp:body>
-        <form id="CreateIssueForm" method="post" action="<spring:url value="/login"/>">
-            <h1>Please enter your credentials</h1>
-            <div class="LoginForm__inputs-wrapper">
-                <div class="input-container">
-                    <input type="email" id="emailInput" name="email" maxlength="319" autofocus placeholder=" " required>
-                    <label for="emailInput">Email</label>
+        <form id="CreateIssueForm" method="post" action="<spring:url value="/new"/>">
+            <h1>Create A New Issue</h1>
+            <div class="input-container">
+                <input type="text" id="titleInput" name="title" minlength="5" maxlength="100" autofocus placeholder=" "
+                       required aria-required="true" aria-label="Issue title">
+                <label for="titleInput">Title</label>
+            </div>
+            <div class="form-description-wrapper input-container">
+                <textarea
+                        id="descriptionInput"
+                        name="description"
+                        maxlength="1000"
+                        minlength="10"
+                        required
+                        aria-required="true"
+                        aria-label="Issue description"
+                        placeholder=" "
+                >
+
+                </textarea>
+                <label for="descriptionInput">Leave a description</label>
+            </div>
+
+            <div class="categories-select-container">
+                <div>
+                    <label for="categorySelect">Select a category</label>
+                    <select
+                            id="categorySelect"
+                            name="category"
+                            required aria-required="true"
+                            aria-label="Issue category"
+                    >
+                        <option value="Network">Network</option>
+                        <option value="Software">Software</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Email">Email</option>
+                        <option value="Account">Account</option>
+                    </select>
                 </div>
-                <div class="input-container">
-                    <input type="password" id="passwordInput" name="password" maxlength="30" placeholder=" " required>
-                    <label for="passwordInput">Password</label>
+
+                <div>
+                    <label for="categorySelect">Select a sub-category</label>
+                    <select
+                            id="subcategorySelect"
+                            name="subcategory"
+                            required
+                            aria-required="true"
+                            aria-label="Issue category"
+                            disabled
+                            aria-disabled="true"
+                    >
+
+                    </select>
                 </div>
             </div>
-            <button class="login-button" type="submit">Login</button>
+
+
+            <button type="submit">Submit</button>
         </form>
     </jsp:body>
 </app:Layout>
+<%--
 Create an issue
 <form action="/report/submit">
     <label for="issueTitle">Title of issue: </label>
@@ -49,4 +137,4 @@ Create an issue
     <input type="submit" value="Submit">
 
 
-</form>
+</form>--%>
