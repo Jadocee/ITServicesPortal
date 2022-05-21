@@ -2,7 +2,6 @@ package com.spacejaam.itservicesportal.dao.issue;
 
 import com.spacejaam.itservicesportal.model.issue.Issue;
 import com.spacejaam.itservicesportal.model.issue.State;
-import com.spacejaam.itservicesportal.model.issue.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,13 +22,12 @@ public class IssueDAO {
         return this.jdbcTemplate.query(sql, new IssueRowMapper(), state.name());
     }
 
-    public int insertIssue(Issue issue) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (final Tag tag : issue.getTags()) {
-            stringBuilder.append(tag.name()).append(",");
-        }
-        final String sql = "insert into Issue (title, [desc], date, tags, state, category, subcategory) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        return this.jdbcTemplate.update(sql, issue.getTitle(), issue.getDesc(), issue.getCreatedOn(),
-                stringBuilder.toString(), issue.getState().name(), issue.getCategory().name(), issue.getSubCategory().name());
+    public int insertIssue(Issue issue, String username) {
+//        final StringBuilder stringBuilder = new StringBuilder();
+//        for (final Tag tag : issue.getTags()) {
+//            stringBuilder.append(tag.name()).append(",");
+//        }
+        final String sql = "begin transaction declare @IssueID int; insert into Issue (title, [desc], category, subcategory) values (?, ?, ?, ?); select @IssueID = scope_identity(); insert into ClientIssue(client_id, issue_id) select c.id, @IssueID from Client c where c.email = ?; commit";
+        return this.jdbcTemplate.update(sql, issue.getTitle(), issue.getDesc(), issue.getCategory().name(), issue.getSubCategory().name(), username);
     }
 }

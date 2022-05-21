@@ -19,6 +19,10 @@ public class ClientPrinciple implements UserDetails {
         return this.client.getRole().equals(role);
     }
 
+    public String getName() {
+        return this.client.getFirstName() + " " + this.client.getLastName();
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

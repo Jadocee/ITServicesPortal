@@ -17,11 +17,30 @@
         <script type="text/javascript">
             let lastCategory = undefined;
             const subCategories = {
-                "Network": ["Can't Connect", "Speed", "Constant dropouts"],
-                "Software": ["Slow to load", "Won't load at all"],
-                "Hardware": ["Computer won't turn on", "Computer \"Blue screens\"", "Disk Drive", "Peripherals"],
-                "Email": ["Can't send", "Can't receive", "SPAM/Phishing"],
-                "Account": ["Password reset", "Wrong details"]
+                NETWORK: [
+                    {CONNECTION: "Can't Connect"},
+                    {SPEED: "Speed"},
+                    {DROPOUTS: "Constant dropouts"}
+                ],
+                SOFTWARE: [
+                    {SLOW: "Slow to load"},
+                    {WONTLOAD: "Won't load at all"}
+                ],
+                HARDWARE: [
+                    {POWER: "Computer won't turn on"},
+                    {BLUESCREEN: "Computer \"Blue screens\""},
+                    {DRIVE: "Disk Drive"},
+                    {PERIPHERALS: "Peripherals"}
+                ],
+                EMAIL: [
+                    {SEND: "Can't send"},
+                    {RECEIVE: "Can't receive"},
+                    {SPAM: "SPAM/Phishing"}
+                ],
+                ACCOUNT: [
+                    {PASSRESET: "Password reset"},
+                    {DETAILS: "Wrong details"}
+                ]
             };
 
             window.onload = async () => {
@@ -32,33 +51,42 @@
 
             function changeSubCategoryOptions(baseCategory) {
                 const subCategorySelect = document.querySelector("#subcategorySelect");
-                removeChildren(subCategorySelect);
-                this.subCategories[baseCategory.value].forEach(subCategory => {
-                    const option = document.createElement("option");
-                    option.setAttribute("value", subCategory);
-                    option.textContent = subCategory;
-                    subCategorySelect.appendChild(option);
+                while (subCategorySelect.hasChildNodes()) {
+                    subCategorySelect.firstChild.remove();
+                }
+                subCategories[baseCategory.value].forEach((subCategory) => {
+                    Object.entries(subCategory).forEach(([key, val]) => {
+                        const option = document.createElement("option");
+                        option.setAttribute("value", key);
+                        option.textContent = val;
+                        subCategorySelect.appendChild(option);
+                    })
                 });
                 subCategorySelect.removeAttribute("disabled");
                 subCategorySelect.setAttribute("aria-disabled", "false");
             }
-
-            function removeChildren(element) {
-                while (element.hasChildNodes()) {
-                    element.firstChild.remove();
-                }
-            }
         </script>
         <style>
             .categories-select-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                justify-items: center;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .categories-select-container > div {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
+                width: 100%;
+                justify-content: center;
+                align-content: center;
             }
         </style>
     </jsp:attribute>
 
     <jsp:body>
-        <form id="CreateIssueForm" method="post" action="<spring:url value="/new"/>">
+        <form id="CreateIssueForm" method="post" action="<spring:url value="/issues/new"/>">
             <h1>Create A New Issue</h1>
             <div class="input-container">
                 <input type="text" id="titleInput" name="title" minlength="5" maxlength="100" autofocus placeholder=" "
@@ -74,11 +102,11 @@
                         required
                         aria-required="true"
                         aria-label="Issue description"
-                        placeholder=" "
+                        placeholder="Leave a description"
                 >
 
                 </textarea>
-                <label for="descriptionInput">Leave a description</label>
+                    <%--                <label for="descriptionInput">Leave a description</label>--%>
             </div>
 
             <div class="categories-select-container">
@@ -90,11 +118,11 @@
                             required aria-required="true"
                             aria-label="Issue category"
                     >
-                        <option value="Network">Network</option>
-                        <option value="Software">Software</option>
-                        <option value="Hardware">Hardware</option>
-                        <option value="Email">Email</option>
-                        <option value="Account">Account</option>
+                        <option value="NETWORK">Network</option>
+                        <option value="SOFTWARE">Software</option>
+                        <option value="HARDWARE">Hardware</option>
+                        <option value="EMAIL">Email</option>
+                        <option value="ACCOUNT">Account</option>
                     </select>
                 </div>
 
@@ -109,12 +137,9 @@
                             disabled
                             aria-disabled="true"
                     >
-
                     </select>
                 </div>
             </div>
-
-
             <button type="submit">Submit</button>
         </form>
     </jsp:body>

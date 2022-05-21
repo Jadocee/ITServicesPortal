@@ -17,6 +17,13 @@ public class Issue {
     private Set<Tag> tags;
     private Date createdOn;
 
+    public Issue(String title, String desc, Category category, SubCategory subCategory) {
+        this.title = title;
+        this.desc = desc;
+        this.category = category;
+        this.subCategory = subCategory;
+    }
+
     public Issue(Long id, String title, String desc, Category category, SubCategory subCategory, String author, State state, Date createdOn) {
         this.id = id;
         this.title = title;
