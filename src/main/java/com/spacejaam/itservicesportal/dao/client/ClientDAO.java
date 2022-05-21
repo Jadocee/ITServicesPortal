@@ -1,7 +1,6 @@
 package com.spacejaam.itservicesportal.dao.client;
 
 import com.spacejaam.itservicesportal.model.client.Client;
-import com.spacejaam.itservicesportal.model.client.ClientRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

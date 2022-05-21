@@ -15,8 +15,9 @@ public class ClientPrinciple implements UserDetails {
         this.client = client;
     }
 
-    public boolean hasRole(Role role) {
-        return this.client.getRole().equals(role);
+
+    public Long getId() {
+        return this.client.getId();
     }
 
     public String getName() {

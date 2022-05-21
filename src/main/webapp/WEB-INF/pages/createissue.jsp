@@ -89,8 +89,23 @@
         <form id="CreateIssueForm" method="post" action="<spring:url value="/issues/new"/>">
             <h1>Create A New Issue</h1>
             <div class="input-container">
-                <input type="text" id="titleInput" name="title" minlength="5" maxlength="100" autofocus placeholder=" "
-                       required aria-required="true" aria-label="Issue title">
+                <input
+                        type="text"
+                        id="titleInput"
+                        name="title"
+                        minlength="5"
+                        maxlength="100"
+                        autofocus
+                        placeholder=" "
+                        required
+                        aria-required="true"
+                        aria-label="Issue title"
+                        autocapitalize="sentences"
+                        spellcheck="true"
+                        lang="en"
+                        autocomplete="on"
+
+                >
                 <label for="titleInput">Title</label>
             </div>
             <div class="form-description-wrapper input-container">
@@ -103,9 +118,12 @@
                         aria-required="true"
                         aria-label="Issue description"
                         placeholder="Leave a description"
-                >
-
-                </textarea>
+                        autocapitalize="sentences"
+                        spellcheck="true"
+                        lang="en"
+                        autocomplete="on"
+                        rows="8"
+                ></textarea>
                     <%--                <label for="descriptionInput">Leave a description</label>--%>
             </div>
 
@@ -115,9 +133,11 @@
                     <select
                             id="categorySelect"
                             name="category"
-                            required aria-required="true"
+                            required
+                            aria-required="true"
                             aria-label="Issue category"
                     >
+                        <option value="Select category" selected disabled hidden></option>
                         <option value="NETWORK">Network</option>
                         <option value="SOFTWARE">Software</option>
                         <option value="HARDWARE">Hardware</option>
@@ -140,7 +160,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Submit<span class="material-symbols-rounded">send</span></button>
         </form>
     </jsp:body>
 </app:Layout>

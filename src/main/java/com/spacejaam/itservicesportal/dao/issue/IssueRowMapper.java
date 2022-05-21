@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,18 +17,21 @@ public class IssueRowMapper implements RowMapper<Issue> {
         final Issue issue = new Issue(
                 rs.getLong("id"),
                 rs.getString("title"),
-                rs.getString("desc"),
+                rs.getNString("desc"),
                 Category.valueOf(rs.getString("category")),
                 SubCategory.valueOf(rs.getString("subcategory")),
-                rs.getString("firstName").concat(rs.getString("lastName")),
+                rs.getString("author"),
                 State.valueOf(rs.getString("state")),
-                rs.getDate("date")
+                rs.getObject("date", LocalDateTime.class)
         );
-        final Set<Tag> tagSet = new HashSet<>();
-        for (final String name : rs.getString("tags").split(",")) {
-            tagSet.add(Tag.valueOf(name));
+        final String tags = rs.getString("tags");
+        if (tags != null) {
+            final Set<Tag> tagSet = new HashSet<>();
+            for (final String name : tags.split(",")) {
+                tagSet.add(Tag.valueOf(name));
+            }
+            issue.setTags(tagSet);
         }
-        issue.setTags(tagSet);
         return issue;
     }
 }

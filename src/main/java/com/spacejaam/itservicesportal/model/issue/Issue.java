@@ -2,7 +2,11 @@ package com.spacejaam.itservicesportal.model.issue;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Issue {
@@ -15,7 +19,7 @@ public class Issue {
     private String author;
     private State state;
     private Set<Tag> tags;
-    private Date createdOn;
+    private LocalDateTime createdOn;
 
     public Issue(String title, String desc, Category category, SubCategory subCategory) {
         this.title = title;
@@ -24,7 +28,7 @@ public class Issue {
         this.subCategory = subCategory;
     }
 
-    public Issue(Long id, String title, String desc, Category category, SubCategory subCategory, String author, State state, Date createdOn) {
+    public Issue(Long id, String title, String desc, Category category, SubCategory subCategory, String author, State state, LocalDateTime createdOn) {
         this.id = id;
         this.title = title;
         this.desc = desc;
@@ -33,13 +37,22 @@ public class Issue {
         this.author = author;
         this.state = state;
         this.createdOn = createdOn;
+        this.tags = new HashSet<>();
     }
 
     public Issue() {
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public ArrayList<String> getTags() {
+        if (this.tags.isEmpty()) {
+            return null;
+        }
+
+        final ArrayList<String> arrayList = new ArrayList<>();
+        for (final Tag tag : this.tags) {
+            arrayList.add(tag.toString());
+        }
+        return arrayList;
     }
 
     public void setTags(Set<Tag> tags) {
@@ -70,16 +83,16 @@ public class Issue {
         this.desc = desc;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
     public void setCategory(Category category) {
         this.category = category;
     }
 
-    public SubCategory getSubCategory() {
-        return subCategory;
+    public String getCategory() {
+        return category.toString();
+    }
+
+    public String getSubCategory() {
+        return subCategory.toString();
     }
 
     public void setSubCategory(SubCategory subCategory) {
@@ -94,19 +107,20 @@ public class Issue {
         this.author = author;
     }
 
-    public State getState() {
-        return state;
+    public String getState() {
+        return state.toString();
     }
 
     public void setState(State state) {
         this.state = state;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
+    public String getCreatedOn() {
+        return createdOn.atZone(ZoneId.of("Australia/NSW")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+//        return createdOn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
 }

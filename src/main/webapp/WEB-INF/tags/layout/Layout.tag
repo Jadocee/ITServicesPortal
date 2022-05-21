@@ -58,7 +58,7 @@
                         type="button"
                         class="nav-menu-button"
                         aria-label="Knowledge-base"
-                        onclick="window.location.href='<spring:url value="/knowledge-base"/>'"
+                        onclick="window.location.href='<spring:url value="/knowledge_base"/>'"
                 >
                     <span class="material-symbols-rounded">inventory_2</span>
                     <span class="nav-menu-button__label">Knowledge Base</span>
@@ -73,7 +73,7 @@
                             type="button"
                             class="nav-menu-button"
                             aria-label="Issue Manager"
-                            onclick="window.location.href='<spring:url value="/tracker"/>'"
+                            onclick="window.location.href='<spring:url value="issues/tracker"/>'"
                     >
                         <span class="material-symbols-rounded">pending_actions</span>
                         <span class="nav-menu-button__label">Track Issues</span>
@@ -87,7 +87,7 @@
                     <button
                             type="button"
                             class="nav-menu-button"
-                            onclick="window.location.href='<spring:url value="/your-issues"/>'"
+                            onclick="window.location.href='<spring:url value="/issues/created_by_me"/>'"
                     >
                         <span class="material-symbols-rounded">receipt_long</span>
                         <span class="nav-menu-button__label">Your Issues</span>

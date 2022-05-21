@@ -1,5 +1,7 @@
-package com.spacejaam.itservicesportal.model.client;
+package com.spacejaam.itservicesportal.dao.client;
 
+import com.spacejaam.itservicesportal.model.client.Client;
+import com.spacejaam.itservicesportal.model.client.Role;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

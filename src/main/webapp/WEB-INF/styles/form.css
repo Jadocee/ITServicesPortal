@@ -96,7 +96,12 @@ input:focus:invalid {
 form > button[type="submit"] {
     width: 100%;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     text-align: center;
     min-height: 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
 }

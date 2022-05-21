@@ -18,8 +18,13 @@ public class IssueDAO {
     }
 
     public List<Issue> getIssuesByState(State state) {
-        final String sql = "select i.*, c.firstName, c.lastName from Issue i, Client c, ClientIssue CI INNER JOIN Client C2 on C2.id = CI.client_id";
+        final String sql = "select i.*, c.firstName, c.lastName from Issue i, Client c, ClientIssue CI inner join Client C2 on C2.id = CI.client_id";
         return this.jdbcTemplate.query(sql, new IssueRowMapper(), state.name());
+    }
+
+    public Issue getIssueById(Long id) {
+        final String sql = "select I.*, C.firstName + ' ' + C.lastName as 'author' from Client C, Issue I, ClientIssue CI inner join Client C2 on CI.client_id = C2.id where CI.issue_id = I.id and I.id = ?";
+        return this.jdbcTemplate.queryForObject(sql, new IssueRowMapper(), id);
     }
 
     public int insertIssue(Issue issue, String username) {
@@ -28,6 +33,12 @@ public class IssueDAO {
 //            stringBuilder.append(tag.name()).append(",");
 //        }
         final String sql = "begin transaction declare @IssueID int; insert into Issue (title, [desc], category, subcategory) values (?, ?, ?, ?); select @IssueID = scope_identity(); insert into ClientIssue(client_id, issue_id) select c.id, @IssueID from Client c where c.email = ?; commit";
-        return this.jdbcTemplate.update(sql, issue.getTitle(), issue.getDesc(), issue.getCategory().name(), issue.getSubCategory().name(), username);
+        return this.jdbcTemplate.update(sql, issue.getTitle(), issue.getDesc(), issue.getCategory(), issue.getSubCategory(), username);
     }
+
+    public List<Issue> getIssuesByAuthorId(Long id) {
+        final String sql = "select i.*, c.firstName + ' ' + c.lastName as 'author' from Issue i, Client c, ClientIssue CI INNER JOIN Client C2 on C2.id = ? and CI.client_id = C2.id";
+        return this.jdbcTemplate.query(sql, new IssueRowMapper(), id);
+    }
+
 }
