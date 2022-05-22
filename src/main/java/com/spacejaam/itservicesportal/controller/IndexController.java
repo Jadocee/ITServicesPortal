@@ -1,6 +1,8 @@
 package com.spacejaam.itservicesportal.controller;
 
+import com.spacejaam.itservicesportal.dao.performance.PerformanceDAO;
 import com.spacejaam.itservicesportal.model.client.ClientPrinciple;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,13 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping(value = "/")
 public class IndexController {
+
+    private final PerformanceDAO performanceDAO;
+
+    @Autowired
+    IndexController(PerformanceDAO performanceDAO) {
+        this.performanceDAO = performanceDAO;
+    }
 
     @GetMapping(value = "/")
     public ModelAndView index(HttpSession session) {
@@ -38,6 +47,14 @@ public class IndexController {
             session.setAttribute("isLoggedIn", false);
         }
         ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("resolvedStats", performanceDAO.getResolvedCount());
+        modelAndView.addObject("unresolvedStats", performanceDAO.getUnresolvedCount());
+        modelAndView.addObject("stressRate", performanceDAO.getStressRate());
         return modelAndView;
     }
+
+//    @PostMapping("/performance")
+//    public String getPerformanceStats() {
+//        return "";
+//    }
 }

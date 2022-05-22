@@ -2,11 +2,13 @@ package com.spacejaam.itservicesportal.model.issue;
 
 import org.springframework.data.annotation.Id;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class Issue {
     @Id
@@ -127,7 +129,10 @@ public class Issue {
     }
 
     public String getCreatedOn() {
-        return createdOn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        format.setTimeZone(TimeZone.getTimeZone("AEST"));
+//        return createdOn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return format.format(createdOn);
         // TODO: offset by local timezone
     }
 
