@@ -54,6 +54,13 @@
                 while (subCategorySelect.hasChildNodes()) {
                     subCategorySelect.firstChild.remove();
                 }
+                const defaultOption = document.createElement("option");
+                defaultOption.setAttribute("value", "");
+                defaultOption.disabled = true;
+                defaultOption.hidden = true;
+                defaultOption.selected = true;
+                defaultOption.textContent = "Please select";
+                subCategorySelect.appendChild(defaultOption);
                 subCategories[baseCategory.value].forEach((subCategory) => {
                     Object.entries(subCategory).forEach(([key, val]) => {
                         const option = document.createElement("option");
@@ -86,8 +93,15 @@
     </jsp:attribute>
 
     <jsp:body>
-        <form id="CreateIssueForm" method="post" action="<spring:url value="/issues/new"/>">
-            <h1>Create A New Issue</h1>
+        <form
+                id="CreateIssueForm"
+                method="post"
+                action="<spring:url value="/issues/new"/>"
+                accept-charset="UTF-8"
+                autocomplete="off"
+                autocapitalize="sentences"
+                spellcheck="true"
+        >
             <div class="input-container">
                 <input
                         type="text"
@@ -103,7 +117,7 @@
                         autocapitalize="sentences"
                         spellcheck="true"
                         lang="en"
-                        autocomplete="on"
+                        autocomplete="off"
 
                 >
                 <label for="titleInput">Title</label>
@@ -121,7 +135,7 @@
                         autocapitalize="sentences"
                         spellcheck="true"
                         lang="en"
-                        autocomplete="on"
+                        autocomplete="off"
                         rows="8"
                 ></textarea>
                     <%--                <label for="descriptionInput">Leave a description</label>--%>
@@ -137,7 +151,7 @@
                             aria-required="true"
                             aria-label="Issue category"
                     >
-                        <option value="Select category" selected disabled hidden></option>
+                        <option value="" selected disabled hidden>Please select</option>
                         <option value="NETWORK">Network</option>
                         <option value="SOFTWARE">Software</option>
                         <option value="HARDWARE">Hardware</option>
@@ -160,7 +174,9 @@
                     </select>
                 </div>
             </div>
-            <button type="submit">Submit<span class="material-symbols-rounded">send</span></button>
+            <button type="submit" class="form-btn lg">
+                Submit<span class="material-symbols-rounded">send</span>
+            </button>
         </form>
     </jsp:body>
 </app:Layout>

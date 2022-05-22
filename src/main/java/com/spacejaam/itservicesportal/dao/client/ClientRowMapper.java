@@ -26,10 +26,6 @@ public class ClientRowMapper implements RowMapper<Client> {
                 rs.getBoolean("isAccountNonLocked"),
                 rs.getBoolean("isEnabled"),
                 rs.getBoolean("isCredentialsNonExpired")
-          /*      Boolean.parseBoolean(rs.getString("isAccountNonExpired")),
-                Boolean.parseBoolean(rs.getString("isAccountNonLocked")),
-                Boolean.parseBoolean(rs.getString("isEnabled")),
-                Boolean.parseBoolean(rs.getString("isCredentialsNonExpired"))*/
         );
     }
 }

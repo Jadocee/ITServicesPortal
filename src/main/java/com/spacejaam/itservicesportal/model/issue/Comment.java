@@ -1,22 +1,26 @@
 package com.spacejaam.itservicesportal.model.issue;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @Table(value = "Comment")
 public class Comment {
     @Id
-    @Column(value = "id")
     private Long id;
-    @Column(value = "message")
     private String message;
-    @Column(value = "date")
-    private Date created;
+    private String author;
+    private LocalDateTime created;
 
-    public Comment() {
+    public Comment(Long id, String message, LocalDateTime created, String author) {
+        this.id = id;
+        this.message = message;
+        this.created = created;
+        this.author = author;
     }
 
     public Comment(String message) {
@@ -39,11 +43,19 @@ public class Comment {
         this.message = message;
     }
 
-    public Date getCreated() {
-        return created;
+    public String getCreated() {
+        return created.atZone(ZoneId.of("Australia/NSW")).format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
-    private void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

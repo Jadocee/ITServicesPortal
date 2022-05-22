@@ -3,7 +3,6 @@ package com.spacejaam.itservicesportal.model.issue;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -91,8 +90,16 @@ public class Issue {
         return category.toString();
     }
 
+    public Category category() {
+        return category;
+    }
+
     public String getSubCategory() {
         return subCategory.toString();
+    }
+
+    public SubCategory subCategory() {
+        return subCategory;
     }
 
     public void setSubCategory(SubCategory subCategory) {
@@ -111,13 +118,17 @@ public class Issue {
         return state.toString();
     }
 
+    public State state() {
+        return state;
+    }
+
     public void setState(State state) {
         this.state = state;
     }
 
     public String getCreatedOn() {
-        return createdOn.atZone(ZoneId.of("Australia/NSW")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-//        return createdOn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return createdOn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        // TODO: offset by local timezone
     }
 
     public void setCreatedOn(LocalDateTime createdOn) {

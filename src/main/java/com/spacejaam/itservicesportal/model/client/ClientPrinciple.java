@@ -15,7 +15,6 @@ public class ClientPrinciple implements UserDetails {
         this.client = client;
     }
 
-
     public Long getId() {
         return this.client.getId();
     }

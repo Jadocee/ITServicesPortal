@@ -3,6 +3,7 @@ package com.spacejaam.itservicesportal.controller;
 import com.spacejaam.itservicesportal.dao.issue.IssueDAO;
 import com.spacejaam.itservicesportal.model.client.ClientPrinciple;
 import com.spacejaam.itservicesportal.model.issue.Category;
+import com.spacejaam.itservicesportal.model.issue.Comment;
 import com.spacejaam.itservicesportal.model.issue.Issue;
 import com.spacejaam.itservicesportal.model.issue.SubCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -50,8 +53,29 @@ public class IssueController {
     public ModelAndView displayIssue(@PathVariable("id") Long id) {
         final ModelAndView modelAndView = new ModelAndView("issue");
         modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
+        modelAndView.addObject("comments", this.issueDAO.getCommentsByIssueId(id));
         return modelAndView;
     }
+
+    @PostMapping("/{id}/new_comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RedirectView createComment(
+            @PathVariable("id") Long id,
+            @RequestParam("commentBody") String message,
+            HttpSession session,
+            HttpServletRequest request
+    ) {
+        this.issueDAO.insertComment(
+                id,
+                (String) session.getAttribute("username"),
+                new Comment(message)
+        );
+//        if (request.isUserInRole("ROLE_ITSTAFF")) {
+//            this.issueDAO.updateIssueState(id, S)
+//        }
+        return new RedirectView(request.getContextPath() + "/issues/" + id);
+    }
+
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)

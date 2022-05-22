@@ -25,6 +25,7 @@ public class IndexController {
         if (authentication.getPrincipal() instanceof ClientPrinciple) {
             final ClientPrinciple clientPrinciple = (ClientPrinciple) authentication.getPrincipal();
             session.setAttribute("username", clientPrinciple.getUsername());
+            session.setAttribute("userId", clientPrinciple.getId());
             final ArrayList<String> authList = new ArrayList<>();
             for (final GrantedAuthority authority : clientPrinciple.getAuthorities()) {
                 authList.add(authority.getAuthority());
