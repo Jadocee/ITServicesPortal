@@ -61,21 +61,28 @@
 
     <jsp:body>
         <h1>Your Issues</h1>
-
-        <div class="issues-list-container">
-            <div class="issues-list">
-                <c:forEach var="i" begin="0" end="${issues.size() - 1}">
-                    <div class="issue-cls">
-                        <a class="issue__title" href="<spring:url value="/issues/${issues.get(i).id}"/>"><c:out
-                                value="${issues.get(i).title}"/></a>
-                        <span class="issue__created_on">
+        <c:choose>
+            <c:when test="${issues.size() > 0}">
+                <div class="issues-list-container">
+                    <div class="issues-list">
+                        <c:forEach var="i" begin="0" end="${issues.size() - 1}">
+                            <div class="issue-cls">
+                                <a class="issue__title" href="<spring:url value="/issues/${issues.get(i).id}"/>"><c:out
+                                        value="${issues.get(i).title}"/></a>
+                                <span class="issue__created_on">
                             Created by <c:out value="${issues.get(i).author}"/> on <c:out
-                                value="${issues.get(i).createdOn}"/>
+                                        value="${issues.get(i).createdOn}"/>
                         </span>
+                            </div>
+                        </c:forEach>
                     </div>
-                </c:forEach>
-            </div>
-        </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                Could not find any issues
+            </c:otherwise>
+        </c:choose>
+
     </jsp:body>
 </app:Layout>
 
