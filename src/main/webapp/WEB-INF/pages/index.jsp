@@ -121,7 +121,6 @@
     </jsp:attribute>
 
     <jsp:body>
-        <c:out value="${stressRate}"/>
         <div class="index-container">
             <section id="hero" class="index-section">
                 <h1>Welcome to IT Services Portal</h1>

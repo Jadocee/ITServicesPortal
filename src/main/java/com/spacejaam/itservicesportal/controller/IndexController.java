@@ -3,11 +3,13 @@ package com.spacejaam.itservicesportal.controller;
 import com.spacejaam.itservicesportal.dao.performance.PerformanceDAO;
 import com.spacejaam.itservicesportal.model.client.ClientPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,8 +55,8 @@ public class IndexController {
         return modelAndView;
     }
 
-//    @PostMapping("/performance")
-//    public String getPerformanceStats() {
-//        return "";
-//    }
+    @PostMapping(value = "/performance", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getPerformanceStats() {
+        return "";
+    }
 }
