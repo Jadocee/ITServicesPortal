@@ -14,45 +14,83 @@
 <app:Layout title="Home">
     <jsp:attribute name="head">
         <script
-                type="module"
                 src="https://cdn.jsdelivr.net/npm/chart.js@3/dist/chart.min.js"
                 defer
         ></script>
-        <script type="module" defer>
-            const ctx = document.querySelector("#performanceChart");
-            // const config = {
-            //     type: 'doughnut',
-            //     data: data,
-            // };
-            const labels = ['Network', 'Software', 'Hardware', 'Account', 'Email']
-            const data = {
-                labels: labels,
-                datasets: [{
-                    label: 'Resolved',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                },
-                    {
-                        label: 'Unresolved',
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
-                        tension: 0.1
-                    }]
-            };
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: data,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+        <script type="module" defer async>
+            const doughtnutCanvas = document.querySelector("#unresolvedIssues");
+            const lineCanvas = document.querySelector("#resolvedIssues");
+            // let unresolvedData;
+            // let resolvedData;
+            // let stressRate;
+            let lineChart;
+            let donutChart;
+
+            await fetch("./API/performance", {
+                method: 'GET',
+                headers: {'Accept': 'application/json'}
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let resolvedData = JSON.parse(data.resolved);
+                    let stressRate = parseFloat(data.stressRate);
+                    let unresolvedData = JSON.parse(data.unresolved);
+                    lineChart = new Chart(lineCanvas, {
+                        type: 'line',
+                        data: {
+                            // labels: ['Resolved Issues in the past 7 days'],
+                            datasets: [{
+                                label: 'Resolved Issues in the past 7 days',
+                                data: resolvedData,
+                                borderColor: 'rgb(75, 192, 192)'
+                            }]
+                        },
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: {
+                                    ticks: {
+                                        beginAtZero: true,
+                                        callback: function (value) {
+                                            if (Number.isInteger(value)) {
+                                                return value;
+                                            }
+                                        },
+                                        stepSize: 1
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            });
+                    });
+                    donutChart = new Chart(doughtnutCanvas, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Network', 'Software', 'Hardware', 'Account', 'Email'],
+                            datasets: [{
+                                data: [
+                                    'Network' in unresolvedData ? unresolvedData['Network'] : 0,
+                                    'Software' in unresolvedData ? unresolvedData['Software'] : 0,
+                                    'Hardware' in unresolvedData ? unresolvedData['Hardware'] : 0,
+                                    'Account' in unresolvedData ? unresolvedData['Account'] : 0,
+                                    'Email' in unresolvedData ? unresolvedData['Email'] : 0
+                                ],
+                                backgroundColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(54, 162, 235)',
+                                    'rgb(255, 205, 86)',
+                                    'rgb(152,251,152)',
+                                    'rgb(255,182,193)'
+                                ]
+                            }],
+                            hoverOffset: 4
+                        }
+                    });
+
+                    document.querySelector("#stressRate").textContent = stressRate.toString();
+                });
+
 
         </script>
         <style>
@@ -67,7 +105,7 @@
                 display: flex;
                 flex-direction: column;
                 align-content: center;
-                gap: 1rem;
+                gap: 16px;
                 align-items: center;
                 justify-content: flex-start;
                 min-height: calc(100vh - 4rem);
@@ -114,8 +152,68 @@
             }
 
             .chart-container {
-                width: 40%;
+                min-width: 34%;
                 height: 100%;
+                border: 1px solid hsl(212 12% 21%);
+                border-radius: 0.5rem;
+                padding: 8px;
+            }
+
+            .stress-rate-container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .stress-rate-cls {
+                border: 1px solid hsl(212 12% 21%);
+                border-radius: 0.5rem;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                margin-bottom: 1rem;
+                align-items: center;
+                width: calc(68% + 2rem);
+            }
+
+            .stat-heading {
+                margin: 0;
+                letter-spacing: 0.05em;
+            }
+
+            #stressRate {
+                font-size: 4rem;
+                font-weight: 600;
+
+            }
+
+            .chart-container > h2 {
+                margin: 0 0 0 8px;
+                text-align: center;
+                letter-spacing: 0.05em;
+            }
+
+            .statistics__inline-flex {
+                display: flex;
+                flex-direction: row;
+                gap: 2rem;
+                height: 100%;
+                width: 100%;
+                align-content: center;
+                justify-content: center;
+            }
+
+            .statistics__center {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                height: 100%;
+                width: 100%;
+                margin: auto 0;
+                align-items: center;
             }
         </style>
     </jsp:attribute>
@@ -141,13 +239,32 @@
 
             <section id="statistics" class="index-section">
                 <h1>Our Performance</h1>
-                <div class="chart-container">
-                    <canvas
-                            id="performanceChart"
-                            width="400"
-                            height="400"
-                            style="margin-bottom: auto; margin-top: auto;"
-                    ></canvas>
+                <div class="statistics__center">
+                    <div class="stress-rate-container">
+                        <div class="stress-rate-cls">
+                            <h2 class="stat-heading">Stress Rate</h2>
+                            <span id="stressRate">Calculating...</span>
+                        </div>
+                    </div>
+                    <div class="statistics__inline-flex">
+                        <div class="chart-container">
+                            <h2 class="stat-heading">How were performing</h2>
+                            <canvas
+                                    id="resolvedIssues"
+                                    width="400"
+                                    height="400"
+                            ></canvas>
+                        </div>
+
+                        <div class="chart-container">
+                            <h2 class="stat-heading">What were working on</h2>
+                            <canvas
+                                    id="unresolvedIssues"
+                                    width="400"
+                                    height="400"
+                            ></canvas>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

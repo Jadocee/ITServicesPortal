@@ -5,16 +5,17 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  */
-public class UnresolvedRowMapper implements RowMapper<UnresolvedCount> {
+public class UnresolvedRowMapper implements RowMapper<Map<String, Object>> {
     @Override
-    public UnresolvedCount mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new UnresolvedCount(
-                Category.valueOf(rs.getString("category")),
-                rs.getInt("unresolved")
-        );
+    public Map<String, Object> mapRow(ResultSet rs, int rowNum) throws SQLException {
+        final Map<String, Object> map = new HashMap<>();
+        map.put(Category.valueOf(rs.getString("category")).toString(), rs.getInt("unresolved"));
+        return map;
     }
 }

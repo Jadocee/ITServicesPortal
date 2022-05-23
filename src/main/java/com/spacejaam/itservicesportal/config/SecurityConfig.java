@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/issues/created_by_me", "/issues/new").hasRole(Role.USER.name())
                         .antMatchers("/issues/tracker").hasRole(Role.ITSTAFF.name())
                         .antMatchers("/knowledge_base").hasAnyRole(Role.ITSTAFF.name(), Role.USER.name())
+                        .antMatchers("/API/**").permitAll()
                         .anyRequest().authenticated()
                 ).formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login").permitAll()

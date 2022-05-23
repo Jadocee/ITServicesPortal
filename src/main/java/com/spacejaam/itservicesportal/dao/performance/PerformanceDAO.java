@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PerformanceDAO {
@@ -15,14 +16,24 @@ public class PerformanceDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<ResolvedCount> getResolvedCount() {
+    public List<Map<String, Object>> getResolvedCount() {
         final String sql = "select * from resolved_last_7_days";
         return this.jdbcTemplate.query(sql, new ResolvedRowMapper());
     }
 
-    public List<UnresolvedCount> getUnresolvedCount() {
-        final String sql = "select * from unresolved_count";
-        return this.jdbcTemplate.query(sql, new UnresolvedRowMapper());
+    public Map<String, Integer> getUnresolvedCount() {
+        final String sql = "select *\n" +
+                "from unresolved_count\n" +
+                "order by case\n" +
+                "             when [category] = 'NETWORK' then '1'\n" +
+                "             when [category] = 'SOFTWARE' then '2'\n" +
+                "             when [category] = 'HARDWARE' then '3'\n" +
+                "             when [category] = 'ACCOUNT' then '4'\n" +
+                "             when [category] = 'EMAIL' then '5'\n" +
+                "             else [category]\n" +
+                "             end";
+        return this.jdbcTemplate.query(sql, new UnresolvedResultSetExtractor());
+//        return this.jdbcTemplate.queryForList(sql);
     }
 
     public Double getStressRate() {
