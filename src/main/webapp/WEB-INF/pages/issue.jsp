@@ -53,12 +53,12 @@
                                 <div role="menubar" class="top-bar__menu-container">
                                     <c:if test="${comment.recommended}">
                                         <span role="button"
-                                              aria-label="Recommend as solution"
+                                              aria-label="Accept as solution"
                                               class="material-symbols-rounded"
                                               onclick="handleRecommendComment('<c:out value="${comment.id}"/>')"
                                         >done</span>
                                         <span role="button"
-                                              aria-label="Recommend as solution"
+                                              aria-label="Reject as solution"
                                               class="material-symbols-rounded"
                                               onclick="handleRecommendComment('<c:out value="${comment.id}"/>')"
                                         >close</span>
@@ -67,12 +67,6 @@
                             </div>
                             <p><c:out value="${comment.message}"/></p>
                         </div>
-                        <button
-                                type="button"
-                                onclick="${Issue.setState(COMPLETE)}"
-                        >
-                            <span class="material-symbols-rounded">Mark as solution</span>
-                        </button>
                     </c:forEach>
                 </div>
             </c:if>
