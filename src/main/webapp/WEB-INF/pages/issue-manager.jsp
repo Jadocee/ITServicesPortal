@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Jaydon
-  Date: 21/05/2022
-  Time: 21:44
+  Date: 24/05/2022
+  Time: 00:21
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,8 +12,8 @@
 
 <app:Layout title="${issue.title}">
     <jsp:attribute name="head">
-        <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/form.css"/>"/>
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issue.css"/>"/>
+        <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/form.css"/>"/>
     </jsp:attribute>
 
     <jsp:body>
@@ -27,11 +27,9 @@
                     <span class="issue-label"><c:out value="${issue.category}"/></span>
                     <span class="issue-label"><c:out value="${issue.subCategory}"/></span>
                     <span class="issue-label"><c:out value="${issue.state}"/></span>
-                    <c:if test="${issue.tags != null}">
-                        <c:forEach var="tag" items="${issue.tags}">
-                            <span class="issue-label"><c:out value="${tag}"/></span>
-                        </c:forEach>
-                    </c:if>
+                    <c:forEach var="tag" items="${issue.tags}">
+                        <span class="issue-label"><c:out value="${tag}"/></span>
+                    </c:forEach>
                 </div>
 
             </div>

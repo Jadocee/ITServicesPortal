@@ -1,6 +1,6 @@
 package com.spacejaam.itservicesportal.controller;
 
-import com.spacejaam.itservicesportal.model.client.ClientPrinciple;
+import com.spacejaam.itservicesportal.client.ClientPrinciple;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,17 +33,11 @@ public class IndexController {
                 authList.add(authority.getAuthority());
             }
             session.setAttribute("authorities", authList);
-//            session.setAttribute("isUSER", clientPrinciple);
-//            session.setAttribute("isITSTAFF", clientPrinciple.hasRole(Role.ITSTAFF));
             session.setAttribute("isLoggedIn", true);
         } else {
             session.setAttribute("isLoggedIn", false);
         }
-        ModelAndView modelAndView = new ModelAndView("index");
-//        modelAndView.addObject("resolvedStats", performanceDAO.getResolvedCount());
-//        modelAndView.addObject("unresolvedStats", performanceDAO.getUnresolvedCount());
-//        modelAndView.addObject("stressRate", performanceDAO.getStressRate());
-        return modelAndView;
+        return new ModelAndView("index");
     }
 
 
