@@ -1,0 +1,135 @@
+.issue-container {
+    width: 100%;
+}
+
+.issue-creation-details {
+    font-size: 14px;
+    color: hsl(212 9% 58% / 0.8);
+}
+
+.issue-top {
+    padding-bottom: 8px;
+    border-bottom: 1px solid hsl(212 9% 58%);
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.issue-title {
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.issue-description {
+    border: 1px solid hsl(212 9% 58%);
+    border-radius: 0.5rem;
+    padding: 16px;
+    overflow: visible;
+}
+
+p {
+    margin: 0;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.issue-labels {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    align-content: center;
+}
+
+.issue-label {
+    border: 1px solid #fff;
+    border-radius: 2em;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 0 7px;
+    display: inline-block;
+    line-height: 18px;
+}
+
+.issue-label:hover {
+    cursor: default;
+}
+
+#commentFormSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid hsl(212 9% 58%);
+    border-radius: 0.5rem;
+    margin-top: 16px;
+    padding: 8px;
+}
+
+#commentFormSection > form {
+    width: 100%;
+    max-width: 100% !important;
+    gap: 0.5rem !important;
+}
+
+.text-area-container {
+    width: 100%;
+}
+
+#issueCommentBody {
+    width: 100%;
+}
+
+.form__bottom-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    max-height: fit-content;
+}
+
+.issue-comments-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+}
+
+.issue-comment::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 2px;
+    background-color: hsl(212 9% 58%);
+    margin-top: -2rem;
+    z-index: -1;
+    margin-left: 16px;
+}
+
+.issue-comment {
+    border: 1px solid hsl(212 9% 58%);
+    border-radius: 0.5rem;
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-content: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    background-color: hsl(216 28% 7%);
+}
+
+.issue-comment > div {
+    background: hsl(264 64% 35%);
+    color: hsl(212 9% 58%);
+    padding: 8px 16px;
+    margin: -16px -16px 0 -16px;
+    font-weight: 400;
+    font-size: 14px;
+}

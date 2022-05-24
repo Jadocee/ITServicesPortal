@@ -1,6 +1,6 @@
 package com.spacejaam.itservicesportal.config;
 
-import com.spacejaam.itservicesportal.model.client.Role;
+import com.spacejaam.itservicesportal.client.Role;
 import com.spacejaam.itservicesportal.service.ClientDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

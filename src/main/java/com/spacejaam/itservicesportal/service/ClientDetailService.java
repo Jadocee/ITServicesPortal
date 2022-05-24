@@ -1,8 +1,8 @@
 package com.spacejaam.itservicesportal.service;
 
-import com.spacejaam.itservicesportal.dao.client.ClientDAO;
-import com.spacejaam.itservicesportal.model.client.Client;
-import com.spacejaam.itservicesportal.model.client.ClientPrinciple;
+import com.spacejaam.itservicesportal.client.Client;
+import com.spacejaam.itservicesportal.client.ClientDAO;
+import com.spacejaam.itservicesportal.client.ClientPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

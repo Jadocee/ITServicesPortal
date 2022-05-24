@@ -12,51 +12,7 @@
 
 <app:Layout title="Your Issues">
     <jsp:attribute name="head">
-        <style>
-            .issues-list-container {
-                width: 100%;
-            }
-
-            .issues-list {
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
-                width: 100%;
-            }
-
-            .issue-cls {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                gap: 0.5em;
-                border: hsl(212 12% 21%) solid 1px;
-                border-radius: 0.5rem;
-                padding: 16px;
-            }
-
-            .issue__title {
-                margin: 0;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 16px;
-                transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
-                transition-property: color, background-color, box-shadow, border-color;
-                background-color: transparent;
-                cursor: pointer;
-            }
-
-            .issue__title:hover {
-                color: #58a6ff;
-            }
-
-            .issue__created_on {
-                font-size: 12px;
-                color: #8b949e;
-                line-height: 1.5;
-            }
-
-
-        </style>
+        <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issues.css"/>"/>
     </jsp:attribute>
 
     <jsp:body>
@@ -82,7 +38,6 @@
                 Could not find any issues
             </c:otherwise>
         </c:choose>
-
     </jsp:body>
 </app:Layout>
 
