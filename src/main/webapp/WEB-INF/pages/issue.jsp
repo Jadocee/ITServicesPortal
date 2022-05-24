@@ -51,6 +51,12 @@
                             </div>
                             <p><c:out value="${comment.message}"/></p>
                         </div>
+                        <button
+                                type="button"
+                                onclick="${Issue.setState(COMPLETE)}"
+                        >
+                            <span class="material-symbols-rounded">Mark as solution</span>
+                        </button>
                     </c:forEach>
                 </div>
             </c:if>
