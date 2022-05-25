@@ -81,7 +81,7 @@
                                                 <c:out value="${issue.title}"/>
                                             </a>
                                             <span class="issue__created_on">
-                                            Created by <c:out value="${issue.author}"/> on <c:out
+                                            Created by <c:out value="${issue.author.displayName}"/> on <c:out
                                                     value="${issue.createdOn}"/>
                                         </span>
                                         </div>

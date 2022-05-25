@@ -18,7 +18,8 @@ public class CommentRowMapper implements RowMapper<Comment> {
                 rs.getObject("date", LocalDateTime.class),
                 new Author(
                         rs.getString("author name"),
-                        rs.getString("author role")
+                        rs.getString("author role"),
+                        rs.getLong("author id")
                 ),
                 rs.getBoolean("recommended")
         );

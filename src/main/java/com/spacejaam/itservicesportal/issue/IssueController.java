@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,13 +40,13 @@ public class IssueController {
 
     @GetMapping("/new")
     public ModelAndView displayForm() {
-        ModelAndView modelAndView = new ModelAndView("createissue");
+        ModelAndView modelAndView = new ModelAndView("create-issue");
         return modelAndView;
     }
 
     @GetMapping("/created_by_me")
     public ModelAndView displayYourIssues() {
-        final ModelAndView modelAndView = new ModelAndView("yourissues");
+        final ModelAndView modelAndView = new ModelAndView("your-issues");
         final Long clientId = ((ClientPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         final List<Issue> yourIssues = this.issueDAO.getIssuesByAuthorId(clientId);
         modelAndView.addObject("issues", yourIssues);
@@ -59,23 +58,25 @@ public class IssueController {
         final ModelAndView modelAndView = new ModelAndView("issue");
         modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
         modelAndView.addObject("comments", this.commentDAO.getCommentsByIssueId(id));
+
         return modelAndView;
     }
 
     @PostMapping("/{id}/new_comment")
     @ResponseStatus(HttpStatus.CREATED)
-    public RedirectView createComment(
+    public String createComment(
             @PathVariable("id") Long id,
             @RequestParam("commentBody") String message,
             HttpSession session,
-            HttpServletRequest request
+            HttpServletRequest request,
+            HttpServletResponse response
     ) {
         this.commentDAO.insertComment(
                 id,
                 (String) session.getAttribute("username"),
                 new Comment(message)
         );
-        return new RedirectView(request.getContextPath() + "/issues/" + id);
+        return "redirect:/issues/" + id;
     }
 
 
@@ -99,7 +100,7 @@ public class IssueController {
                 ),
                 (String) request.getSession().getAttribute("username")
         );
-        // TODO: redirect to the created issue
+        // TODO redirect to the created issue
         return "index";
     }
 
@@ -147,15 +148,67 @@ public class IssueController {
             @PathVariable("id") Long id,
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws IOException {
-        BufferedReader bufferedReader = request.getReader();
-        if (bufferedReader.ready()) {
-            JsonReader jsonReader = new JsonReader(bufferedReader);
-            JsonObject jsonObject = JsonParser.parseReader(jsonReader).getAsJsonObject();
+    ) {
+        try {
+            JsonObject jsonObject = getJSON(request.getReader());
             final String tag = jsonObject.get("tag").getAsString();
             this.issueDAO.updateIssueTag(id, Tag.valueOf(tag));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    @PostMapping(
+            value = "/tracker/manage_issue/{id}/remove_tag",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public void removeTag(
+            @PathVariable("id") Long id,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        try {
+            JsonObject jsonObject = getJSON(request.getReader());
+            final String tag = jsonObject.get("tag").getAsString();
+            this.issueDAO.removeTag(id, Tag.valueOf(tag));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    @PostMapping(
+            value = "{id}/comments/{commentId}/review",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public void reviewSolution(
+            @PathVariable("id") Long id,
+            @PathVariable("commentId") Long commentId,
+            HttpServletRequest request
+    ) {
+        try {
+            JsonObject jsonObject = getJSON(request.getReader());
+            if (jsonObject.get("accept").getAsBoolean()) {
+                this.issueDAO.acceptSolution(id, commentId);
+            } else {
+                this.issueDAO.rejectSolution(id, commentId);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping(
+            value = "{id}/comments/{commentId}/reject",
+            consumes = MediaType.TEXT_PLAIN_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public void rejectSolution(@PathVariable("id") Long id, @PathVariable("commentId") Long commentId) {
+        this.issueDAO.rejectSolution(id, commentId);
+    }
+
+    private JsonObject getJSON(BufferedReader bufferedReader) throws IOException {
+        return JsonParser.parseReader(new JsonReader(bufferedReader)).getAsJsonObject();
+    }
 }

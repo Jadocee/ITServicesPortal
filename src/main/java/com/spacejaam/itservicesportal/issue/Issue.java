@@ -1,24 +1,28 @@
 package com.spacejaam.itservicesportal.issue;
 
+import com.spacejaam.itservicesportal.author.Author;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Issue {
+public class Issue implements Serializable {
     @Id
     private Long id;
     private String title;
-    private String desc;
+    private final String desc;
     private Category category;
-    private SubCategory subCategory;
-    private String author;
+    private final SubCategory subCategory;
+    private Author author;
     private State state;
     private Set<Tag> tags;
     private LocalDateTime createdOn;
+    private LocalDate resolvedOn;
 
     public Issue(String title, String desc, Category category, SubCategory subCategory) {
         this.title = title;
@@ -27,7 +31,16 @@ public class Issue {
         this.subCategory = subCategory;
     }
 
-    public Issue(Long id, String title, String desc, Category category, SubCategory subCategory, String author, State state, LocalDateTime createdOn) {
+    public Issue(
+            Long id,
+            String title,
+            String desc,
+            Category category,
+            SubCategory subCategory,
+            Author author,
+            State state,
+            LocalDateTime createdOn
+    ) {
         this.id = id;
         this.title = title;
         this.desc = desc;
@@ -37,9 +50,6 @@ public class Issue {
         this.state = state;
         this.createdOn = createdOn;
         this.tags = new HashSet<>();
-    }
-
-    public Issue() {
     }
 
     public ArrayList<String> getTags() {
@@ -78,10 +88,6 @@ public class Issue {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -102,16 +108,8 @@ public class Issue {
         return subCategory;
     }
 
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getState() {
@@ -127,14 +125,17 @@ public class Issue {
     }
 
     public String getCreatedOn() {
-//        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-//        format.setTimeZone(TimeZone.getTimeZone("AEST"));
         return createdOn.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-//        return format.format(createdOn);
         // TODO: offset by local timezone
     }
 
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
+    public LocalDate getResolvedOn() {
+        return resolvedOn;
+    }
+
+    public void setResolvedOn(LocalDate resolvedOn) {
+        this.resolvedOn = resolvedOn;
     }
 }
+
+

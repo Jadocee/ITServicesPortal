@@ -50,8 +50,12 @@ p {
     font-weight: 500;
     font-size: 12px;
     padding: 0 7px;
-    display: inline-block;
     line-height: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 
 .issue-label:hover {
@@ -128,7 +132,7 @@ p {
 }
 
 .issue-comment > div {
-    background: hsl(264 64% 35%);
+    background: hsl(253 89% 42%);
     color: hsl(212 9% 58%);
     padding: 8px 16px;
     margin: -16px -16px 0 -16px;

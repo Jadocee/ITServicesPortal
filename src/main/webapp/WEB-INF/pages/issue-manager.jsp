@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Jaydon
-  Date: 24/05/2022
-  Time: 00:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags/layout" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -69,6 +62,30 @@
             .add-label-menu > li:hover {
                 background-color: hsl(264 64% 35% / 1);
             }
+
+            .issue-label.removable {
+                position: relative;
+            }
+
+            .issue-label.removable > span[role="button"] {
+                font-size: 10px;
+                visibility: hidden;
+                cursor: pointer;
+                background-color: hsl(355 86% 48% / 0.9);
+                border: 1px solid;
+                border-radius: 6px;
+                transition: visibility 251ms linear, opacity 250ms linear;
+                position: absolute;
+                opacity: 0;
+                bottom: 55%;
+                left: 94%;
+            }
+
+            .issue-label.removable:hover > span[role="button"],
+            .issue-label.removable > span[role="button"]:hover {
+                visibility: visible;
+                opacity: 1;
+            }
         </style>
         <script type="text/javascript">
             async function handleRecommendComment(id) {
@@ -105,6 +122,38 @@
                 });
             }
 
+            function removeTag(el) {
+                const url = '<spring:url value="/issues/tracker/manage_issue/${issue.id}/remove_tag"/>';
+                let tag;
+                switch (el.parentElement.id) {
+                    case "knowledge-base-article":
+                        tag = 'ARTICLE';
+                        break;
+                    case "waiting-on-reporter":
+                        tag = 'WAITING';
+                        break;
+                    case "waiting-on-third-party":
+                        tag = 'WAITING_TP';
+                        break;
+                    default:
+                        return;
+                }
+                console.log(tag);
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        tag: tag
+                    }),
+                    headers: {'Content-Type': 'application/json'}
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+
             function toggleMenu() {
                 const menu = document.querySelector(".add-label-menu");
                 menu.hidden = !menu.hidden;
@@ -118,14 +167,23 @@
             <div class="issue-top">
                 <h1 class="issue-title"><c:out value="${issue.title}"/></h1>
                 <span class="issue-creation-details">
-                        <c:out value="${issue.author}"/> created this issue on <c:out value="${issue.createdOn}"/>
+                        <c:out value="${issue.author.displayName}"/> created this issue on <c:out
+                        value="${issue.createdOn}"/>
                     </span>
                 <div class="issue-labels">
                     <span class="issue-label"><c:out value="${issue.category}"/></span>
                     <span class="issue-label"><c:out value="${issue.subCategory}"/></span>
                     <span class="issue-label"><c:out value="${issue.state}"/></span>
                     <c:forEach var="tag" items="${issue.tags}">
-                        <span class="issue-label"><c:out value="${tag}"/></span>
+                        <span id="<c:out value="${tag.replace(' ', '-').toLowerCase()}"/>"
+                              class="issue-label removable">
+                            <span role="button"
+                                  aria-label="Remove this label"
+                                  class="material-symbols-rounded"
+                                  onclick="removeTag(this)"
+                            >remove</span>
+                            <c:out value="${tag}"/>
+                        </span>
                     </c:forEach>
                     <div class="add-label">
                         <span role="button"
@@ -151,7 +209,7 @@
                                     Waiting on reporter
                                 </li>
                             </c:if>
-                            <c:if test="${!issue.tags.contains('Knowledge-Base Article')}">
+                            <c:if test="${!issue.tags.contains('Knowledge-Base Article') && issue.state.equals('Completed') || issue.state.equals('Resolved')}">
                                 <li role="menuitem"
                                     aria-label="Add to knowledge-base"
                                     onclick="addTag('ARTICLE')"

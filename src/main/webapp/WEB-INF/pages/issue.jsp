@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Jaydon
-  Date: 21/05/2022
-  Time: 21:44
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags/layout" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -14,6 +7,39 @@
     <jsp:attribute name="head">
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/form.css"/>"/>
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issue.css"/>"/>
+        <style>
+            /*.issue-comment#recommended-solution {*/
+
+            /*}*/
+
+            /*.issue-comment#recommended-solution .issue-comment__top-bar {*/
+            /*    position: relative;*/
+            /*}*/
+
+            /*.issue-comment#recommended-solution .issue-comment__top-bar:after {*/
+            /*    position: absolute;*/
+            /*    top: 100%;*/
+            /*}*/
+        </style>
+        <script type="text/javascript">
+            const reviewSolution = async (commentId, accept) => {
+                const url = '<spring:url value="/issues/${issue.id}/comments/"/>' + commentId + '/review';
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify({accept: accept}),
+                    headers: {'Content-Type': 'application/json'}
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+        </script>
     </jsp:attribute>
 
     <jsp:body>
@@ -21,17 +47,16 @@
             <div class="issue-top">
                 <h1 class="issue-title"><c:out value="${issue.title}"/></h1>
                 <span class="issue-creation-details">
-                        <c:out value="${issue.author}"/> created this issue on <c:out value="${issue.createdOn}"/>
+                        <c:out value="${issue.author.displayName}"/> created this issue on <c:out
+                        value="${issue.createdOn}"/>
                     </span>
                 <div class="issue-labels">
                     <span class="issue-label"><c:out value="${issue.category}"/></span>
                     <span class="issue-label"><c:out value="${issue.subCategory}"/></span>
                     <span class="issue-label"><c:out value="${issue.state}"/></span>
-                    <c:if test="${issue.tags != null}">
-                        <c:forEach var="tag" items="${issue.tags}">
-                            <span class="issue-label"><c:out value="${tag}"/></span>
-                        </c:forEach>
-                    </c:if>
+                    <c:forEach var="tag" items="${issue.tags}">
+                        <span class="issue-label"><c:out value="${tag}"/></span>
+                    </c:forEach>
                 </div>
 
             </div>
@@ -42,7 +67,8 @@
             <c:if test="${!comments.isEmpty()}">
                 <div class="issue-comments-container">
                     <c:forEach var="comment" items="${comments}">
-                        <div class="issue-comment">
+                        <div <c:out value="${comment.recommended ? 'id=recommended-solution' : ''}"/>
+                                class="issue-comment">
                             <div class="issue-comment__top-bar">
                                 <div>
                                     <c:out value="${comment.author.displayName}"/> commented on
@@ -51,16 +77,18 @@
                                     </time>
                                 </div>
                                 <div role="menubar" class="top-bar__menu-container">
-                                    <c:if test="${comment.recommended}">
+                                    <c:if test="${comment.recommended && issue.author.id == sessionScope.userId && issue.resolvedOn == null}">
                                         <span role="button"
+                                              id="accept-button"
                                               aria-label="Accept as solution"
                                               class="material-symbols-rounded"
-                                              onclick="handleRecommendComment('<c:out value="${comment.id}"/>')"
+                                              onclick="reviewSolution('<c:out value="${comment.id}"/>', true)"
                                         >done</span>
                                         <span role="button"
+                                              id="reject-button"
                                               aria-label="Reject as solution"
                                               class="material-symbols-rounded"
-                                              onclick="handleRecommendComment('<c:out value="${comment.id}"/>')"
+                                              onclick="reviewSolution('<c:out value="${comment.id}"/>', false)"
                                         >close</span>
                                     </c:if>
                                 </div>

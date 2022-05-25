@@ -13,7 +13,7 @@
 
 :root {
     color-scheme: light dark;
-    accent-color: hsl(264 64% 35%);
+    accent-color: hsl(253 89% 42%);
 }
 
 html {
@@ -117,14 +117,13 @@ button,
 [type='submit'] {
     -webkit-appearance: button;
     -moz-appearance: button;
-    appearance: none;
     border-style: solid;
     border-color: transparent;
     cursor: pointer;
     padding: 0;
     overflow: hidden;
     color: inherit;
-    background-color: hsl(264 64% 35%);
+    background-color: hsl(253 89% 42%);
     border-radius: 0.5rem;
     vertical-align: middle;
     text-decoration: none;
@@ -307,7 +306,7 @@ h2 {
     }
 
     .nav-menu-button {
-        background-color: hsl(264 64% 35%);
+        background-color: hsl(253 89% 42%);
     }
 }
 

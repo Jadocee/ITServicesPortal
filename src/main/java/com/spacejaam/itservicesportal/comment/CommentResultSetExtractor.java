@@ -27,7 +27,8 @@ public class CommentResultSetExtractor implements ResultSetExtractor<Map<String,
                         rs.getObject("date", LocalDateTime.class),
                         new Author(
                                 rs.getString("author name"),
-                                rs.getString("author role")
+                                rs.getString("author role"),
+                                rs.getLong("author id")
                         )
                 ));
             } else {
@@ -37,7 +38,8 @@ public class CommentResultSetExtractor implements ResultSetExtractor<Map<String,
                         rs.getObject("date", LocalDateTime.class),
                         new Author(
                                 rs.getString("author name"),
-                                rs.getString("author role")
+                                rs.getString("author role"),
+                                rs.getLong("author id")
                         )
                 ));
             }

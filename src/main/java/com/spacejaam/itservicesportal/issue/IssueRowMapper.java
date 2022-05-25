@@ -1,8 +1,10 @@
 package com.spacejaam.itservicesportal.issue;
 
+import com.spacejaam.itservicesportal.author.Author;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,10 +21,18 @@ public class IssueRowMapper implements RowMapper<Issue> {
                 rs.getNString("desc"),
                 Category.valueOf(rs.getString("category")),
                 SubCategory.valueOf(rs.getString("subcategory")),
-                rs.getString("author"),
+                new Author(
+                        rs.getString("author name"),
+                        rs.getString("author role"),
+                        rs.getLong("author id")
+                ),
                 State.valueOf(rs.getString("state")),
                 rs.getObject("date", LocalDateTime.class)
         );
+        final Date resolvedDate = rs.getDate("resolved_date");
+        if (resolvedDate != null) {
+            issue.setResolvedOn(resolvedDate.toLocalDate());
+        }
         final String tags = rs.getString("tags");
         if (tags != null) {
             final Set<Tag> tagSet = new HashSet<>();

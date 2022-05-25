@@ -23,7 +23,7 @@ public class CommentDAO {
     }
 
     public List<Comment> getCommentsByIssueId(Long id) {
-        final String sql = "select c.*, concat(cl.firstName, ' ', cl.lastName) as 'author name', cl.role as 'author role'\n" +
+        final String sql = "select c.*, concat(cl.firstName, ' ', cl.lastName) as 'author name', cl.role as 'author role', cl.id as 'author id'\n" +
                 "from Comment c\n" +
                 "         join IssueComment IC on c.id = IC.comment_id\n" +
                 "         join ClientComment CC on c.id = CC.comment_id\n" +

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Jaydon
-  Date: 10/05/2022
-  Time: 23:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags/layout" %>
@@ -15,10 +8,9 @@
     <jsp:attribute name="head">
         <script
                 src="https://cdn.jsdelivr.net/npm/chart.js@3/dist/chart.min.js"
-                defer
         ></script>
         <script type="module" defer async>
-            const doughtnutCanvas = document.querySelector("#unresolvedIssues");
+            const donutCanvas = document.querySelector("#unresolvedIssues");
             const lineCanvas = document.querySelector("#resolvedIssues");
             // let unresolvedData;
             // let resolvedData;
@@ -26,7 +18,7 @@
             let lineChart;
             let donutChart;
 
-            await fetch("./API/performance", {
+            await fetch('<spring:url value="/API/performance"/>', {
                 method: 'GET',
                 headers: {'Accept': 'application/json'}
             })
@@ -64,7 +56,7 @@
                             }
                         }
                     });
-                    donutChart = new Chart(doughtnutCanvas, {
+                    donutChart = new Chart(donutCanvas, {
                         type: 'doughnut',
                         data: {
                             labels: ['Network', 'Software', 'Hardware', 'Account', 'Email'],
