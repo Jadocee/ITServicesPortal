@@ -1,4 +1,4 @@
-package com.spacejaam.itservicesportal.controller;
+package com.spacejaam.itservicesportal.article;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

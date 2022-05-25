@@ -113,6 +113,13 @@ public class IssueController {
         final ModelAndView modelAndView = new ModelAndView("issue-manager");
         modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
         modelAndView.addObject("comments", this.commentDAO.getCommentsByIssueId(id));
+//        modelAndView.addObject("recommended", this.commentDAO.getRecommendedCommentForIssue(id));
         return modelAndView;
+    }
+
+    @PostMapping("/tracker/recommend_comment")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void recommendAsSolution(@RequestParam("id") Long commentId) {
+
     }
 }

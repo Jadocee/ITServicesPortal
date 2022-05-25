@@ -1,8 +1,7 @@
-package com.spacejaam.itservicesportal.controller;
+package com.spacejaam.itservicesportal.performance;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.spacejaam.itservicesportal.performance.PerformanceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -14,12 +14,22 @@ public class Comment implements Serializable {
     private String message;
     private Author author;
     private LocalDateTime created;
+    private Boolean recommended;
 
     public Comment(Long id, String message, LocalDateTime created, Author author) {
         this.id = id;
         this.message = message;
         this.created = created;
         this.author = author;
+        this.recommended = false;
+    }
+
+    public Comment(Long id, String message, LocalDateTime created, Author author, Boolean recommended) {
+        this.id = id;
+        this.message = message;
+        this.created = created;
+        this.author = author;
+        this.recommended = recommended;
     }
 
     public Comment(String message) {
@@ -57,5 +67,9 @@ public class Comment implements Serializable {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Boolean getRecommended() {
+        return recommended;
     }
 }

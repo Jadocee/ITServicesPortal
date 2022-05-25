@@ -14,6 +14,26 @@
     <jsp:attribute name="head">
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issue.css"/>"/>
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/form.css"/>"/>
+        <style>
+
+        </style>
+        <script type="text/javascript" defer>
+            async function handleRecommendComment(id) {
+                const url = <spring:url value="/tracker/recommend_comment"/>;
+                const formData = new FormData();
+                formData.append('id', id);
+                fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.status === 6) {
+                        window.location.reload();
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+        </script>
     </jsp:attribute>
 
     <jsp:body>
@@ -37,15 +57,27 @@
                 <p><c:out value="${issue.desc}"/></p>
             </div>
 
-            <c:if test="${comments.size() > 0}">
+            <c:if test="${!comments.isEmpty()}">
                 <div class="issue-comments-container">
                     <c:forEach var="comment" items="${comments}">
                         <div class="issue-comment">
-                            <div>
-                                <c:out value="${comment.author.displayName}"/> commented on
-                                <time datetime="<c:out value="${comment.created}"/>">
-                                    <c:out value="${comment.created}"/>
-                                </time>
+                            <div class="issue-comment__top-bar">
+                                <div>
+                                    <c:out value="${comment.author.displayName}"/> commented on
+                                    <time datetime="<c:out value="${comment.created}"/>">
+                                        <c:out value="${comment.created}"/>
+                                    </time>
+                                </div>
+                                <div role="menubar" class="top-bar__menu-container">
+                                    <c:if test="${comment.author.role.equals('ITSTAFF') }">
+                                            <span role="button"
+                                                  aria-label="Recommend as solution"
+                                                  class="material-symbols-rounded"
+                                                  onclick="handleRecommendComment('<c:out value="${comment.id}"/>')"
+                                            >recommend</span>
+                                    </c:if>
+                                </div>
+
                             </div>
                             <p><c:out value="${comment.message}"/></p>
                         </div>

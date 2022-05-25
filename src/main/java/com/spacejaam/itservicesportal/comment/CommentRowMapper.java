@@ -19,7 +19,8 @@ public class CommentRowMapper implements RowMapper<Comment> {
                 new Author(
                         rs.getString("author name"),
                         rs.getString("author role")
-                )
+                ),
+                rs.getBoolean("recommended")
         );
     }
 }

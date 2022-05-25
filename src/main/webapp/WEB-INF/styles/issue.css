@@ -133,3 +133,38 @@ p {
     font-weight: 400;
     font-size: 14px;
 }
+
+.issue-comment__top-bar {
+    min-height: 36px;
+}
+
+.issue-comment__top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar__menu-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 8px;
+}
+
+.top-bar__menu-container > [role="button"] {
+    transition: color 400ms ease-in-out;
+    color: hsl(0 0% 100% / 0.4);
+    opacity: 0.5;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 20px;
+}
+
+.top-bar__menu-container > [role="button"]:hover {
+    color: hsl(0 0% 100% / 1);
+}
