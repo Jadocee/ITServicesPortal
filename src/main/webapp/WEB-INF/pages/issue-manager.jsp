@@ -15,23 +15,83 @@
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issue.css"/>"/>
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/form.css"/>"/>
         <style>
+            .add-label {
+                position: relative;
+                aspect-ratio: 1;
+                width: 20px;
+                max-height: 20px;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+            }
 
+            .add-label-btn {
+                cursor: pointer;
+                font-size: 20px;
+                opacity: 0.5;
+                transition: opacity 300ms ease-in-out;
+            }
+
+            .add-label-btn:hover {
+                opacity: 1;
+            }
+
+            .add-label-menu {
+                position: absolute;
+                list-style: none;
+                background: hsl(215 21% 11%);
+                top: 100%;
+                left: 0;
+                background-clip: padding-box;
+                right: auto;
+                margin: 0;
+                padding: 4px 0 4px 0;
+                z-index: 100;
+                width: 200px;
+                border: 1px solid;
+                border-radius: 6px;
+            }
+
+            .add-label-menu > li {
+                width: 100%;
+                text-align: left;
+                display: block;
+                padding: 4px 8px 4px 16px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                background-color: hsl(264 64% 35% / 0);
+                transition: background-color 250ms ease-in-out;
+                cursor: pointer;
+            }
+
+            .add-label-menu > li:hover {
+                background-color: hsl(264 64% 35% / 1);
+            }
         </style>
-        <script type="text/javascript" defer>
+        <script type="text/javascript">
             async function handleRecommendComment(id) {
-                const url = <spring:url value="/tracker/recommend_comment"/>;
-                const formData = new FormData();
-                formData.append('id', id);
+                const url = '<spring:url value="/issues/tracker/recommend_comment"/>';
                 fetch(url, {
                     method: 'POST',
-                    body: formData
+                    body: JSON.stringify({
+                        id: id
+                    }),
+                    headers: {'Content-Type': 'application/json'}
                 }).then(response => {
-                    if (response.status === 6) {
+                    if (response.ok) {
                         window.location.reload();
                     }
                 }).catch(error => {
                     console.error(error);
                 });
+            }
+
+            function toggleMenu() {
+                const menu = document.querySelector(".add-label-menu");
+                menu.hidden = !menu.hidden;
+                menu.ariaHidden = menu.hidden.toString();
             }
         </script>
     </jsp:attribute>
@@ -50,6 +110,31 @@
                     <c:forEach var="tag" items="${issue.tags}">
                         <span class="issue-label"><c:out value="${tag}"/></span>
                     </c:forEach>
+                    <div class="add-label">
+                        <span role="button"
+                              aria-haspopup="menu"
+                              class="material-symbols-rounded add-label-btn"
+                              onclick="toggleMenu()"
+                        >add</span>
+
+                        <menu role="menu" class="add-label-menu" hidden aria-hidden="true">
+                            <li role="menuitem"
+                                aria-label="Add to knowledge-base"
+                            >
+                                Knowledge-base article
+                            </li>
+                            <li role="menuitem"
+                                aria-label="Mark as 'waiting on third-party'"
+                            >
+                                Waiting on third-party
+                            </li>
+                            <li role="menuitem"
+                                aria-label="Mark as 'waiting on reporter'"
+                            >
+                                Waiting on reporter
+                            </li>
+                        </menu>
+                    </div>
                 </div>
 
             </div>
@@ -69,7 +154,7 @@
                                     </time>
                                 </div>
                                 <div role="menubar" class="top-bar__menu-container">
-                                    <c:if test="${comment.author.role.equals('ITSTAFF') }">
+                                    <c:if test="${!issue.state.equals('Completed') && comment.author.role.equals('ITSTAFF')}">
                                             <span role="button"
                                                   aria-label="Recommend as solution"
                                                   class="material-symbols-rounded"

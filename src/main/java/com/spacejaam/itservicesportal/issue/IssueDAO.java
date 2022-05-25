@@ -71,4 +71,5 @@ public class IssueDAO {
         return this.jdbcTemplate.query(sql, new IssueResultSetExtractor());
     }
 
+
 }

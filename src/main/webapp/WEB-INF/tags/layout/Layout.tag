@@ -12,7 +12,8 @@
     <link fetchpriority="low" rel="icon" href="<spring:url value="/$assets/favicon.png"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link fetchpriority="high" type="text/css" rel="stylesheet" href="<spring:url value="/$styles/app.css"/>"/>
-    <link rel="stylesheet"
+    <link fetchpriority="high"
+          rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <jsp:invoke fragment="head"/>
     <title><c:out value="${title}"/></title>

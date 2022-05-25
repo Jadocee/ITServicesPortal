@@ -1,10 +1,14 @@
 package com.spacejaam.itservicesportal.issue;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import com.spacejaam.itservicesportal.client.ClientPrinciple;
 import com.spacejaam.itservicesportal.comment.Comment;
 import com.spacejaam.itservicesportal.comment.CommentDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -117,9 +123,18 @@ public class IssueController {
         return modelAndView;
     }
 
-    @PostMapping("/tracker/recommend_comment")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void recommendAsSolution(@RequestParam("id") Long commentId) {
-
+    @PostMapping(
+            value = "/tracker/recommend_comment",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public void recommendAsSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader bufferedReader = request.getReader();
+        if (bufferedReader.ready()) {
+            JsonReader jsonReader = new JsonReader(bufferedReader);
+            JsonObject jsonObject = JsonParser.parseReader(jsonReader).getAsJsonObject();
+            final Long id = jsonObject.get("id").getAsLong();
+            this.commentDAO.markCommentAsSolution(id);
+        }
     }
 }

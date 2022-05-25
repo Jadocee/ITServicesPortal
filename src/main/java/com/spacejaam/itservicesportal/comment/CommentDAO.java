@@ -32,4 +32,22 @@ public class CommentDAO {
                 "order by date asc";
         return this.jdbcTemplate.query(sql, new CommentRowMapper(), id);
     }
+
+    public void markCommentAsSolution(Long commentId) {
+        final String sql = "begin transaction\n" +
+                "declare @commentId int;" +
+                "select @commentId = ?;" +
+                "update Comment\n" +
+                "set recommended = 0;\n" +
+                "update Comment\n" +
+                "set recommended = 1\n" +
+                "where id = @commentId;\n" +
+                "update Issue\n" +
+                "set state = case when (state = 'PROGRESS') then 'COMPLETE' else state end\n" +
+                "from Issue\n" +
+                "join IssueComment on Issue.id = IssueComment.issue_id\n" +
+                "where comment_id = @commentId;\n" +
+                "commit\n";
+        this.jdbcTemplate.update(sql, commentId);
+    }
 }

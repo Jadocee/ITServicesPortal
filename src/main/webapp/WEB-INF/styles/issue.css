@@ -39,6 +39,8 @@ p {
     flex-direction: row;
     gap: 0.5em;
     align-content: center;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .issue-label {
