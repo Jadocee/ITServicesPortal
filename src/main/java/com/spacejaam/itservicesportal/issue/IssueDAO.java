@@ -71,5 +71,10 @@ public class IssueDAO {
         return this.jdbcTemplate.query(sql, new IssueResultSetExtractor());
     }
 
+    public void updateIssueTag(Long issueId, Tag tag) {
+        final String sql = "update Issue set tags = case when tags is null then ? else concat(tags, ',', ?) end where id = ?";
+        this.jdbcTemplate.update(sql, tag.name(), tag.name(), issueId);
+    }
+
 
 }

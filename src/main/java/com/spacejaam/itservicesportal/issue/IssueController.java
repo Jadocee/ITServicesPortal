@@ -137,4 +137,25 @@ public class IssueController {
             this.commentDAO.markCommentAsSolution(id);
         }
     }
+
+    @PostMapping(
+            value = "/tracker/manage_issue/{id}/add_tag",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public void addTag(
+            @PathVariable("id") Long id,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        BufferedReader bufferedReader = request.getReader();
+        if (bufferedReader.ready()) {
+            JsonReader jsonReader = new JsonReader(bufferedReader);
+            JsonObject jsonObject = JsonParser.parseReader(jsonReader).getAsJsonObject();
+            final String tag = jsonObject.get("tag").getAsString();
+            this.issueDAO.updateIssueTag(id, Tag.valueOf(tag));
+        }
+    }
+
+
 }

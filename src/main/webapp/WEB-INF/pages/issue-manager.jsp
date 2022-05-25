@@ -88,6 +88,23 @@
                 });
             }
 
+            async function addTag(tag) {
+                const url = '<spring:url value="/issues/tracker/manage_issue/${issue.id}/add_tag"/>';
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        tag: tag
+                    }),
+                    headers: {'Content-Type': 'application/json'}
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+
             function toggleMenu() {
                 const menu = document.querySelector(".add-label-menu");
                 menu.hidden = !menu.hidden;
@@ -118,21 +135,30 @@
                         >add</span>
 
                         <menu role="menu" class="add-label-menu" hidden aria-hidden="true">
-                            <li role="menuitem"
-                                aria-label="Add to knowledge-base"
-                            >
-                                Knowledge-base article
-                            </li>
-                            <li role="menuitem"
-                                aria-label="Mark as 'waiting on third-party'"
-                            >
-                                Waiting on third-party
-                            </li>
-                            <li role="menuitem"
-                                aria-label="Mark as 'waiting on reporter'"
-                            >
-                                Waiting on reporter
-                            </li>
+                            <c:if test="${!issue.tags.contains('Waiting on third-party')}">
+                                <li role="menuitem"
+                                    aria-label="Mark as 'waiting on third-party'"
+                                    onclick="addTag('WAITING_TP')"
+                                >
+                                    Waiting on third-party
+                                </li>
+                            </c:if>
+                            <c:if test="${!issue.tags.contains('Waiting on reporter')}">
+                                <li role="menuitem"
+                                    aria-label="Mark as 'waiting on reporter'"
+                                    onclick="addTag('WAITING')"
+                                >
+                                    Waiting on reporter
+                                </li>
+                            </c:if>
+                            <c:if test="${!issue.tags.contains('Knowledge-Base Article')}">
+                                <li role="menuitem"
+                                    aria-label="Add to knowledge-base"
+                                    onclick="addTag('ARTICLE')"
+                                >
+                                    Knowledge-base article
+                                </li>
+                            </c:if>
                         </menu>
                     </div>
                 </div>
