@@ -73,7 +73,7 @@
                             type="button"
                             class="nav-menu-button"
                             aria-label="Issue Manager"
-                            onclick="window.location.href='<spring:url value="issues/tracker"/>'"
+                            onclick="window.location.href='<spring:url value="/issues/tracker"/>'"
                     >
                         <span class="material-symbols-rounded">pending_actions</span>
                         <span class="nav-menu-button__label">Track Issues</span>
