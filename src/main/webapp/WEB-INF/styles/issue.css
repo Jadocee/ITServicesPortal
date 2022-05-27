@@ -175,7 +175,7 @@ p {
     color: hsl(0 0% 100% / 1);
 }
 
-.recommended-solution > div {
+#recommended-solution > div {
     background: hsl(253 89% 42%);
     color: chartreuse;
     padding: 8px 16px;

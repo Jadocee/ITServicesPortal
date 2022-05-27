@@ -29,7 +29,8 @@ public class ArticleDAO {
                 "from KnowledgeBase K\n" +
                 "         join Issue I on K.issue_id = I.id\n" +
                 "         join IssueComment IC on I.id = IC.issue_id\n" +
-                "         join Comment C on IC.comment_id = C.id";
+                "         join Comment C on IC.comment_id = C.id\n" +
+                "where C.recommended = 1;";
         return this.jdbcTemplate.query(sql, new ArticleRowMapper());
     }
 
@@ -48,7 +49,7 @@ public class ArticleDAO {
                 "         join Issue I on K.issue_id = I.id\n" +
                 "         join IssueComment IC on I.id = IC.issue_id\n" +
                 "         join Comment C on IC.comment_id = C.id\n" +
-                "where K.id = ?;";
+                "where K.id = ? and C.recommended = 1;";
         return this.jdbcTemplate.queryForObject(sql, new ArticleRowMapper(), id);
     }
 
