@@ -15,6 +15,56 @@
     <link fetchpriority="high"
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <script>
+        function toggleNoti() {
+            const menu = document.querySelector(".notification-menu");
+            menu.hidden = !menu.hidden;
+            menu.ariaHidden = menu.hidden.toString();
+        }
+    </script>
+    <style>
+
+        .notification-btn {
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.5;
+            transition: opacity 300ms ease-in-out;
+        }
+
+        .notification-btn:hover {
+            opacity: 1;
+        }
+
+        .notification-menu {
+            position: absolute;
+            list-style: none;
+            background: hsl(215 21% 11%);
+            top: 100%;
+            left: auto;
+            background-clip: padding-box;
+            right: auto;
+            margin: 0;
+            padding: 4px 0 4px 0;
+            z-index: 100;
+            width: 200px;
+            border: 1px solid;
+            border-radius: 6px;
+        }
+
+        .notification-menu > li {
+            width: 100%;
+            text-align: left;
+            display: block;
+            padding: 4px 8px 4px 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            background-color: hsl(264 64% 35% / 0);
+            transition: background-color 250ms ease-in-out;
+            cursor: pointer;
+        }
+
+    </style>
     <jsp:invoke fragment="head"/>
     <title><c:out value="${title}"/></title>
 </head>
@@ -28,6 +78,21 @@
 
     </div>
     <div class="primary-header__right">
+        <c:if test="${sessionScope.authorities.contains('ROLE_USER')}">
+            <span role="button"
+                  aria-haspopup="menu"
+                  class="material-symbols-rounded notification-btn"
+                  onclick="toggleNoti()">
+                notifications</span>
+
+            <menu role="menu" class="notification-menu" hidden aria-hidden="true">
+                <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}"><%--this do not work need fix--%>
+                    <li>Your issues needs attendants</li>
+                </c:if>
+
+                <li>boo</li>
+            </menu>
+        </c:if>
 
     </div>
 </header>
