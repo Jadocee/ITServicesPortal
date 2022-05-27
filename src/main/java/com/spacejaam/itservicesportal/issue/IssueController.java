@@ -70,7 +70,6 @@ public class IssueController {
     }
 
     @PostMapping("/{id}/new_comment")
-    @ResponseStatus(HttpStatus.CREATED)
     public String createComment(
             @PathVariable("id") Long id,
             @RequestParam("commentBody") String message,
@@ -88,8 +87,7 @@ public class IssueController {
 
 
     @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String createIssue(
+    public void createIssue(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("category") String category,
@@ -97,7 +95,7 @@ public class IssueController {
             HttpServletRequest request,
             HttpServletResponse response,
             Model model
-    ) {
+    ) throws IOException {
         this.issueDAO.insertIssue(
                 new Issue(
                         title,
@@ -108,7 +106,7 @@ public class IssueController {
                 (String) request.getSession().getAttribute("username")
         );
         // TODO redirect to the created issue
-        return "index";
+        response.sendRedirect(request.getContextPath() + "/issues/created_by_me");
     }
 
     @GetMapping("/tracker")

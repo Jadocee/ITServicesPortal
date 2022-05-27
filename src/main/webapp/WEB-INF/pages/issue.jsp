@@ -39,6 +39,8 @@
                     });
             }
 
+            const createComment = async(message)
+
         </script>
     </jsp:attribute>
 
