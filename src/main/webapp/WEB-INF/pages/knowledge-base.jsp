@@ -11,24 +11,21 @@
     <jsp:body>
         <h1>Knowledge Base</h1>
         <c:choose>
-            <c:when test="${!issues.isEmpty()}">
+            <c:when test="${foundArticles}">
                 <div class="issues-list-container">
                     <div class="issues-list">
-                        <c:forEach var="issue" items="${issues}">
+                        <c:forEach var="article" items="${articles}">
                             <div class="issue-cls">
-                                <a class="issue__title" href="<spring:url value="/issues/${issue.id}"/>"><c:out
-                                        value="${issue.title}"/></a>
-                                <span class="issue__created_on">
-                            Created by <c:out value="${issue.author.displayName}"/> on <c:out
-                                        value="${issue.createdOn}"/>
-                        </span>
+                                <a class="issue__title" href="<spring:url value="/knowledge_base/${article.id}"/>">
+                                    <c:out value="${article.title}"/>
+                                </a>
                             </div>
                         </c:forEach>
                     </div>
                 </div>
             </c:when>
             <c:otherwise>
-                Could not find any issues
+                The Knowledge-Base is currently empty.
             </c:otherwise>
         </c:choose>
     </jsp:body>

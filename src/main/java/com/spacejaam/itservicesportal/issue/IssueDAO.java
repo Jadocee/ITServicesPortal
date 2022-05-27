@@ -47,18 +47,21 @@ public class IssueDAO {
     }
 
     public Map<String, List<Issue>> getAllIssues() {
-        final String sql = "select i.*, concat(c.firstName, ' ', c.lastName) as 'author name', c.id as 'author id', c.role as 'author role'\n" +
+        final String sql = "select i.*,\n" +
+                "       concat(c.firstName, ' ', c.lastName) as 'author name',\n" +
+                "       c.id                                 as 'author id',\n" +
+                "       c.role                               as 'author role'\n" +
                 "from Issue i\n" +
                 "         join ClientIssue CI on i.id = CI.issue_id\n" +
                 "         join Client C on CI.client_id = C.id\n" +
-                "where state != 'RESOLVED'\n" +
-                "order by date asc,\n" +
-                "         case\n" +
+                "order by case\n" +
                 "             when i.state = 'NEW' then '1'\n" +
                 "             when i.state = 'PROGRESS' then '2'\n" +
                 "             when i.state = 'COMPLETE' then '3'\n" +
-                "             else i.state end asc\n" +
-                "\n";
+                "             when i.state = 'RESOLVED' then '4'\n" +
+                "             else i.state\n" +
+                "             end asc,\n" +
+                "         date asc";
         return this.jdbcTemplate.query(sql, new IssueResultSetExtractor());
     }
 

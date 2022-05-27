@@ -238,7 +238,7 @@
                                     </time>
                                 </div>
                                 <div role="menubar" class="top-bar__menu-container">
-                                    <c:if test="${!issue.state.equals('Completed') && comment.author.role.equals('ITSTAFF')}">
+                                    <c:if test="${!issue.state.equals('Completed') && !issue.state.equals('Resolved') && comment.author.role.equals('ITSTAFF')}">
                                             <span role="button"
                                                   aria-label="Recommend as solution"
                                                   class="material-symbols-rounded"

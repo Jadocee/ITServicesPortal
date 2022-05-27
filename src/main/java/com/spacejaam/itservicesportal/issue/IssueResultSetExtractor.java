@@ -18,9 +18,13 @@ public class IssueResultSetExtractor implements ResultSetExtractor<Map<String, L
     @Override
     public Map<String, List<Issue>> extractData(ResultSet rs) throws SQLException, DataAccessException {
         final Map<String, List<Issue>> issuesListMap = new HashMap<>();
+        issuesListMap.put("New", new ArrayList<>());
+        issuesListMap.put("In Progress", new ArrayList<>());
+        issuesListMap.put("Completed", new ArrayList<>());
+        issuesListMap.put("Resolved", new ArrayList<>());
         while (rs.next()) {
-            final String state = rs.getString("state");
-            issuesListMap.computeIfAbsent(state, k -> new ArrayList<>());
+            final State state = State.valueOf(rs.getString("state"));
+//            issuesListMap.computeIfAbsent(state, k -> new ArrayList<>());
             final Issue issue = new Issue(
                     rs.getLong("id"),
                     rs.getString("title"),
@@ -32,7 +36,7 @@ public class IssueResultSetExtractor implements ResultSetExtractor<Map<String, L
                             rs.getString("author role"),
                             rs.getLong("author id")
                     ),
-                    State.valueOf(state),
+                    state,
                     rs.getObject("date", LocalDateTime.class)
             );
             final Date resolvedDate = rs.getDate("resolved_date");
@@ -47,7 +51,7 @@ public class IssueResultSetExtractor implements ResultSetExtractor<Map<String, L
                 }
                 issue.setTags(tagSet);
             }
-            issuesListMap.get(state).add(issue);
+            issuesListMap.get(state.toString()).add(issue);
 
         }
         return issuesListMap;
