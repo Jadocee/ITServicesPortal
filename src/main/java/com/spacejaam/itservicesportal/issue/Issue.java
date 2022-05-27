@@ -131,7 +131,11 @@ public class Issue implements Serializable {
     }
 
     public String getResolvedOn() {
-        return resolvedOn.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        try {
+            return resolvedOn.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public void setResolvedOn(LocalDate resolvedOn) {

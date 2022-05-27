@@ -142,22 +142,11 @@ public class IssueDAO {
                 "    end\n" +
                 "insert into @table\n" +
                 "select @currentTags;\n" +
-                "if not exists(select *\n" +
-                "              from @table\n" +
-                "              where name = 'ARTICLE')\n" +
-                "    begin\n" +
-                "        update Issue\n" +
-                "        set state = 'RESOLVED',\n" +
-                "            tags  = IIF((select * from @table where name = 'ARTICLE') is not null, concat(tags, ',ARTICLE'), tags),\n" +
-                "            resolved_date = getutcdate()" +
-                "        where id = @issueId;\n" +
-                "    end\n" +
-                "if not exists(select *\n" +
-                "              from KnowledgeBase\n" +
-                "              where issue_id = @issueId)\n" +
-                "    begin\n" +
-                "        insert into KnowledgeBase(issue_id) values (@issueId);\n" +
-                "    end\n" +
+                "update Issue\n" +
+                "set state         = 'RESOLVED',\n" +
+                "    tags          = IIF((tags is not null and not exists(select * from @table where name = 'ARTICLE')), concat(tags, ',ARTICLE'),\n" +
+                "                        tags),\n" +
+                "    resolved_date = getutcdate()\n" +
                 "commit";
         this.jdbcTemplate.update(sql, issueId, commentId);
     }

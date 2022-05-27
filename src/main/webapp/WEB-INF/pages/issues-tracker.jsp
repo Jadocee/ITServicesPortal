@@ -87,7 +87,7 @@
             <h1>Issues Tracker</h1>
 
             <c:choose>
-                <c:when test="${!issues.isEmpty()}">
+                <c:when test="${foundIssues}">
                     <div class="issues-list-container">
 
                         <c:forEach var="issuesListMap" items="${issues}">

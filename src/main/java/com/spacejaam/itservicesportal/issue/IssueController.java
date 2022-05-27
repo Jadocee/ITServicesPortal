@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -110,12 +111,11 @@ public class IssueController {
     }
 
     @GetMapping("/tracker")
-    public ModelAndView displayTracker(@RequestParam(value = "state", required = false) String state) {
+    public ModelAndView displayTracker() {
         final ModelAndView modelAndView = new ModelAndView("issues-tracker");
-        modelAndView.addObject(
-                "issues",
-                state != null ? this.issueDAO.getIssuesByState(State.valueOf(state)) : this.issueDAO.getAllIssues()
-        );
+        final Map<String, List<Issue>> issues = this.issueDAO.getAllIssues();
+        modelAndView.addObject("foundIssues", !issues.isEmpty());
+        modelAndView.addObject("issues", issues);
         return modelAndView;
     }
 
@@ -123,9 +123,12 @@ public class IssueController {
     @GetMapping("/tracker/manage_issue/{id}")
     public ModelAndView manageIssue(@PathVariable("id") Long id) {
         final ModelAndView modelAndView = new ModelAndView("issue-manager");
-        modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
-        modelAndView.addObject("comments", this.commentDAO.getCommentsByIssueId(id));
-//        modelAndView.addObject("recommended", this.commentDAO.getRecommendedCommentForIssue(id));
+        final Issue issue = this.issueDAO.getIssueById(id);
+        modelAndView.addObject("allowCommenting", !issue.state().equals(State.RESOLVED));
+        modelAndView.addObject("issue", issue);
+        final List<Comment> comments = this.commentDAO.getCommentsByIssueId(id);
+        modelAndView.addObject("hasCommments", !comments.isEmpty());
+        modelAndView.addObject("comments", comments);
         return modelAndView;
     }
 
