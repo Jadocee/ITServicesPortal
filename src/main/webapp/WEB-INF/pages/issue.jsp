@@ -64,7 +64,7 @@
                 <p><c:out value="${issue.desc}"/></p>
             </div>
 
-            <c:if test="${!comments.isEmpty()}">
+            <c:if test="${showComments}">
                 <div class="issue-comments-container">
                     <c:forEach var="comment" items="${comments}">
                         <div <c:out value="${comment.recommended ? 'id=recommended-solution' : ''}"/>
@@ -77,7 +77,7 @@
                                     </time>
                                 </div>
                                 <div role="menubar" class="top-bar__menu-container">
-                                    <c:if test="${comment.recommended && issue.author.id == sessionScope.userId && issue.resolvedOn == null}">
+                                    <c:if test="${comment.recommended && isAuthor && issue.resolvedOn == null}">
                                         <span role="button"
                                               id="accept-button"
                                               aria-label="Accept as solution"
@@ -100,18 +100,19 @@
             </c:if>
         </section>
 
-        <section id="commentFormSection">
-            <form
-                    id="issueCommentForm"
-                    accept-charset="UTF-8"
-                    method="post"
-                    action="<spring:url value="/issues/${issue.id}/new_comment"/>"
-                    autocapitalize="sentences"
-                    autocomplete="off"
-                    spellcheck="true"
-                    lang="en"
-            >
-                <div class="text-area-container input-container">
+        <c:if test="${allowCommenting}">
+            <section id="commentFormSection">
+                <form
+                        id="issueCommentForm"
+                        accept-charset="UTF-8"
+                        method="post"
+                        action="<spring:url value="/issues/${issue.id}/new_comment"/>"
+                        autocapitalize="sentences"
+                        autocomplete="off"
+                        spellcheck="true"
+                        lang="en"
+                >
+                    <div class="text-area-container input-container">
                     <textarea
                             id="issueCommentBody"
                             placeholder="Leave a comment"
@@ -123,11 +124,12 @@
                             aria-label="Comment body"
                             name="commentBody"
                     ></textarea>
-                </div>
-                <div class="form__bottom-container">
-                    <button type="submit" class="form-btn md">Comment</button>
-                </div>
-            </form>
-        </section>
+                    </div>
+                    <div class="form__bottom-container">
+                        <button type="submit" class="form-btn md">Comment</button>
+                    </div>
+                </form>
+            </section>
+        </c:if>
     </jsp:body>
 </app:Layout>

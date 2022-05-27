@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -54,11 +55,15 @@ public class IssueController {
     }
 
     @GetMapping("/{id}")
-    public ModelAndView displayIssue(@PathVariable("id") Long id) {
+    public ModelAndView displayIssue(@PathVariable("id") Long id, HttpSession session) {
         final ModelAndView modelAndView = new ModelAndView("issue");
-        modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
+        final Issue issue = this.issueDAO.getIssueById(id);
+        final List<Comment> comments = this.commentDAO.getCommentsByIssueId(id);
+        modelAndView.addObject("showComments", !comments.isEmpty());
+        modelAndView.addObject("allowCommenting", !issue.state().equals(State.RESOLVED));
+        modelAndView.addObject("isAuthor", Objects.equals(issue.getAuthor().getId(), session.getAttribute("userId")));
+        modelAndView.addObject("issue", issue);
         modelAndView.addObject("comments", this.commentDAO.getCommentsByIssueId(id));
-
         return modelAndView;
     }
 
@@ -130,13 +135,9 @@ public class IssueController {
     )
     @ResponseStatus(HttpStatus.OK)
     public void recommendAsSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader bufferedReader = request.getReader();
-        if (bufferedReader.ready()) {
-            JsonReader jsonReader = new JsonReader(bufferedReader);
-            JsonObject jsonObject = JsonParser.parseReader(jsonReader).getAsJsonObject();
-            final Long id = jsonObject.get("id").getAsLong();
-            this.commentDAO.markCommentAsSolution(id);
-        }
+        JsonObject jsonObject = getJSON(request.getReader());
+        final Long id = jsonObject.get("id").getAsLong();
+        this.commentDAO.markCommentAsSolution(id);
     }
 
     @PostMapping(
@@ -197,15 +198,6 @@ public class IssueController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @PostMapping(
-            value = "{id}/comments/{commentId}/reject",
-            consumes = MediaType.TEXT_PLAIN_VALUE
-    )
-    @ResponseStatus(HttpStatus.OK)
-    public void rejectSolution(@PathVariable("id") Long id, @PathVariable("commentId") Long commentId) {
-        this.issueDAO.rejectSolution(id, commentId);
     }
 
     private JsonObject getJSON(BufferedReader bufferedReader) throws IOException {
