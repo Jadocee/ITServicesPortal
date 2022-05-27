@@ -1,56 +1,131 @@
--- counters
-create view performance_view as
+create table Client
+(
+    id                      int identity
+        primary key,
+    email                   varchar(319)  not null,
+    password                nvarchar(150) not null,
+    firstName               varchar(30)   not null,
+    lastName                varchar(30)   not null,
+    contactNum              varchar(50)   not null,
+    role                    varchar(10)   not null,
+    isAccountNonExpired     bit default 1 not null,
+    isAccountNonLocked      bit default 1 not null,
+    isCredentialsNonExpired bit default 1 not null,
+    isEnabled               bit default 1 not null
+)
+go
+
+create table Comment
+(
+    id          int identity
+        constraint Comment_pk
+            primary key,
+    date        datetime2 default getutcdate() not null,
+    message     nvarchar(600)                  not null,
+    recommended bit       default 0            not null
+)
+go
+
+create table ClientComment
+(
+    client_id  int not null
+        constraint ClientComment_Client_id_fk
+            references Client
+            on update cascade on delete cascade,
+    comment_id int not null
+        constraint ClientComment_Comment_id_fk
+            references Comment
+            on update cascade on delete cascade,
+    constraint ClientComment_pk
+        primary key (client_id, comment_id)
+)
+go
+
+create unique index Comment_id_uindex
+    on Comment (id)
+go
+
+create table Issue
+(
+    id            int identity
+        constraint Issue_pk
+            primary key,
+    title         varchar(100)                  not null,
+    [desc]        nvarchar(1000)                not null,
+    date          datetime2   default getdate() not null,
+    tags          varchar(30) default NULL,
+    state         varchar(8)  default 'NEW'     not null,
+    category      varchar(8)                    not null,
+    subcategory   varchar(11)                   not null,
+    resolved_date datetime2   default NULL
+)
+go
+
+create table ClientIssue
+(
+    client_id int not null
+        constraint ClientIssue_Client_id_fk
+            references Client
+            on update cascade on delete cascade,
+    issue_id  int not null
+        constraint ClientIssue_Issue_id_fk
+            references Issue
+            on update cascade on delete cascade,
+    constraint ClientIssue_pk
+        primary key (client_id, issue_id)
+)
+go
+
+create unique index Issue_id_uindex
+    on Issue (id)
+go
+
+create table IssueComment
+(
+    issue_id   int not null
+        constraint IssueComment_Issue_id_fk
+            references Issue
+            on update cascade on delete cascade,
+    comment_id int not null
+        constraint IssueComment_Comment_id_fk
+            references Comment
+            on update cascade on delete cascade,
+    constraint IssueComment_pk
+        primary key (issue_id, comment_id)
+)
+go
+
+create table KnowledgeBase
+(
+    id         int identity
+        constraint KnowledgeBase_pk
+            primary key,
+    date_added datetime2 default getutcdate() not null,
+    issue_id   int                            not null
+        constraint KnowledgeBase_Issue_id_fk
+            references Issue
+            on update cascade on delete cascade
+)
+go
+
+create unique index KnowledgeBase_id_uindex
+    on KnowledgeBase (id)
+go
+
+create view resolved_last_7_days as
+select dateadd(day, 0, datediff(day, 0, date))                                                        as 'date',
+       sum(case when state = 'RESOLVED' and date >= dateadd(day, -7, getutcdate()) then 1 else 0 end) as 'nResolved'
+from Issue
+where date >= dateadd(day, -7, getutcdate())
+group by dateadd(day, 0, datediff(day, 0, date))
+go
+
+create view unresolved_count as
 select [category],
        sum(case
                when (state = 'NEW' or state = 'PROGRESS' or state = 'COMPLETE') THEN 1
-               ELSE 0 end)                                                                            as 'unresolved',
-       sum(case when state = 'RESOLVED' and date >= dateadd(day, -7, getutcdate()) THEN 1 ELSE 0 end) as 'resolved'
+               ELSE 0 end) as 'unresolved'
 from Issue
 group by [category]
 go
 
-create view unresolved_count as
-select name,
-       sum(case
-               when (state = 'NEW' or state = 'PROGRESS' or state = 'COMPLETE') THEN 1
-               ELSE 0 end) as 'unresolved'
-from Issue,
-     Category
-group by [name]
-
-go
-
-
-select *
-from unresolved_count
-order by case
-             when [category] = 'NETWORK' then '1'
-             when [category] = 'SOFTWARE' then '2'
-             when [category] = 'HARDWARE' then '3'
-             when [category] = 'ACCOUNT' then '4'
-             when [category] = 'EMAIL' then '5'
-             else [category]
-             end
-go
-
-
-
-begin transaction
-declare @unresolvedCount float;
-declare @itstaffCount float;
-select @itstaffCount = cast((sum(case when role = 'ITSTAFF' then 1 else 0 end) * 5) as float)
-from Client;
-select @unresolvedCount =
-       cast(sum(case when (state = 'NEW' or state = 'PROGRESS' or state = 'COMPLETE') then 1 else 0 end) as float)
-from Issue;
-select @unresolvedCount / @itstaffCount as [stress rate];
-commit
-
-
-begin transaction
-declare @unresolvedCount float;
-declare @itstaffCount float;
-select @itstaffCount = cast((sum(case when role = 'ITSTAFF' then 1 else 0 end) * 5) as float)
-from Client;
-select @itstaffCount as 'count';
-commit
