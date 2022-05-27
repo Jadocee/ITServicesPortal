@@ -9,17 +9,18 @@
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issue.css"/>"/>
         <style>
             /*.issue-comment#recommended-solution {*/
-
+            /*    outline-color: chartreuse;*/
+            /*    outline-width: medium;*/
             /*}*/
 
-            /*.issue-comment#recommended-solution .issue-comment__top-bar {*/
-            /*    position: relative;*/
-            /*}*/
+            .issue-comment#recommended-solution .issue-comment__top-bar {
+                background-color: darkslateblue;
+            }
 
             /*.issue-comment#recommended-solution .issue-comment__top-bar:after {*/
             /*    position: absolute;*/
             /*    top: 100%;*/
-            /*}*/
+            /*}
         </style>
         <script type="text/javascript">
             const reviewSolution = async (commentId, accept) => {

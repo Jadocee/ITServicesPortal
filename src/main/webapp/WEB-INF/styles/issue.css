@@ -174,23 +174,3 @@ p {
 .top-bar__menu-container > [role="button"]:hover {
     color: hsl(0 0% 100% / 1);
 }
-
-.recommended-solution > div {
-    background: hsl(253 89% 42%);
-    color: chartreuse;
-    padding: 8px 16px;
-    margin: -16px -16px 0 -16px;
-    font-weight: 400;
-    font-size: 14px;
-}
-
-.recommended-solution__top-bar {
-    min-height: 36px;
-}
-
-.recommended-solution__top-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
