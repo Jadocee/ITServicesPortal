@@ -42,7 +42,7 @@
             top: 100%;
             left: auto;
             background-clip: padding-box;
-            right: auto;
+            right: 2rem;
             margin: 0;
             padding: 4px 0 4px 0;
             z-index: 100;
@@ -78,21 +78,16 @@
 
     </div>
     <div class="primary-header__right">
-        <c:if test="${sessionScope.authorities.contains('ROLE_USER')}">
-            <span role="button"
-                  aria-haspopup="menu"
-                  class="material-symbols-rounded notification-btn"
-                  onclick="toggleNoti()">
-                notifications</span>
-
-            <menu role="menu" class="notification-menu" hidden aria-hidden="true">
-                <c:if test="${sessionScope.authorities.contains('ROLE_ITSTAFF')}"><%--this do not work need fix--%>
-                    <li>Your issues needs attendants</li>
-                </c:if>
-
-                <li>boo</li>
-            </menu>
-        </c:if>
+        <%--        <c:if test="${sessionScope.authorities.contains('ROLE_USER')}">--%>
+        <%--            <span role="button"--%>
+        <%--                  aria-haspopup="menu"--%>
+        <%--                  class="material-symbols-rounded notification-btn"--%>
+        <%--                  onclick="toggleNoti()"--%>
+        <%--            >notifications</span>--%>
+        <%--            <menu role="menu" class="notification-menu" hidden aria-hidden="true">--%>
+        <%--                <li>boo</li>--%>
+        <%--            </menu>--%>
+        <%--        </c:if>--%>
 
     </div>
 </header>

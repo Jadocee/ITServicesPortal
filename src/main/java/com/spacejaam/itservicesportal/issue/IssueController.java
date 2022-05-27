@@ -21,6 +21,8 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -49,21 +51,25 @@ public class IssueController {
         final ModelAndView modelAndView = new ModelAndView("your-issues");
         final Long clientId = ((ClientPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         final List<Issue> yourIssues = this.issueDAO.getIssuesByAuthorId(clientId);
+        modelAndView.addObject("foundIssues", !yourIssues.isEmpty());
         modelAndView.addObject("issues", yourIssues);
         return modelAndView;
     }
 
     @GetMapping("/{id}")
-    public ModelAndView displayIssue(@PathVariable("id") Long id) {
+    public ModelAndView displayIssue(@PathVariable("id") Long id, HttpSession session) {
         final ModelAndView modelAndView = new ModelAndView("issue");
-        modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
+        final Issue issue = this.issueDAO.getIssueById(id);
+        final List<Comment> comments = this.commentDAO.getCommentsByIssueId(id);
+        modelAndView.addObject("showComments", !comments.isEmpty());
+        modelAndView.addObject("allowCommenting", !issue.state().equals(State.RESOLVED));
+        modelAndView.addObject("isAuthor", Objects.equals(issue.getAuthor().getId(), session.getAttribute("userId")));
+        modelAndView.addObject("issue", issue);
         modelAndView.addObject("comments", this.commentDAO.getCommentsByIssueId(id));
-
         return modelAndView;
     }
 
     @PostMapping("/{id}/new_comment")
-    @ResponseStatus(HttpStatus.CREATED)
     public String createComment(
             @PathVariable("id") Long id,
             @RequestParam("commentBody") String message,
@@ -81,7 +87,6 @@ public class IssueController {
 
 
     @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)
     public String createIssue(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
@@ -101,16 +106,16 @@ public class IssueController {
                 (String) request.getSession().getAttribute("username")
         );
         // TODO redirect to the created issue
-        return "index";
+//        response.sendRedirect(request.getContextPath() + "/issues/created_by_me");
+        return "redirect:/issues/created_by_me";
     }
 
     @GetMapping("/tracker")
-    public ModelAndView displayTracker(@RequestParam(value = "state", required = false) String state) {
+    public ModelAndView displayTracker() {
         final ModelAndView modelAndView = new ModelAndView("issues-tracker");
-        modelAndView.addObject(
-                "issues",
-                state != null ? this.issueDAO.getIssuesByState(State.valueOf(state)) : this.issueDAO.getAllIssues()
-        );
+        final Map<String, List<Issue>> issues = this.issueDAO.getAllIssues();
+        modelAndView.addObject("foundIssues", !issues.isEmpty());
+        modelAndView.addObject("issues", issues);
         return modelAndView;
     }
 
@@ -118,9 +123,12 @@ public class IssueController {
     @GetMapping("/tracker/manage_issue/{id}")
     public ModelAndView manageIssue(@PathVariable("id") Long id) {
         final ModelAndView modelAndView = new ModelAndView("issue-manager");
-        modelAndView.addObject("issue", this.issueDAO.getIssueById(id));
-        modelAndView.addObject("comments", this.commentDAO.getCommentsByIssueId(id));
-//        modelAndView.addObject("recommended", this.commentDAO.getRecommendedCommentForIssue(id));
+        final Issue issue = this.issueDAO.getIssueById(id);
+        modelAndView.addObject("allowCommenting", !issue.state().equals(State.RESOLVED));
+        modelAndView.addObject("issue", issue);
+        final List<Comment> comments = this.commentDAO.getCommentsByIssueId(id);
+        modelAndView.addObject("hasCommments", !comments.isEmpty());
+        modelAndView.addObject("comments", comments);
         return modelAndView;
     }
 
@@ -130,13 +138,9 @@ public class IssueController {
     )
     @ResponseStatus(HttpStatus.OK)
     public void recommendAsSolution(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader bufferedReader = request.getReader();
-        if (bufferedReader.ready()) {
-            JsonReader jsonReader = new JsonReader(bufferedReader);
-            JsonObject jsonObject = JsonParser.parseReader(jsonReader).getAsJsonObject();
-            final Long id = jsonObject.get("id").getAsLong();
-            this.commentDAO.markCommentAsSolution(id);
-        }
+        JsonObject jsonObject = getJSON(request.getReader());
+        final Long id = jsonObject.get("id").getAsLong();
+        this.commentDAO.markCommentAsSolution(id);
     }
 
     @PostMapping(
@@ -199,14 +203,6 @@ public class IssueController {
         }
     }
 
-    @PostMapping(
-            value = "{id}/comments/{commentId}/reject",
-            consumes = MediaType.TEXT_PLAIN_VALUE
-    )
-    @ResponseStatus(HttpStatus.OK)
-    public void rejectSolution(@PathVariable("id") Long id, @PathVariable("commentId") Long commentId) {
-        this.issueDAO.rejectSolution(id, commentId);
-    }
 
     private JsonObject getJSON(BufferedReader bufferedReader) throws IOException {
         return JsonParser.parseReader(new JsonReader(bufferedReader)).getAsJsonObject();

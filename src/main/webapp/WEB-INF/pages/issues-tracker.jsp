@@ -25,8 +25,30 @@
                 padding: 8px;
                 overflow: hidden;
                 position: relative;
-                overflow-y: auto;
                 max-height: 300px;
+            }
+
+            .issues-group > .issues-list.scrollable {
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding-right: 8px;
+                scroll-snap-type: y proximity;
+                max-height: calc(284px - 2rem);
+            }
+
+            .issues-group > .issues-list.scrollable > .issue-cls {
+                scroll-snap-align: center;
+            }
+
+            .scrollable::-webkit-scrollbar {
+                width: 8px;
+                background-color: hsl(215 21% 11%);
+                border-radius: 8px;
+            }
+
+            .scrollable::-webkit-scrollbar-thumb {
+                background-color: hsl(253 89% 42%);
+                border-radius: 8px;
             }
 
             .issues-group__heading {
@@ -39,11 +61,17 @@
             .issues-group__top-bar {
                 padding: 8px;
                 margin: -8px -8px 8px -8px;
-                background-color: hsl(264 64% 35%);
+                background-color: hsl(253 89% 42%);
                 position: sticky;
                 top: -8px;
                 left: -8px;
                 right: -8px;
+                display: flex;
+                align-content: center;
+                align-items: center;
+                justify-content: flex-start;
+                height: 2rem;
+                max-height: 2rem;
             }
 
             .issues-list-container {
@@ -59,19 +87,17 @@
             <h1>Issues Tracker</h1>
 
             <c:choose>
-                <c:when test="${!issues.isEmpty()}">
+                <c:when test="${foundIssues}">
                     <div class="issues-list-container">
 
                         <c:forEach var="issuesListMap" items="${issues}">
                             <section class="issues-group">
                                 <div class="issues-group__top-bar">
-                                    <a href="<spring:url value="/issues/tracker?state=${issuesListMap.key}"/>">
-                                        <h1 class="issues-group__heading">
-                                            <c:out value="${issuesListMap.key}"/>
-                                        </h1>
-                                    </a>
+                                    <h1 class="issues-group__heading">
+                                        <c:out value="${issuesListMap.key}"/>
+                                    </h1>
                                 </div>
-                                <div class="issues-list">
+                                <div class="issues-list scrollable">
                                     <c:forEach var="issue" items="${issuesListMap.value}">
                                         <div class="issue-cls">
                                             <a

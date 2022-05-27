@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,15 +54,15 @@ public class Issue implements Serializable {
     }
 
     public ArrayList<String> getTags() {
-        if (this.tags.isEmpty()) {
+        try {
+            final ArrayList<String> arrayList = new ArrayList<>();
+            for (final Tag tag : this.tags) {
+                arrayList.add(tag.toString());
+            }
+            return arrayList;
+        } catch (NullPointerException e) {
             return null;
         }
-
-        final ArrayList<String> arrayList = new ArrayList<>();
-        for (final Tag tag : this.tags) {
-            arrayList.add(tag.toString());
-        }
-        return arrayList;
     }
 
     public void setTags(Set<Tag> tags) {
@@ -129,8 +130,12 @@ public class Issue implements Serializable {
         // TODO: offset by local timezone
     }
 
-    public LocalDate getResolvedOn() {
-        return resolvedOn;
+    public String getResolvedOn() {
+        try {
+            return resolvedOn.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public void setResolvedOn(LocalDate resolvedOn) {

@@ -19,10 +19,9 @@ import java.util.ArrayList;
 @RequestMapping(value = "/")
 public class IndexController {
 
-
-
     @GetMapping(value = "/")
     public ModelAndView index(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("index");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof ClientPrinciple) {
             final ClientPrinciple clientPrinciple = (ClientPrinciple) authentication.getPrincipal();
@@ -37,7 +36,7 @@ public class IndexController {
         } else {
             session.setAttribute("isLoggedIn", false);
         }
-        return new ModelAndView("index");
+        return modelAndView;
     }
 
 

@@ -6,12 +6,35 @@
 <app:Layout title="Your Issues">
     <jsp:attribute name="head">
         <link type="text/css" rel="stylesheet" href="<spring:url value="/$styles/issues.css"/>"/>
+        <style>
+            .issue-cls {
+                position: relative;
+            }
+
+            .notification {
+                position: absolute;
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                border: 1px solid hsl(212 9% 58%);
+                border-radius: 0.5rem;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                font-weight: 500;
+                padding: 1px 7px;
+                left: 80%;
+                bottom: 75%;
+                background-color: hsl(345 100% 50% / 0.9);
+            }
+
+        </style>
     </jsp:attribute>
 
     <jsp:body>
         <h1>Your Issues</h1>
         <c:choose>
-            <c:when test="${!issues.isEmpty()}">
+            <c:when test="${foundIssues}">
                 <div class="issues-list-container">
                     <div class="issues-list">
                         <c:forEach var="issue" items="${issues}">
@@ -22,6 +45,12 @@
                             Created by <c:out value="${issue.author.displayName}"/> on <c:out
                                         value="${issue.createdOn}"/>
                         </span>
+                                <c:if test="${issue.tags.contains('Waiting on reporter')}">
+                                    <div class="notification">
+                                        <span class="material-symbols-rounded">notification_important</span>
+                                        Action required
+                                    </div>
+                                </c:if>
                             </div>
                         </c:forEach>
                     </div>

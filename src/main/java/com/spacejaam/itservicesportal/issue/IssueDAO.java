@@ -47,18 +47,21 @@ public class IssueDAO {
     }
 
     public Map<String, List<Issue>> getAllIssues() {
-        final String sql = "select i.*, concat(c.firstName, ' ', c.lastName) as 'author name', c.id as 'author id', c.role as 'author role'\n" +
+        final String sql = "select i.*,\n" +
+                "       concat(c.firstName, ' ', c.lastName) as 'author name',\n" +
+                "       c.id                                 as 'author id',\n" +
+                "       c.role                               as 'author role'\n" +
                 "from Issue i\n" +
                 "         join ClientIssue CI on i.id = CI.issue_id\n" +
                 "         join Client C on CI.client_id = C.id\n" +
-                "where state != 'RESOLVED'\n" +
-                "order by date asc,\n" +
-                "         case\n" +
+                "order by case\n" +
                 "             when i.state = 'NEW' then '1'\n" +
                 "             when i.state = 'PROGRESS' then '2'\n" +
                 "             when i.state = 'COMPLETE' then '3'\n" +
-                "             else i.state end asc\n" +
-                "\n";
+                "             when i.state = 'RESOLVED' then '4'\n" +
+                "             else i.state\n" +
+                "             end asc,\n" +
+                "         date asc";
         return this.jdbcTemplate.query(sql, new IssueResultSetExtractor());
     }
 
@@ -72,7 +75,9 @@ public class IssueDAO {
                 "set tags = case when tags is null then @tag else concat(tags, ',', @tag) end\n" +
                 "where id = @issueId;\n" +
                 "if @tag = 'ARTICLE'\n" +
+                "begin\n" +
                 "insert into KnowledgeBase (issue_id) values (@issueId);\n" +
+                "end\n" +
                 "commit";
         this.jdbcTemplate.update(sql, tag.name(), issueId);
     }
@@ -139,22 +144,11 @@ public class IssueDAO {
                 "    end\n" +
                 "insert into @table\n" +
                 "select @currentTags;\n" +
-                "if not exists(select *\n" +
-                "              from @table\n" +
-                "              where name = 'ARTICLE')\n" +
-                "    begin\n" +
-                "        update Issue\n" +
-                "        set state = 'RESOLVED',\n" +
-                "            tags  = IIF((select * from @table where name = 'ARTICLE') is not null, concat(tags, ',ARTICLE'), tags),\n" +
-                "            resolved_date = getutcdate()" +
-                "        where id = @issueId;\n" +
-                "    end\n" +
-                "if not exists(select *\n" +
-                "              from KnowledgeBase\n" +
-                "              where issue_id = @issueId)\n" +
-                "    begin\n" +
-                "        insert into KnowledgeBase(issue_id) values (@issueId);\n" +
-                "    end\n" +
+                "update Issue\n" +
+                "set state         = 'RESOLVED',\n" +
+                "    tags          = IIF((tags is not null and not exists(select * from @table where name = 'ARTICLE')), concat(tags, ',ARTICLE'),\n" +
+                "                        tags),\n" +
+                "    resolved_date = getutcdate()\n" +
                 "commit";
         this.jdbcTemplate.update(sql, issueId, commentId);
     }
