@@ -42,7 +42,7 @@
             top: 100%;
             left: auto;
             background-clip: padding-box;
-            right: auto;
+            right: 2rem;
             margin: 0;
             padding: 4px 0 4px 0;
             z-index: 100;
