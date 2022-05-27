@@ -211,18 +211,21 @@ h2 {
     right: 0;
     border-radius: 0;
     min-height: 3rem;
-    display: flex;
+    display:flex;
     grid-template-columns: auto 1fr auto;
     gap: 4rem;
     align-items: center;
+    justify-content: space-between;
     background: hsl(215 21% 11%);
     position: fixed;
     z-index: 999;
+
 }
 
 .primary-header > div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .primary-header__left > h1 {
@@ -309,6 +312,7 @@ h2 {
         background-color: hsl(253 89% 42%);
     }
 }
+
 
 
 
