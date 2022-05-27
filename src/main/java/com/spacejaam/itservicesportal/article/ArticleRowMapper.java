@@ -27,7 +27,8 @@ public class ArticleRowMapper implements RowMapper<Article> {
                 Category.valueOf(rs.getString("category")),
                 SubCategory.valueOf(rs.getString("subcategory")),
                 rs.getDate("added_to_knowledge_base_on").toLocalDate(),
-                rs.getNString("solution")
+                rs.getNString("solution"),
+                rs.getDate("solution_provided_on").toLocalDate()
         );
         final Date date = rs.getDate("resolved_on");
         if (date != null) {

@@ -37,8 +37,8 @@
                 <div class="issue-comment">
                     <div class="issue-comment__top-bar">
                         <div>Solution provided on
-                            <time datetime="<c:out value="${article.resolvedOn}"/>">
-                                <c:out value="${article.resolvedOn}"/>
+                            <time datetime="<c:out value="${article.solutionProvidedOn}"/>">
+                                <c:out value="${article.solutionProvidedOn}"/>
                             </time>
                         </div>
                     </div>

@@ -21,8 +21,9 @@ public class Article implements Serializable {
     private final SubCategory subCategory;
     private final LocalDate addedOn;
     private final String solution;
+    private final LocalDate solutionProvidedOn;
     @Id
-    private Long id;
+    private final Long id;
     private LocalDate resolvedOn;
     private Set<Tag> tags;
 
@@ -34,7 +35,8 @@ public class Article implements Serializable {
             Category category,
             SubCategory subCategory,
             LocalDate addedOn,
-            String solution
+            String solution,
+            LocalDate solutionProvidedOn
     ) {
         this.id = id;
         this.title = title;
@@ -44,6 +46,7 @@ public class Article implements Serializable {
         this.subCategory = subCategory;
         this.addedOn = addedOn;
         this.solution = solution;
+        this.solutionProvidedOn = solutionProvidedOn;
     }
 
     public Long getId() {
@@ -87,7 +90,11 @@ public class Article implements Serializable {
     }
 
     public String getResolvedOn() {
-        return resolvedOn.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        try {
+            return resolvedOn.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public void setResolvedOn(LocalDate resolvedOn) {
@@ -100,5 +107,9 @@ public class Article implements Serializable {
 
     public String getSolution() {
         return solution;
+    }
+
+    public String getSolutionProvidedOn() {
+        return solutionProvidedOn.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
     }
 }

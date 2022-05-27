@@ -25,7 +25,8 @@ public class ArticleDAO {
                 "       I.tags,\n" +
                 "       I.resolved_date as 'resolved_on',\n" +
                 "       K.date_added    as 'added_to_knowledge_base_on',\n" +
-                "       C.message as 'solution'\n" +
+                "       C.message as 'solution',\n" +
+                "       C.date as 'solution_provided_on'\n" +
                 "from KnowledgeBase K\n" +
                 "         join Issue I on K.issue_id = I.id\n" +
                 "         join IssueComment IC on I.id = IC.issue_id\n" +
@@ -44,7 +45,8 @@ public class ArticleDAO {
                 "       I.tags,\n" +
                 "       I.resolved_date as 'resolved_on',\n" +
                 "       K.date_added    as 'added_to_knowledge_base_on',\n" +
-                "       C.message as 'solution'\n" +
+                "       C.message as 'solution',\n" +
+                "       C.date as 'solution_provided_on'\n" +
                 "from KnowledgeBase K\n" +
                 "         join Issue I on K.issue_id = I.id\n" +
                 "         join IssueComment IC on I.id = IC.issue_id\n" +
