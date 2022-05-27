@@ -75,7 +75,9 @@ public class IssueDAO {
                 "set tags = case when tags is null then @tag else concat(tags, ',', @tag) end\n" +
                 "where id = @issueId;\n" +
                 "if @tag = 'ARTICLE'\n" +
+                "begin\n" +
                 "insert into KnowledgeBase (issue_id) values (@issueId);\n" +
+                "end\n" +
                 "commit";
         this.jdbcTemplate.update(sql, tag.name(), issueId);
     }

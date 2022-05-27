@@ -51,6 +51,7 @@ public class IssueController {
         final ModelAndView modelAndView = new ModelAndView("your-issues");
         final Long clientId = ((ClientPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         final List<Issue> yourIssues = this.issueDAO.getIssuesByAuthorId(clientId);
+        modelAndView.addObject("foundIssues", !yourIssues.isEmpty());
         modelAndView.addObject("issues", yourIssues);
         return modelAndView;
     }
@@ -202,6 +203,7 @@ public class IssueController {
             throw new RuntimeException(e);
         }
     }
+
 
     private JsonObject getJSON(BufferedReader bufferedReader) throws IOException {
         return JsonParser.parseReader(new JsonReader(bufferedReader)).getAsJsonObject();

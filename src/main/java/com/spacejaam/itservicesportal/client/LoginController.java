@@ -2,6 +2,7 @@ package com.spacejaam.itservicesportal.client;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -19,7 +20,8 @@ public class LoginController {
     }*/
 
     @GetMapping(value = "/login")
-    public String getLoginView() {
+    public ModelAndView getLoginView() {
+        return new ModelAndView("login");
        /* clientDAO.insertClient(new Client(
                 "Adolf",
                 "Budden",
@@ -45,13 +47,14 @@ public class LoginController {
                 true,
                 true
         ));*/
-        return "login";
     }
 
     @GetMapping(value = "/login?error")
-    public ModelAndView getLoginViewWithError() {
-        final ModelAndView modelAndView = new ModelAndView("login");
-        // TODO handle login error
+    public ModelAndView getLoginViewWithError(
+            @RequestParam(value = "error", required = false) String error,
+            ModelAndView modelAndView
+    ) {
+        modelAndView.addObject("error", error);
         return modelAndView;
     }
 
