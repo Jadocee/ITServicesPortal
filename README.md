@@ -70,7 +70,49 @@ To build and run the application, you will need the following dependencies:
 
 The IT Services Portal uses Spring Security to manage authentication, and data is stored on a SQL database accessed using JDBC. A SQL script for setting up the database is provided in the repository.
 
-To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`com.spacejaam.itservicesportal.configs.DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/configs/DatasourceConfig.java). The application does not provide the ability for users to create accounts, and so, accounts must be manually added to the database. The following table provides example account data.
+To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`com.spacejaam.itservicesportal.configs.DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/configs/DatasourceConfig.java). The application does not provide the ability for users to create accounts, and so, accounts must be manually added to the database.
+
+1. Import the required packages by adding the following code at the top of [LoginController.java](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java)
+
+    ```java
+    import org.springframework.security.crypto.password.PasswordEncoder;
+
+    import com.spacejaam.itservicesportal.data.ClientDAO;
+    import com.spacejaam.itservicesportal.enums.Role;
+    import com.spacejaam.itservicesportal.models.Client;
+    ```
+
+2. Add the following code at the top of the [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java#L11) class.
+
+    ```java
+    private final ClientDAO clientDAO;
+    private final PasswordEncoder encoder;
+
+    @Autowired
+    LoginController(ClientDAO clientDAO, PasswordEncoder encoder) {
+        this.clientDAO = clientDAO;
+        this.encoder = encoder;
+    }
+    ```
+
+3. Add the following code to the `getLoginView()` method in the [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java#L11) class.
+
+    ```java
+    clientDAO.insertClient(new Client(
+            "firstName",
+            "lastName",
+            "email",
+            encoder.encode("password"),
+            "phone",
+            Role.ITSTAFF,
+            true,
+            true,
+            true,
+            true
+    ));
+    ```
+
+After following these steps, each time the `getLoginView()` method is called, a new account is added to the database and can be used to sign into the application. The details of the account in the `insertClient()` method can be modified to change their first name, last name, email, password, phone number, and role. The role can be one of three options, `Role.ITSTAFF`, `Role.User`, or `Role.DEV`. The `DEV` role provides the account with full-access to all features of the IT services portal. The following table provides example data that can be used for creating accounts.
 
 | Username                           | Password              | Role       |
 |------------------------------------|-----------------------|------------|

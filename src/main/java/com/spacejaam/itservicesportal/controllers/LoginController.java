@@ -4,6 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+
+import com.spacejaam.itservicesportal.data.ClientDAO;
+import com.spacejaam.itservicesportal.models.Client;
 
 @Controller
 public class LoginController {
@@ -11,7 +16,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public ModelAndView getLoginView() {
         return new ModelAndView("login");
-       /* clientDAO.insertClient(new Client(
+        clientDAO.insertClient(new Client(
                 "Adolf",
                 "Budden",
                 "itstaff@test.com",
@@ -35,7 +40,7 @@ public class LoginController {
                 true,
                 true,
                 true
-        ));*/
+        ));
     }
 
     @GetMapping(value = "/login?error")
