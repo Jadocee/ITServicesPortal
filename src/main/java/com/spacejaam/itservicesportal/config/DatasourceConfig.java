@@ -20,11 +20,14 @@ public class DatasourceConfig {
     @ConfigurationProperties("app.datasource.main")
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        // TODO: set DB driver
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl(
-                "jdbc:sqlserver://spacejaam-itservicesportal.database.windows.net;database=ITServicesPortal;encrypt=true;loginTimeout=30;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;");
-        dataSource.setUsername("Finisher8510");
-        dataSource.setPassword("8UKU^26hLeZz");
+        // TODO: set DB URL
+        dataSource.setUrl("");
+        // TODO: set DB username
+        dataSource.setUsername("");
+        // TODO: set DB password
+        dataSource.setPassword("");
         return dataSource;
     }
 
