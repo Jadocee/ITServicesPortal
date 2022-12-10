@@ -70,24 +70,22 @@ To build and run the application, you will need the following dependencies:
 
 The IT Services Portal uses Spring Security to manage authentication, and data is stored on a SQL database accessed using JDBC. A SQL script for setting up the database is provided in the repository.
 
-To run the application locally using Apache Tomcat, follow these steps:
+To run the application locally using Apache Tomcat (see [Tomcat Setup](https://tomcat.apache.org/tomcat-8.5-doc/setup.html)), follow these steps:
 
 1. Move the project file into the `<tomcat-installation-directory>/webapps` directory
 2. Run `<tomcat-installation-directory>/bin/startup.bat`
 
 ## Technologies Used
 
-* Spring Framework
-* Spring MVC
-* Spring Boot
-* Spring Security
-* Spring Data
-* Apache Tomcat (for hosting the application)
-* Azure SQL Server / Microsoft SQL Server (for hosting the database on the cloud or locally, respectively)
-* JDBC (for establishing connection to the database)
-* Spring Session
-* Java Server Pages (JSPs)
-* npm (with TypeScript package for compiling TypeScript to JavaScript)
+* [Spring Framework](https://spring.io/projects/spring-framework)
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Spring Security](https://spring.io/projects/spring-security)
+* [Spring Data](https://spring.io/projects/spring-data)
+* [Apache Tomcat](https://tomcat.apache.org/) (for hosting the application)
+* [Azure SQL Server](https://azure.microsoft.com/en-au/services/sql-database/campaign/) / [Microsoft SQL Server](https://www.microsoft.com/en-au/sql-server/sql-server-2019) (for hosting the database on the cloud or locally, respectively)
+* [Spring Session](https://spring.io/projects/spring-session)
+* [Jakarta Server Pages](https://projects.eclipse.org/projects/ee4j.jsp) (JSPs)
+* [npm](https://www.npmjs.com/) (with the [TypeScript package](https://www.npmjs.com/package/typescript) for compiling TypeScript to JavaScript)
 
 ## Credits
 
