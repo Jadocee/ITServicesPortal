@@ -36,11 +36,6 @@ The homepage of the application also includes a statistics section that shows th
 
 ![UWE Presentation Model for IT Services Portal](./images/UWE-Presentation-Diagram.jpeg)
 
-<figure>
-    <img src="./images/UWE-Presentation-Diagram.jpeg" alt="UWE Presentation Model for IT Services Portal"/>
-    <figcaption>UWE Presentation Model for IT Services Portal</figcaption>
-</figure>
-
 ### Content 
 
 ![UWE Content Model for IT Services Portal](./images/Content.jpg)
@@ -77,8 +72,8 @@ The IT Services Portal uses Spring Security to manage authentication, and data i
 
 To run the application locally using Apache Tomcat, follow these steps:
 
-1. Move the project file into the <tomcat-installation-directory>/webapps directory
-2. Run <tomcat-installation-directory>/bin/startup.bat
+1. Move the project file into the `<tomcat-installation-directory>/webapps` directory
+2. Run `<tomcat-installation-directory>/bin/startup.bat`
 
 ## Technologies Used
 
