@@ -1,6 +1,6 @@
 # IT Services Portal
 
-The IT Services Portal is a web application for managing and reporting IT services-related issues and incidents. It was created as part of a course assignment at the University of Newcastle, with the goal of improving the efficiency of the IT staff by providing a knowledge-base for users to browse before submitting an issue. The application was created using Spring Framework, Java, and Java Server Pages (JSPs), and follows the MVC (Model-View-Controller) architecture.
+The IT Services Portal is a web application for managing and reporting IT services-related issues and incidents. It was created as part of a course assignment at the University of Newcastle, with the goal of improving the efficiency of the IT staff by providing a knowledge-base for users to browse before submitting an issue. The application was created using Spring Framework and Java, and follows the MVC (Model-View-Controller) architecture.
 
 ## Use Cases
 
