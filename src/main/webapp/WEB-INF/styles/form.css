@@ -1,8 +1,3 @@
-/*input:invalid {*/
-/*  background-color: hsl(0 100% 93%);*/
-/*  border-color: hsl(7 89% 60%);*/
-/*}*/
-
 label {
     font-weight: 600;
     text-transform: uppercase;
@@ -74,8 +69,6 @@ form .input-container > label {
     text-align: center;
     color: inherit;
 }
-
-
 
 form .input-container > input,
 form .input-container > textarea {

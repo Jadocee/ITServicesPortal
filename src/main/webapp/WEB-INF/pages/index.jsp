@@ -12,9 +12,6 @@
         <script type="module" defer async>
             const donutCanvas = document.querySelector("#unresolvedIssues");
             const lineCanvas = document.querySelector("#resolvedIssues");
-            // let unresolvedData;
-            // let resolvedData;
-            // let stressRate;
             let lineChart;
             let donutChart;
 

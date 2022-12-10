@@ -70,7 +70,7 @@ To build and run the application, you will need the following dependencies:
 
 The IT Services Portal uses Spring Security to manage authentication, and data is stored on a SQL database accessed using JDBC. A SQL script for setting up the database is provided in the repository.
 
-To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`com.spacejaam.itservicesportal.config.DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/config/DatasourceConfig.java). The application does not provide the ability for users to create accounts, and so, accounts must be manually added to the database. The following table provides example account data.
+To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`com.spacejaam.itservicesportal.configs.DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/configs/DatasourceConfig.java). The application does not provide the ability for users to create accounts, and so, accounts must be manually added to the database. The following table provides example account data.
 
 | Username                           | Password              | Role       |
 |------------------------------------|-----------------------|------------|
