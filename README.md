@@ -70,8 +70,14 @@ To build and run the application, you will need the following dependencies:
 
 The IT Services Portal uses Spring Security to manage authentication, and data is stored on a SQL database accessed using JDBC. A SQL script for setting up the database is provided in the repository.
 
-To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`com.spacejaam.itservicesportal.config.DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/config/DatasourceConfig.java).
+To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`com.spacejaam.itservicesportal.config.DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/config/DatasourceConfig.java). The application does not provide the ability for users to create accounts, and so, accounts must be manually added to the database. The following table provides example account data.
 
+| Username                           | Password              | Role       |
+|------------------------------------|-----------------------|------------|
+| `nzinga_houghus5j@wit.vs`          | `UkyDJvlLRqcLL1FLdV7` | `IT Staff` |
+| `aamil_delcastillorp@volumes.zn`   | `d3Eu5SE2DIZ89`       | `User`     |
+| `binyomin_ruckmanh1tj@richards.ug` | `EosoGD9MoHtRSuRoNHb` | `User`     |
+| `marena_davidsontmsu@company.mpd`  | `3mCE7UjWt9F`         | `IT Staff` |
 
 To run the application locally using Apache Tomcat (see [Tomcat Setup](https://tomcat.apache.org/tomcat-8.5-doc/setup.html)), follow these steps:
 
