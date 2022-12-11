@@ -139,7 +139,7 @@ After following these steps, each time the `getLoginView()` method is called, a 
 
 ## Build
 
-To build the project, you will need to run the following command:
+To build the project, you will need to run the following command inside the project directory:
 
 ```ps
 mvn clean install
