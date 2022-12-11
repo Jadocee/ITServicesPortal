@@ -41,13 +41,13 @@ The IT Services Portal has different use cases depending on whether the authenti
 
 ![UWE Presentation Model for IT Services Portal](./images/UWE-Presentation-Diagram.jpeg)
 
-### Content 
+### Content
 
 ![UWE Content Model for IT Services Portal](./images/Content.jpg)
 
 ### Navigation
 
-#### IT Staff
+#### Site Navigation For IT Staff
 
 The following UWE diagram shows the different pages and features available to IT Staff members, as well as the actions they can perform on each page:
 
@@ -55,7 +55,7 @@ The following UWE diagram shows the different pages and features available to IT
 
 This diagram shows that IT Staff members can view a list of all issues, filter issues by status, and tag issues. They can also mark comments as suggested solutions, and add or remove issues to the knowledge base.
 
-#### Client
+#### Site Navigation For Client
 
 The following UWE diagram shows the different pages and features available to Clients, as well as the actions they can perform on each page:
 
