@@ -1,23 +1,23 @@
-create table Client
+create table main.Client
 (
-    id                      int identity
-        primary key,
-    email                   varchar(319)  not null,
-    password                nvarchar(150) not null,
-    firstName               varchar(30)   not null,
-    lastName                varchar(30)   not null,
-    contactNum              varchar(50)   not null,
-    role                    varchar(10)   not null,
-    isAccountNonExpired     bit default 1 not null,
-    isAccountNonLocked      bit default 1 not null,
-    isCredentialsNonExpired bit default 1 not null,
-    isEnabled               bit default 1 not null
-)
-go
+    id                      integer           not null
+        constraint Client_pk
+            primary key autoincrement,
+    email                   text              not null,
+    password                text              not null,
+    firstName               text              not null,
+    lastName                text              not null,
+    contactNum              text              not null,
+    role                    text              not null,
+    isAccountNonExpired     integer default 1 not null,
+    isAccountNonLocked      integer default 1 not null,
+    isCredentialsNonExpired integer default 1 not null,
+    isEnabled               integer default 1 not null
+);
 
-create table Comment
+create table main.Comment
 (
-    id          int identity
+    id          integer
         constraint Comment_pk
             primary key,
     date        datetime2 default getutcdate() not null,
