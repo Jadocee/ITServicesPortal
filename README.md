@@ -128,7 +128,9 @@ To setup a database connection, you will need to set the driver name, database U
     ));
     ```
 
-After following these steps, each time the `getLoginView()` method is called, a new account is added to the database and can be used to sign into the application. The details of the account in the `insertClient()` method can be modified to change their first name, last name, email, password, phone number, and role. The role can be one of three options, `Role.ITSTAFF`, `Role.User`, or `Role.DEV`. The `DEV` role provides the account with full-access to all features of the IT services portal. The following table provides example data that can be used for creating accounts.
+After following these steps, each time the `getLoginView()` method is called, a new account is added to the database and can be used to sign into the application. The details of the account in the `insertClient()` method can be modified to change their first name, last name, email, password, phone number, and role. The role can be one of three options, `Role.ITSTAFF`, `Role.User`, or `Role.DEV`. The `DEV` role provides the account with full-access to all features of the IT services portal. 
+
+The following table provides example data that can be used for creating accounts:
 
 | Username                           | Password              | Role       |
 |------------------------------------|-----------------------|------------|
