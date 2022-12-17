@@ -89,7 +89,7 @@ The IT Services Portal uses Spring Security to manage authentication, and data i
 
 To setup a database connection, you will need to set the driver name, database URL, and the username and password for connecting the database in [`DatasourceConfig`](./src/main/java/com/spacejaam/itservicesportal/configs/DatasourceConfig.java). The application does not provide the ability for users to create accounts, and so, accounts must be manually added to the database.
 
-1. Import the required packages by adding the following code at the top of [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java).
+1. Import the required packages by adding the following code at the top of the [`LoginController.java`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java) file.
 
     ```java
     import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,7 +99,7 @@ To setup a database connection, you will need to set the driver name, database U
     import com.spacejaam.itservicesportal.models.Client;
     ```
 
-2. Add the following code at the top of the [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java#L11) class.
+2. Add the following code at the top of the [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java#L9) class.
 
     ```java
     private final ClientDAO clientDAO;
@@ -112,7 +112,7 @@ To setup a database connection, you will need to set the driver name, database U
     }
     ```
 
-3. Add the following code to the `getLoginView()` method in the [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java#L11) class.
+3. Add the following code to the [`getLoginView()`](./src/main/java/com/spacejaam/itservicesportal/controllers/LoginController.java#L12) method in the [`LoginController`](./src/main/java/com/spacejaam/itservicesportal/controller/LoginController.java#L9) class.
 
     ```java
     clientDAO.insertClient(new Client(
