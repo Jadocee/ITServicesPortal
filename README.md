@@ -8,7 +8,6 @@ The IT Services Portal is a web application for managing and reporting IT servic
 * Knowlege-base that IT staff can add solved issues to
 * IT staff can mark a comment as a potential solution to be reviewed by the issue' author.
 * Issues tracker for assisting IT staff with tracking and managing issues.
-* c
 * The homepage of the application includes a statistics section that shows the total unsolved incidents in each category, the total resolved incidents within the last 7 days in each category, and the stress rate.
 
 ## Use Cases
